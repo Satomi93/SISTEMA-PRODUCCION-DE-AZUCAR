@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema de producción de azucar</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    @Styles.Render("~/Content/plugins/fontawesome-free/css/all.min.css")
+    <!-- icheck bootstrap -->
+    @Styles.Render("~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css")
+    <!-- Theme style -->
+    @Styles.Render("~/Content/dist/css/adminlte.min.css")
+    <!-- General styles -->
+    @Styles.Render("~/Content/general-styles.css")
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-header text-center border-bottom-0 mt-4">
+                <div class="login-logo">
+                    <img src="~/Content/dist/img/user2.png" class="img-circle elevation-2 img-user" alt="User Image">
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="form-login">
+                    <div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Username" id="username" name="username">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block mb-3">LOGIN</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <div id="msj-login-info" class="alert alert-info d-none" role="alert"></div>
+                    <div id="msj-login-danger" class="alert alert-danger d-none" role="alert"></div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    @Scripts.Render("~/Content/plugins/jquery/jquery.min.js")
+    <!-- Bootstrap 4 -->
+    @Scripts.Render("~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js")
+    <!-- AdminLTE App -->
+    @Scripts.Render("~/Content/dist/js/adminlte.min.js")
+    <!-- jQuery Validate -->
+    @Scripts.Render("~/Content/plugins/jquery-validation/jquery.validate.js")
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $("#form-login").validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "Por favor ingrese su nombre de usuario."
+                    },
+                    password: {
+                        required: "Por favor ingrese su contraseña."
+                    }
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().parent().append(error);
+                }
+            });
+
+            $('#form-login').submit((e) => {
+                e.preventDefault();
+
+                if ($('#form-login').valid()) {
+                    $('#msj-login-info').addClass('d-none');
+                    $('#msj-login-danger').addClass('d-none');
+
+                    let values = $('#form-login').serialize();
+
+                    $.post('@Url.Content("~/Home/Login")', values, (data) => {
+                        if (data.response == 1) {
+                            document.location.href = '@Url.Content("~/User/")';
+                        } else if (data.response == 2) {
+                            $('#msj-login-info').text(data.message).removeClass('d-none');
+                        } else if (data.response == 0) {
+                            $('#msj-login-danger').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
