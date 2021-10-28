@@ -6,3 +6,13 @@ p.error-validation {
     font-size: 12px;
     color: #ff0000;
 }
+
+button.btn-primary {
+    background-color: #76ab3d !important;
+    border-color: #76ab3d !important;
+}
+
+a.active {
+    background-color: #76ab3d !important;
+}
+
