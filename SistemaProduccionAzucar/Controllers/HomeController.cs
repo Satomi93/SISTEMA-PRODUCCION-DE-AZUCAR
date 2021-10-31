@@ -33,11 +33,31 @@ namespace SistemaProduccionAzucar.Controllers
                             if (user.estado == 1) 
                             {
                                 Session["UserData"] = user;
+                                string url = "";
+
+                                switch(user.tipo_usuario) {
+                                    case "Administrador":
+                                        url = "/User/";
+                                        break;
+                                    case "Administrador finca":
+                                        url = "/MateriaPrima/";
+                                        break;
+                                    case "Encargado transporte caña":
+                                        url = "~/User/";
+                                        break;
+                                    case "Jefe de área":
+                                        url = "~/User/";
+                                        break;
+                                    case "Encargado de central":
+                                        url = "~/User/";
+                                        break;
+                                }
 
                                 return Json(new
                                 {
                                     response = 1,
-                                    message = "Éxito"
+                                    message = "Éxito",
+                                    url = url
                                 });
                             }
                             else

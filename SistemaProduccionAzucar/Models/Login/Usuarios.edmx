@@ -20,28 +20,28 @@
         </EntityType>
         <EntityContainer Name="SistemaAzucarModelStoreContainer">
           <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
-        </EntityContainer>
+          </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SistemaAzucarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SistemaAzucarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="usuarios" EntityType="SistemaAzucarModel.usuarios" />
+          </EntityContainer>
         <EntityType Name="usuarios">
           <Key>
             <PropertyRef Name="cod_usuario" />
           </Key>
           <Property Name="cod_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipo_usuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_usuario" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SistemaAzucarEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="usuarios" EntityType="Self.usuarios" />
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -51,13 +51,13 @@
             <EntityTypeMapping TypeName="SistemaAzucarModel.usuarios">
               <MappingFragment StoreEntitySet="usuarios">
                 <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="correo" ColumnName="correo" />
-                <ScalarProperty Name="clave" ColumnName="clave" />
                 <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

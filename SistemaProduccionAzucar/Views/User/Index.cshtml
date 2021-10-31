@@ -1,5 +1,280 @@
-﻿@{
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.User>
+@{
     ViewBag.Title = "Usuarios";
 }
 
-bbvcbvcbcvb
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search Mail">
+                <div class="input-group-append">
+                    <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-create-user">
+                    <i class="fa fa-plus"></i>
+                    Agregar usuario
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Nombre completo</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var us in Model)
+                    {
+                        <tr>
+                            <td>@us.codUsuario</td>
+                            <td>@us.nombre @us.apellido</td>
+                            <td>@us.correo</td>
+                            <td>@us.estadoStr</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="changeState(@us.codUsuario)">
+                                    <i class="fas fa-sync-alt"></i>
+                                    @if (@us.estado == 1)
+                                    {
+                                        <span>Desactivar</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Activar</span>
+                                    }
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="details(@us.codUsuario);" data-toggle="modal" data-target="#modal-details">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Ver detalles
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+<!-- /.card -->
+
+<!-- Modal Create User-->
+<div class="modal fade" id="modal-create-user" tabindex="-1" aria-labelledby="modal-create-user" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-create" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-create-user">Agregar usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" class="form-control" name="nombres" id="nombres" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="username">Nombre de usuario:</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo:</label>
+                    <input type="text" class="form-control" name="correo" id="correo" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="clave">Clave:</label>
+                    <input type="text" class="form-control" name="clave" id="clave" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="tipoUsuario">Tipo de usuario:</label>
+                    <select class="form-control" name="tipoUsuario" id="tipoUsuario">
+                    <option value="">Seleccione tipo de usuario</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Administrador finca">Administrador finca</option>
+                        <option value="Encargado transporte caña">Encargado transporte caña</option>
+                        <option value="Jefe de área">Jefe de área</option>
+                        <option value="Encargado de central">Encargado de central</option>
+                    </select>
+                </div>
+
+                <div id="msj-info" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Details -->
+<div class="modal fade" id="modal-details" tabindex="-1" aria-labelledby="modal-details" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-details">Ver detalles</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="details-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    $(document).ready(() => {
+        // VALIDACION DE FORMULARIO
+        $("#form-create").validate({
+            rules: {
+                nombres: {
+                    required: true
+                },
+                apellidos: {
+                    required: true
+                },
+                username: {
+                    required: true
+                },
+                correo: {
+                    required: true,
+                    email: true
+                },
+                clave: {
+                    required: true
+                },
+                tipoUsuario: {
+                    required: true
+                }
+            },
+            messages: {
+                nombres: {
+                    required: "Ingrese nombres."
+                },
+                apellidos: {
+                    required: "Ingrese apellidos."
+                },
+                username: {
+                    required: "Ingrese nombre de usuario."
+                },
+                correo: {
+                    required: "Ingrese correo electrónico.",
+                    email: "Ingrese un correo válido."
+                },
+                clave: {
+                    required: "Ingrese una clave."
+                },
+                tipoUsuario: {
+                    required: "Seleccione un tipo de usuario."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        $('#form-create').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-create').valid()) {
+                $('#msj-info').addClass('d-none');
+                let values = $('#form-create').serialize();
+
+                $.post('@Url.Content("~/User/Create")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+    });
+
+    // CAMBIAR ESTADO A USUARIO
+    function changeState(id) {
+        if (confirm("Esta seguro de cambiar estado?")) {
+            $.post('@Url.Content("~/User/ChangeState")', 
+            {
+                codUsuario: id
+            }, 
+            (data) => {
+                if (data.response == 1) {
+                    window.location.reload(true);
+                }
+            });
+        }
+    }
+
+    // VER DETALLES EN MODAL
+    function details(id) {
+        $.post('@Url.Content("~/User/Details")', 
+        {
+            codUsuario: id
+        }, 
+        (data) => {
+            if (data.response == 1) {
+                let html = '';
+
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Nombre completo: </div>';
+                html +=     '<div class="col-md-8">' + data.data.nombre + ' ' + data.data.apellido + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Correo: </div>';
+                html +=     '<div class="col-md-8">' + data.data.correo + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Nombre de usuario: </div>';
+                html +=     '<div class="col-md-8">' + data.data.username + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Tipo de usuario: </div>';
+                html +=     '<div class="col-md-8">' + data.data.tipo_usuario + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Estado: </div>';
+                html +=     '<div class="col-md-8">' + (data.data.estado == 1 ? 'Activo' : 'Inactivo') + '</div>';
+                html += '</div>';
+
+                $('#details-list').html(html);
+            }
+        });
+    }
+</script>
+}

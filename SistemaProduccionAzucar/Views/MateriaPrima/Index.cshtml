@@ -1,0 +1,187 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.MateriaPrima>
+@{
+    ViewBag.Title = "Materia prima";
+}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search Mail">
+                <div class="input-group-append">
+                    <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-create-m-prima">
+                    <i class="fa fa-plus"></i>
+                    Agregar materia prima
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Finca</th>
+                        <th>Cantidad</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var mat in Model)
+                    {
+                        <tr>
+                            <td>@mat.codMateriaPrima</td>
+                            <td>@mat.nombreMateria</td>
+                            <td>@mat.finca</td>
+                            <td>@mat.cantidad @mat.unidad</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="details(@mat.codMateriaPrima);" data-toggle="modal" data-target="#modal-history">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Historial
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+<!-- /.card -->
+<!-- Modal Create User 
+<div class="modal fade" id="modal-create-user" tabindex="-1" aria-labelledby="modal-create-user" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-create" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-create-user">Agregar usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" class="form-control" name="nombres" id="nombres" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="username">Nombre de usuario:</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo:</label>
+                    <input type="text" class="form-control" name="correo" id="correo" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="clave">Clave:</label>
+                    <input type="text" class="form-control" name="clave" id="clave" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="tipoUsuario">Tipo de usuario:</label>
+                    <select class="form-control" name="tipoUsuario" id="tipoUsuario">
+                        <option value="">Seleccione tipo de usuario</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Administrador finca">Administrador finca</option>
+                        <option value="Encargado transporte caña">Encargado transporte caña</option>
+                        <option value="Jefe de área">Jefe de área</option>
+                        <option value="Encargado de central">Encargado de central</option>
+                    </select>
+                </div>
+
+                <div id="msj-info" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>-->
+
+<!-- Modal Details -->
+<div class="modal fade" id="modal-history" tabindex="-1" aria-labelledby="modal-history" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-details">Historial</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="table-history" class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Cantidad</th>
+                                <th>Motivo</th>
+                                <th>Comentario</th>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    // VER HISTORIAL EN MODAL
+    function details(id) {
+        $.post('@Url.Content("~/MateriaPrima/History")', 
+        {
+            codMateriaPrima: id
+        }, 
+        (data) => {
+            if (data.response == 1) {
+                $('#table-history > table > tbody').html('');
+
+                $.each(data.data, function (i, item) {
+                    let row = '<tr>';
+                    row += '   <td>' + item.correlativo + '</td>';
+                    row += '   <td>' + item.cantidad + '</td>';
+                    row += '   <td>' + item.motivo + '</td>';
+                    row += '   <td>' + item.comentario + '</td>';
+                    row += '   <td>' + item.fechaCreacionStr + '</td>';
+                    row += '   <td>' + item.usuarioCreacion + '</td>';
+                    row += '</tr>';
+
+                    $("#table-history > table > tbody").append(row);
+                });
+            }
+        });
+    }
+</script>
+}

@@ -24,32 +24,6 @@ namespace SistemaProduccionAzucar.Filters
                     filterContext.HttpContext.Response.Redirect("~/Home/Index");
                 }
             }
-            else
-            {
-                if (filterContext.Controller is HomeController)
-                {
-                    if (usuario.tipo_usuario == "Administrador")
-                    {
-                        filterContext.HttpContext.Response.Redirect("~/User/Index");
-                    }
-                    else if (usuario.tipo_usuario == "Administrador finca")
-                    {
-                        filterContext.HttpContext.Response.Redirect("~/User/Index");
-                    }
-                    else if (usuario.tipo_usuario == "Encargado transporte caña")
-                    {
-                        filterContext.HttpContext.Response.Redirect("~/User/Index");
-                    }
-                    else if (usuario.tipo_usuario == "Jefe de área")
-                    {
-                        filterContext.HttpContext.Response.Redirect("~/User/Index");
-                    }
-                    else if (usuario.tipo_usuario == "Encargado de central")
-                    {
-                        filterContext.HttpContext.Response.Redirect("~/User/Index");
-                    }
-                }
-            }
 
             base.OnActionExecuting(filterContext);
         }

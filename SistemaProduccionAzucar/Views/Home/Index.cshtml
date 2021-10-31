@@ -114,7 +114,7 @@
 
                     $.post('@Url.Content("~/Home/Login")', values, (data) => {
                         if (data.response == 1) {
-                            document.location.href = '@Url.Content("~/User/")';
+                            document.location.href = data.url;
                         } else if (data.response == 2) {
                             $('#msj-login-info').text(data.message).removeClass('d-none');
                         } else if (data.response == 0) {

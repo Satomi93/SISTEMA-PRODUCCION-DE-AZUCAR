@@ -5,13 +5,13 @@
       <EntityTypeMapping TypeName="SistemaAzucarModel.usuarios">
         <MappingFragment StoreEntitySet="usuarios">
           <ScalarProperty Name="estado" ColumnName="estado" />
-          <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="apellido" ColumnName="apellido" />
-          <ScalarProperty Name="correo" ColumnName="correo" />
-          <ScalarProperty Name="clave" ColumnName="clave" />
           <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+          <ScalarProperty Name="clave" ColumnName="clave" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

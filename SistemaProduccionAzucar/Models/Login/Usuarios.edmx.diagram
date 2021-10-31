@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="83bbd59bbdb14d1b8d9df4b6c7d0055f" Name="Diagram1">
-        <EntityTypeShape EntityType="SistemaAzucarModel.usuarios" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-      </Diagram>
+        <EntityTypeShape EntityType="SistemaAzucarModel.usuarios" Width="1.5" PointX="0.75" PointY="1" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

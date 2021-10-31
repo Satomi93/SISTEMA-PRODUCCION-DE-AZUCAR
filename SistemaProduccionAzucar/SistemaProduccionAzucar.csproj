@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +188,36 @@
       <DependentUpon>Usuarios.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MateriaPrima\cat_motivo_trans_inv_finca.cs">
+      <DependentUpon>MateriaPrima.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\fincas.cs">
+      <DependentUpon>MateriaPrima.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\historial_inventario_finca.cs">
+      <DependentUpon>MateriaPrima.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\inventario_finca.cs">
+      <DependentUpon>MateriaPrima.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\MateriaPrima.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrima.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\MateriaPrima.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrima.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrima\MateriaPrima.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrima.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TableViewModels\HistorialInventarioFinca.cs" />
+    <Compile Include="Models\TableViewModels\MateriaPrima.cs" />
+    <Compile Include="Models\TableViewModels\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -233,6 +264,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Usuarios.edmx</DependentUpon>
       <LastGenOutput>Usuarios1.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\MateriaPrima\MateriaPrima.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MateriaPrima.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MateriaPrima\MateriaPrima.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MateriaPrima.edmx</DependentUpon>
+      <LastGenOutput>MateriaPrima.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MateriaPrima\MateriaPrima.edmx.diagram">
+      <DependentUpon>MateriaPrima.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\MateriaPrima\MateriaPrima.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MateriaPrima.edmx</DependentUpon>
+      <LastGenOutput>MateriaPrima.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\dist\css\adminlte.css" />
@@ -2236,6 +2284,7 @@
     <Content Include="Content\plugins\summernote\summernote.min.js.map" />
     <Content Include="Content\plugins\toastr\toastr.js.map" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\MateriaPrima\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

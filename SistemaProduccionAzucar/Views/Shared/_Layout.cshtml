@@ -15,7 +15,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    @Styles.Render("~/Content/plugins/fontawesome-free/css/all.min.css")
+    @Styles.Render("~/Content/plugins/fontawesome-free/css/all.css")
     <!-- Theme style -->
     @Styles.Render("~/Content/dist/css/adminlte.min.css")
     <!-- General style -->
@@ -78,15 +78,19 @@
                             else if (user.tipo_usuario == "Administrador finca")
                             {
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="#" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
+                                        <p>Fincas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="@Url.Action("Index", "MateriaPrima")" class="nav-link 
+                                    @((Url.RequestContext.HttpContext.Request.Path == "/MateriaPrima/index") 
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/MateriaPrima/Index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/MateriaPrima/")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/MateriaPrima") ? "active" : "")">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                        <p>Materia prima</p>
                                     </a>
                                 </li>
                             }
@@ -196,6 +200,8 @@
     @Scripts.Render("~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js")
     <!-- AdminLTE App -->
     @Scripts.Render("~/Content/dist/js/adminlte.min.js")
+    <!-- jQuery Validate -->
+    @Scripts.Render("~/Content/plugins/jquery-validation/jquery.validate.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
