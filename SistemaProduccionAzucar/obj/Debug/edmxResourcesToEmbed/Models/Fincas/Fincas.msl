@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FincasModelStoreContainer" CdmEntityContainer="FincasEntities">
+    <EntitySetMapping Name="fincas">
+      <EntityTypeMapping TypeName="FincasModel.fincas">
+        <MappingFragment StoreEntitySet="fincas">
+          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="registro_corte">
+      <EntityTypeMapping TypeName="FincasModel.registro_corte">
+        <MappingFragment StoreEntitySet="registro_corte">
+          <ScalarProperty Name="cod_corte" ColumnName="cod_corte" />
+          <ScalarProperty Name="cantidad_cortada" ColumnName="cantidad_cortada" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="registro_sembrado">
+      <EntityTypeMapping TypeName="FincasModel.registro_sembrado">
+        <MappingFragment StoreEntitySet="registro_sembrado">
+          <ScalarProperty Name="cod_sembrado" ColumnName="cod_sembrado" />
+          <ScalarProperty Name="cantidad_sembrado" ColumnName="cantidad_sembrado" />
+          <ScalarProperty Name="unidad_sembrado" ColumnName="unidad_sembrado" />
+          <ScalarProperty Name="cantidad_abono" ColumnName="cantidad_abono" />
+          <ScalarProperty Name="unidad_abono" ColumnName="unidad_abono" />
+          <ScalarProperty Name="cantidad_fertilizante" ColumnName="cantidad_fertilizante" />
+          <ScalarProperty Name="unidad_fertilizante" ColumnName="unidad_fertilizante" />
+          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FincasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="fincas">
+          <Key>
+            <PropertyRef Name="cod_finca" />
+          </Key>
+          <Property Name="cod_finca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="direccion" Type="varchar" MaxLength="150" />
+          <Property Name="area_metros_cuadrados" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_creacion" Type="int" />
+        </EntityType>
+        <EntityType Name="registro_corte">
+          <Key>
+            <PropertyRef Name="cod_corte" />
+          </Key>
+          <Property Name="cod_corte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cantidad_cortada" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="unidad" Type="varchar" MaxLength="10" />
+          <Property Name="cod_finca" Type="int" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="registro_sembrado">
+          <Key>
+            <PropertyRef Name="cod_sembrado" />
+          </Key>
+          <Property Name="cod_sembrado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cantidad_sembrado" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_sembrado" Type="varchar" MaxLength="10" />
+          <Property Name="cantidad_abono" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_abono" Type="varchar" MaxLength="3" />
+          <Property Name="cantidad_fertilizante" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_fertilizante" Type="varchar" MaxLength="3" />
+          <Property Name="cod_finca" Type="int" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_cod_finca_corte">
+          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
+          <End Role="registro_corte" Type="Self.registro_corte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fincas">
+              <PropertyRef Name="cod_finca" />
+            </Principal>
+            <Dependent Role="registro_corte">
+              <PropertyRef Name="cod_finca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cod_finca_sembrado">
+          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
+          <End Role="registro_sembrado" Type="Self.registro_sembrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fincas">
+              <PropertyRef Name="cod_finca" />
+            </Principal>
+            <Dependent Role="registro_sembrado">
+              <PropertyRef Name="cod_finca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FincasModelStoreContainer">
+          <EntitySet Name="fincas" EntityType="Self.fincas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registro_corte" EntityType="Self.registro_corte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registro_sembrado" EntityType="Self.registro_sembrado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cod_finca_corte" Association="Self.FK_cod_finca_corte">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_corte" EntitySet="registro_corte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cod_finca_sembrado" Association="Self.FK_cod_finca_sembrado">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_sembrado" EntitySet="registro_sembrado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FincasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="fincas">
+          <Key>
+            <PropertyRef Name="cod_finca" />
+          </Key>
+          <Property Name="cod_finca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="area_metros_cuadrados" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <NavigationProperty Name="registro_corte" Relationship="Self.FK_cod_finca_corte" FromRole="fincas" ToRole="registro_corte" />
+          <NavigationProperty Name="registro_sembrado" Relationship="Self.FK_cod_finca_sembrado" FromRole="fincas" ToRole="registro_sembrado" />
+        </EntityType>
+        <EntityType Name="registro_corte">
+          <Key>
+            <PropertyRef Name="cod_corte" />
+          </Key>
+          <Property Name="cod_corte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantidad_cortada" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cod_finca" Type="Int32" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_corte" FromRole="registro_corte" ToRole="fincas" />
+        </EntityType>
+        <EntityType Name="registro_sembrado">
+          <Key>
+            <PropertyRef Name="cod_sembrado" />
+          </Key>
+          <Property Name="cod_sembrado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantidad_sembrado" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_sembrado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad_abono" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_abono" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad_fertilizante" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_fertilizante" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="cod_finca" Type="Int32" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_sembrado" FromRole="registro_sembrado" ToRole="fincas" />
+        </EntityType>
+        <Association Name="FK_cod_finca_corte">
+          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
+          <End Role="registro_corte" Type="Self.registro_corte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fincas">
+              <PropertyRef Name="cod_finca" />
+            </Principal>
+            <Dependent Role="registro_corte">
+              <PropertyRef Name="cod_finca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cod_finca_sembrado">
+          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
+          <End Role="registro_sembrado" Type="Self.registro_sembrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fincas">
+              <PropertyRef Name="cod_finca" />
+            </Principal>
+            <Dependent Role="registro_sembrado">
+              <PropertyRef Name="cod_finca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FincasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="fincas" EntityType="Self.fincas" />
+          <EntitySet Name="registro_corte" EntityType="Self.registro_corte" />
+          <EntitySet Name="registro_sembrado" EntityType="Self.registro_sembrado" />
+          <AssociationSet Name="FK_cod_finca_corte" Association="Self.FK_cod_finca_corte">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_corte" EntitySet="registro_corte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cod_finca_sembrado" Association="Self.FK_cod_finca_sembrado">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_sembrado" EntitySet="registro_sembrado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FincasModelStoreContainer" CdmEntityContainer="FincasEntities">
+          <EntitySetMapping Name="fincas">
+            <EntityTypeMapping TypeName="FincasModel.fincas">
+              <MappingFragment StoreEntitySet="fincas">
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registro_corte">
+            <EntityTypeMapping TypeName="FincasModel.registro_corte">
+              <MappingFragment StoreEntitySet="registro_corte">
+                <ScalarProperty Name="cod_corte" ColumnName="cod_corte" />
+                <ScalarProperty Name="cantidad_cortada" ColumnName="cantidad_cortada" />
+                <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registro_sembrado">
+            <EntityTypeMapping TypeName="FincasModel.registro_sembrado">
+              <MappingFragment StoreEntitySet="registro_sembrado">
+                <ScalarProperty Name="cod_sembrado" ColumnName="cod_sembrado" />
+                <ScalarProperty Name="cantidad_sembrado" ColumnName="cantidad_sembrado" />
+                <ScalarProperty Name="unidad_sembrado" ColumnName="unidad_sembrado" />
+                <ScalarProperty Name="cantidad_abono" ColumnName="cantidad_abono" />
+                <ScalarProperty Name="unidad_abono" ColumnName="unidad_abono" />
+                <ScalarProperty Name="cantidad_fertilizante" ColumnName="cantidad_fertilizante" />
+                <ScalarProperty Name="unidad_fertilizante" ColumnName="unidad_fertilizante" />
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

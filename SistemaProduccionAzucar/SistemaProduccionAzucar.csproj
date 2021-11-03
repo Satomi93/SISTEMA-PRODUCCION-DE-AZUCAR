@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -160,6 +162,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\FincasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -168,6 +171,30 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Fincas\Fincas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fincas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fincas\fincas.cs">
+      <DependentUpon>Fincas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fincas\Fincas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fincas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fincas\Fincas1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fincas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fincas\registro_corte.cs">
+      <DependentUpon>Fincas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fincas\registro_sembrado.cs">
+      <DependentUpon>Fincas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Login\Usuarios.Context.cs">
       <AutoGen>True</AutoGen>
@@ -215,8 +242,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
     <Compile Include="Models\TableViewModels\HistorialInventarioFinca.cs" />
     <Compile Include="Models\TableViewModels\MateriaPrima.cs" />
+    <Compile Include="Models\TableViewModels\RegistroCorte.cs" />
+    <Compile Include="Models\TableViewModels\RegistroSembrado.cs" />
     <Compile Include="Models\TableViewModels\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -229,6 +259,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Fincas\Fincas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Fincas.edmx</DependentUpon>
+      <LastGenOutput>Fincas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Fincas\Fincas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Fincas.edmx</DependentUpon>
+      <LastGenOutput>Fincas1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\dist\css\adminlte.css.map" />
@@ -281,6 +321,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
       <LastGenOutput>MateriaPrima.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\Fincas\Fincas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Fincas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Fincas\Fincas.edmx.diagram">
+      <DependentUpon>Fincas.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\dist\css\adminlte.css" />
@@ -2285,6 +2332,7 @@
     <Content Include="Content\plugins\toastr\toastr.js.map" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\MateriaPrima\Index.cshtml" />
+    <Content Include="Views\Fincas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

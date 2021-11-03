@@ -78,7 +78,11 @@
                             else if (user.tipo_usuario == "Administrador finca")
                             {
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link ">
+                                    <a href="@Url.Action("Index", "Fincas")" class="nav-link
+                                    @((Url.RequestContext.HttpContext.Request.Path == "/Fincas/index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/Fincas/Index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/Fincas/")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/Fincas") ? "active" : "")">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Fincas</p>
                                     </a>
