@@ -17,12 +17,13 @@ namespace SistemaProduccionAzucar.Models.Fincas
         public int cod_sembrado { get; set; }
         public Nullable<decimal> cantidad_sembrado { get; set; }
         public string unidad_sembrado { get; set; }
-        public Nullable<decimal> cantidad_abono { get; set; }
-        public string unidad_abono { get; set; }
+        public Nullable<int> cod_brote { get; set; }
         public Nullable<decimal> cantidad_fertilizante { get; set; }
         public string unidad_fertilizante { get; set; }
+        public Nullable<int> cod_fertilizante { get; set; }
         public Nullable<int> cod_finca { get; set; }
         public System.DateTime fecha_registro { get; set; }
+        public string usuario_creacion { get; set; }
     
         public virtual fincas fincas { get; set; }
     }

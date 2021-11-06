@@ -23,16 +23,11 @@ namespace SistemaProduccionAzucar.Controllers
                 tablaFincas = datos.fincas.ToList(),
                 tabla_registro_sembrado = datos.registro_sembrado.ToList(),
                 tabla_registro_corte = datos.registro_corte.ToList(),
-                //tabla_inventario_finca = datos.inventario_finca.ToList()
             };
             return View(tables);
         }
 
         public static int fincaSeleccionada = 0;
-        //public static void seleccionarFinca(int codigo)
-        //{
-        //    fincaSeleccionada = codigo;
-        //}
         public ActionResult Sembrado(int codFinca)
         {
             fincaSeleccionada = codFinca;
@@ -51,8 +46,6 @@ namespace SistemaProduccionAzucar.Controllers
                                                            cod_sembrado = m.cod_sembrado,
                                                            cantidad_sembrado = m.cantidad_sembrado,
                                                            unidad_sembrado = m.unidad_sembrado,
-                                                           cantidad_abono = m.cantidad_abono,
-                                                           unidad_abono = m.unidad_abono,
                                                            cantidad_fertilizante = m.cantidad_fertilizante,
                                                            unidad_fertilizante = m.unidad_fertilizante,
                                                            fecha_registro = m.fecha_registro
@@ -134,30 +127,48 @@ namespace SistemaProduccionAzucar.Controllers
             }
         }
 
-        public ActionResult AgregarSembrado(decimal cantidadSembrada, decimal cantidadAbono, decimal cantidadFertilizante)
+        public ActionResult AgregarSembrado(decimal cantidadSembrada, decimal cantidadFertilizante)
         {
-
+            var usuario = (usuarios)Session["UserData"];
             using (var db = new MateriaPrimaEntities())
             {
 
-                var listAbono = from d in db.inventario_finca
-                           where d.nombre == "abono"
-                           select d.cantidad;
+                //var listAbono = from d in db.inventario_finca
+                //           where d.nombre == "abono" && d.cod_finca == fincaSeleccionada
+                //           select d.cantidad;
 
                 var listFertilizante = from d in db.inventario_finca
-                                where d.nombre == "fertilizante"
+                                where d.tipo_materia == "fertilizante" && d.cod_finca == fincaSeleccionada
                                 select d.cantidad;
 
+                var listBrote = from d in db.inventario_finca
+                                       where d.tipo_materia == "semilla" && d.cod_finca == fincaSeleccionada
+                                       select d.cantidad;
 
-                if (cantidadAbono > listAbono.FirstOrDefault())
+                var codBrote = from d in db.inventario_finca
+                               where d.tipo_materia == "semilla" && d.cod_finca == fincaSeleccionada
+                           select d.cod_materia_prima;
+
+                //var codAbono = from d in db.inventario_finca
+                //                where d.nombre == "abono" && d.cod_finca == fincaSeleccionada
+                //           select d.cod_materia_prima;
+
+                var codFertilizante = from d in db.inventario_finca
+                                       where d.tipo_materia == "fertilizante" && d.cod_finca == fincaSeleccionada
+                                select d.cod_materia_prima;
+
+
+
+
+                 if (cantidadSembrada > listBrote.FirstOrDefault() || listBrote.FirstOrDefault()  == null)
                 {
                     return Json(new
                     {
                         response = 0,
-                        message = "No hay suficiente abono en inventario."
+                        message = "No hay suficientes brotes de caña en inventario."
                     });
                 }
-                else if (cantidadFertilizante > listFertilizante.FirstOrDefault())
+                else if (cantidadFertilizante > listFertilizante.FirstOrDefault() || listFertilizante.FirstOrDefault() == null)
                 {
                     return Json(new
                     {
@@ -175,15 +186,17 @@ namespace SistemaProduccionAzucar.Controllers
                         SistemaProduccionAzucar.Models.Fincas.registro_sembrado sembrado = new SistemaProduccionAzucar.Models.Fincas.registro_sembrado();
                         sembrado.cantidad_sembrado = cantidadSembrada;
                         sembrado.unidad_sembrado = "kg";
-                        sembrado.cantidad_abono = cantidadAbono;
-                        sembrado.unidad_abono = "kg";
+                        sembrado.cod_brote = codBrote.FirstOrDefault();
                         sembrado.cantidad_fertilizante = cantidadFertilizante;
                         sembrado.unidad_fertilizante = "kg";
+                        sembrado.cod_fertilizante = codFertilizante.FirstOrDefault();
                         sembrado.cod_finca = fincaSeleccionada;
                         sembrado.fecha_registro = DateTime.Now;
+                        sembrado.usuario_creacion = usuario.username;
 
                         ba.registro_sembrado.Add(sembrado);
                         ba.SaveChanges();
+
 
                         return Json(new
                         {

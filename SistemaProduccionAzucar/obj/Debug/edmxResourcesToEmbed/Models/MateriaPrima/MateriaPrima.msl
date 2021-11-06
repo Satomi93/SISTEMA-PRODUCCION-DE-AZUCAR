@@ -37,6 +37,7 @@
     <EntitySetMapping Name="inventario_finca">
       <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
         <MappingFragment StoreEntitySet="inventario_finca">
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
           <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
           <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />

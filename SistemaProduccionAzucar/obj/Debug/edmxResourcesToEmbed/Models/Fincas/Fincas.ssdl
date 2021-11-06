@@ -28,12 +28,13 @@
     <Property Name="cod_sembrado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="cantidad_sembrado" Type="decimal" Precision="8" Scale="2" />
     <Property Name="unidad_sembrado" Type="varchar" MaxLength="10" />
-    <Property Name="cantidad_abono" Type="decimal" Precision="8" Scale="2" />
-    <Property Name="unidad_abono" Type="varchar" MaxLength="3" />
+    <Property Name="cod_brote" Type="int" />
     <Property Name="cantidad_fertilizante" Type="decimal" Precision="8" Scale="2" />
     <Property Name="unidad_fertilizante" Type="varchar" MaxLength="3" />
+    <Property Name="cod_fertilizante" Type="int" />
     <Property Name="cod_finca" Type="int" />
     <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+    <Property Name="usuario_creacion" Type="varchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_cod_finca_corte">
     <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />

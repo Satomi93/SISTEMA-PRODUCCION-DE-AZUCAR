@@ -118,10 +118,8 @@
                                     <th class="col-1"> Codigo</th>
                                     <th class="col-3"> Cantidad Sembrada</th>
                                     <th class="col-1"> unidad</th>
-                                    <th class="col-3">Cantidad abono</th>
-                                    <th class="col-1"> unidad </th>
                                     <th class="col-3"> Cantidad fertilizante </th>
-                                    <th class="col13"> unidad</th>
+                                    <th class="col-1"> unidad</th>
                                     <th class="col-3"> Fecha</th>
                                 </tr>
                             </thead>
@@ -152,10 +150,6 @@
                         <div class="form-group">
                             <label for="cantidadSembrada">Cant. sembrada:</label>
                             <input type="number" class="form-control" name="cantidadSembrada" id="cantidadSembrada" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidadAbono">Cant. abono:</label>
-                            <input type="number" class="form-control" name="cantidadAbono" id="cantidadAbono" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="cantidadFertilizante">Cant. fertilizante:</label>
@@ -293,8 +287,6 @@
                     row += '   <td>' + item.cod_sembrado + '</td>';
                     row += '   <td>' + item.cantidad_sembrado + '</td>';
                     row += '   <td>' + item.unidad_sembrado + '</td>';
-                    row += '   <td>' + item.cantidad_abono + '</td>';
-                    row += '   <td>' + item.unidad_abono + '</td>';
                     row += '   <td>' + item.cantidad_fertilizante + '</td>';
                     row += '   <td>' + item.unidad_fertilizante + '</td>';
                     row += '   <td>' + item.fecha_registroStr + '</td>';
@@ -395,9 +387,6 @@
                 cantidadSembrada: {
                     required: true
                 },
-                cantidadAbono: {
-                    required: true
-                },
                 cantidadFertilizante: {
                     required: true
                 },
@@ -405,9 +394,6 @@
             messages: {
                 cantidadSembrada: {
                     required: "Ingrese cantidad"
-                },
-                cantidadAbono: {
-                    required: "Ingrese cantidad."
                 },
                 cantidadFertilizante: {
                     required: "Ingrese cantidad."
@@ -441,7 +427,7 @@
     });
 
     $(document).ready(() => {
-        // VALIDACION DE FORMULARIO AGREGAR SEMBRADO
+        // VALIDACION DE FORMULARIO AGREGAR CORTE
 
         $("#form-agregar-corte").validate({
             rules: {

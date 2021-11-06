@@ -7,9 +7,9 @@
       <Diagram DiagramId="bef4c582db07421e92a4eaff4295062c" Name="Diagram1">
         <EntityTypeShape EntityType="FincasModel.fincas" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FincasModel.registro_corte" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FincasModel.registro_sembrado" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="FincasModel.FK_cod_finca_corte" ManuallyRouted="false" />
-        <AssociationConnector Association="FincasModel.FK_cod_finca_sembrado" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FincasModel.registro_sembrado" Width="1.5" PointX="3" PointY="4.5" />
+        <AssociationConnector Association="FincasModel.FK_cod_finca_sembrado" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

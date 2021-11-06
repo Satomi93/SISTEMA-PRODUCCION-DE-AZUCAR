@@ -33,12 +33,13 @@
           <Property Name="cod_sembrado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cantidad_sembrado" Type="decimal" Precision="8" Scale="2" />
           <Property Name="unidad_sembrado" Type="varchar" MaxLength="10" />
-          <Property Name="cantidad_abono" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="unidad_abono" Type="varchar" MaxLength="3" />
+          <Property Name="cod_brote" Type="int" />
           <Property Name="cantidad_fertilizante" Type="decimal" Precision="8" Scale="2" />
           <Property Name="unidad_fertilizante" Type="varchar" MaxLength="3" />
+          <Property Name="cod_fertilizante" Type="int" />
           <Property Name="cod_finca" Type="int" />
           <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+          <Property Name="usuario_creacion" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_cod_finca_corte">
           <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
@@ -92,7 +93,7 @@
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_creacion" Type="Int32" />
           <NavigationProperty Name="registro_corte" Relationship="Self.FK_cod_finca_corte" FromRole="fincas" ToRole="registro_corte" />
-          <NavigationProperty Name="registro_sembrado" Relationship="Self.FK_cod_finca_sembrado" FromRole="fincas" ToRole="registro_sembrado" />
+          <NavigationProperty Name="registro_sembrado" Relationship="FincasModel.FK_cod_finca_sembrado" FromRole="fincas" ToRole="registro_sembrado" />
         </EntityType>
         <EntityType Name="registro_corte">
           <Key>
@@ -104,21 +105,6 @@
           <Property Name="cod_finca" Type="Int32" />
           <Property Name="fecha_registro" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_corte" FromRole="registro_corte" ToRole="fincas" />
-        </EntityType>
-        <EntityType Name="registro_sembrado">
-          <Key>
-            <PropertyRef Name="cod_sembrado" />
-          </Key>
-          <Property Name="cod_sembrado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cantidad_sembrado" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="unidad_sembrado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="cantidad_abono" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="unidad_abono" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="cantidad_fertilizante" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="unidad_fertilizante" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="cod_finca" Type="Int32" />
-          <Property Name="fecha_registro" Type="DateTime" Precision="3" Nullable="false" />
-          <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_sembrado" FromRole="registro_sembrado" ToRole="fincas" />
         </EntityType>
         <Association Name="FK_cod_finca_corte">
           <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
@@ -132,9 +118,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="FincasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="fincas" EntityType="Self.fincas" />
+          <EntitySet Name="registro_corte" EntityType="Self.registro_corte" />
+          <AssociationSet Name="FK_cod_finca_corte" Association="Self.FK_cod_finca_corte">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_corte" EntitySet="registro_corte" />
+          </AssociationSet>
+          <EntitySet Name="registro_sembrado" EntityType="FincasModel.registro_sembrado" />
+          <AssociationSet Name="FK_cod_finca_sembrado" Association="FincasModel.FK_cod_finca_sembrado">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="registro_sembrado" EntitySet="registro_sembrado" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="registro_sembrado">
+          <Key>
+            <PropertyRef Name="cod_sembrado" />
+          </Key>
+          <Property Name="cod_sembrado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantidad_sembrado" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_sembrado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cod_brote" Type="Int32" />
+          <Property Name="cantidad_fertilizante" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="unidad_fertilizante" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="cod_fertilizante" Type="Int32" />
+          <Property Name="cod_finca" Type="Int32" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario_creacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="fincas" Relationship="FincasModel.FK_cod_finca_sembrado" FromRole="registro_sembrado" ToRole="fincas" />
+        </EntityType>
         <Association Name="FK_cod_finca_sembrado">
-          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
-          <End Role="registro_sembrado" Type="Self.registro_sembrado" Multiplicity="*" />
+          <End Type="FincasModel.fincas" Role="fincas" Multiplicity="0..1" />
+          <End Type="FincasModel.registro_sembrado" Role="registro_sembrado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="fincas">
               <PropertyRef Name="cod_finca" />
@@ -144,19 +159,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FincasEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="fincas" EntityType="Self.fincas" />
-          <EntitySet Name="registro_corte" EntityType="Self.registro_corte" />
-          <EntitySet Name="registro_sembrado" EntityType="Self.registro_sembrado" />
-          <AssociationSet Name="FK_cod_finca_corte" Association="Self.FK_cod_finca_corte">
-            <End Role="fincas" EntitySet="fincas" />
-            <End Role="registro_corte" EntitySet="registro_corte" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cod_finca_sembrado" Association="Self.FK_cod_finca_sembrado">
-            <End Role="fincas" EntitySet="fincas" />
-            <End Role="registro_sembrado" EntitySet="registro_sembrado" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -189,15 +191,16 @@
           <EntitySetMapping Name="registro_sembrado">
             <EntityTypeMapping TypeName="FincasModel.registro_sembrado">
               <MappingFragment StoreEntitySet="registro_sembrado">
-                <ScalarProperty Name="cod_sembrado" ColumnName="cod_sembrado" />
-                <ScalarProperty Name="cantidad_sembrado" ColumnName="cantidad_sembrado" />
-                <ScalarProperty Name="unidad_sembrado" ColumnName="unidad_sembrado" />
-                <ScalarProperty Name="cantidad_abono" ColumnName="cantidad_abono" />
-                <ScalarProperty Name="unidad_abono" ColumnName="unidad_abono" />
-                <ScalarProperty Name="cantidad_fertilizante" ColumnName="cantidad_fertilizante" />
-                <ScalarProperty Name="unidad_fertilizante" ColumnName="unidad_fertilizante" />
-                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
                 <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="cod_fertilizante" ColumnName="cod_fertilizante" />
+                <ScalarProperty Name="unidad_fertilizante" ColumnName="unidad_fertilizante" />
+                <ScalarProperty Name="cantidad_fertilizante" ColumnName="cantidad_fertilizante" />
+                <ScalarProperty Name="cod_brote" ColumnName="cod_brote" />
+                <ScalarProperty Name="unidad_sembrado" ColumnName="unidad_sembrado" />
+                <ScalarProperty Name="cantidad_sembrado" ColumnName="cantidad_sembrado" />
+                <ScalarProperty Name="cod_sembrado" ColumnName="cod_sembrado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_a7ace3_sistemaazucarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_a7ace3_sistemaazucarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cat_motivo_trans_inv_finca">
           <Key>
             <PropertyRef Name="cod_cat" />
@@ -44,6 +44,7 @@
           <Property Name="nombre" Type="varchar" MaxLength="50" />
           <Property Name="cantidad" Type="decimal" Precision="8" Scale="2" />
           <Property Name="unidad" Type="varchar" MaxLength="10" />
+          <Property Name="tipo_materia" Type="varchar" MaxLength="25" />
         </EntityType>
         <Association Name="FK_cod_finca_inventario">
           <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
@@ -83,8 +84,7 @@
             <End Role="historial_inventario_finca" EntitySet="historial_inventario_finca" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MateriaPrimaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -131,6 +131,7 @@
           <Property Name="cantidad" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_inventario" FromRole="inventario_finca" ToRole="fincas" />
+          <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_his_inv_finca">
           <End Role="cat_motivo_trans_inv_finca" Type="Self.cat_motivo_trans_inv_finca" Multiplicity="1" />
@@ -212,6 +213,7 @@
           <EntitySetMapping Name="inventario_finca">
             <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
               <MappingFragment StoreEntitySet="inventario_finca">
+                <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
                 <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
                 <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
