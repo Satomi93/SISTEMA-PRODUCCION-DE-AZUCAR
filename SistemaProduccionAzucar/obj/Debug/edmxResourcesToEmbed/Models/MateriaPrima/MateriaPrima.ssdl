@@ -55,13 +55,13 @@
   </Association>
   <Association Name="FK_his_inv_finca">
     <End Role="cat_motivo_trans_inv_finca" Type="Self.cat_motivo_trans_inv_finca" Multiplicity="1" />
-    <End Role="historial_inventario_finca" Type="Self.historial_inventario_finca" Multiplicity="0..1" />
+    <End Role="historial_inventario_finca" Type="Self.historial_inventario_finca" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="cat_motivo_trans_inv_finca">
         <PropertyRef Name="cod_cat" />
       </Principal>
       <Dependent Role="historial_inventario_finca">
-        <PropertyRef Name="correlativo" />
+        <PropertyRef Name="cod_cat" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

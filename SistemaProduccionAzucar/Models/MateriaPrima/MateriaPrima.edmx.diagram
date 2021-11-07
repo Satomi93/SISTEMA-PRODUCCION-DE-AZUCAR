@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="eb1ebf17723f4e599a04cf6040cde252" Name="Diagram1">
-        <EntityTypeShape EntityType="MateriaPrimaModel.cat_motivo_trans_inv_finca" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MateriaPrimaModel.fincas" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MateriaPrimaModel.historial_inventario_finca" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MateriaPrimaModel.inventario_finca" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="MateriaPrimaModel.FK_his_inv_finca" ManuallyRouted="false" />
-        <AssociationConnector Association="MateriaPrimaModel.FK_cod_finca_inventario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MateriaPrimaModel.cat_motivo_trans_inv_finca" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="MateriaPrimaModel.fincas" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="MateriaPrimaModel.historial_inventario_finca" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="MateriaPrimaModel.inventario_finca" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="MateriaPrimaModel.FK_his_inv_finca" />
+        <AssociationConnector Association="MateriaPrimaModel.FK_cod_finca_inventario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

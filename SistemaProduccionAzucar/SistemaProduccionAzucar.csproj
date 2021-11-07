@@ -243,11 +243,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
     <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
     <Compile Include="Models\TableViewModels\HistorialInventarioFinca.cs" />
     <Compile Include="Models\TableViewModels\MateriaPrima.cs" />
     <Compile Include="Models\TableViewModels\RegistroCorte.cs" />
     <Compile Include="Models\TableViewModels\RegistroSembrado.cs" />
+=======
+    <Compile Include="Models\TableViewModels\Finca.cs" />
+    <Compile Include="Models\TableViewModels\HistorialInventarioFinca.cs" />
+    <Compile Include="Models\TableViewModels\MateriaPrima.cs" />
+    <Compile Include="Models\TableViewModels\Motivos.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Models\TableViewModels\User.cs" />
     <Compile Include="Models\TableViewModels\Vehiculos.cs" />
     <Compile Include="Models\Vehiculos\Vehiculos.Context.cs">

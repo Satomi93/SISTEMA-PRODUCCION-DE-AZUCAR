@@ -14,9 +14,16 @@ namespace SistemaProduccionAzucar.Models.MateriaPrima
     
     public partial class cat_motivo_trans_inv_finca
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public cat_motivo_trans_inv_finca()
+        {
+            this.historial_inventario_finca = new HashSet<historial_inventario_finca>();
+        }
+    
         public int cod_cat { get; set; }
         public string motivo { get; set; }
     
-        public virtual historial_inventario_finca historial_inventario_finca { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<historial_inventario_finca> historial_inventario_finca { get; set; }
     }
 }

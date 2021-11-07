@@ -21,4 +21,8 @@ a.active {
     background-color: #76ab3d !important;
 }
 
+.z-index-modal-overlap {
+    z-index: 2050;
+    background-color: rgba(0, 0, 0, .5);
+}
 

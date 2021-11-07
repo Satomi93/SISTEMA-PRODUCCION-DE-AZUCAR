@@ -60,13 +60,13 @@
         </Association>
         <Association Name="FK_his_inv_finca">
           <End Role="cat_motivo_trans_inv_finca" Type="Self.cat_motivo_trans_inv_finca" Multiplicity="1" />
-          <End Role="historial_inventario_finca" Type="Self.historial_inventario_finca" Multiplicity="0..1" />
+          <End Role="historial_inventario_finca" Type="Self.historial_inventario_finca" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cat_motivo_trans_inv_finca">
               <PropertyRef Name="cod_cat" />
             </Principal>
             <Dependent Role="historial_inventario_finca">
-              <PropertyRef Name="correlativo" />
+              <PropertyRef Name="cod_cat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -88,13 +88,27 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MateriaPrimaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MateriaPrimaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cat_motivo_trans_inv_finca" EntityType="MateriaPrimaModel.cat_motivo_trans_inv_finca" />
+          <EntitySet Name="fincas" EntityType="MateriaPrimaModel.fincas" />
+          <EntitySet Name="historial_inventario_finca" EntityType="MateriaPrimaModel.historial_inventario_finca" />
+          <EntitySet Name="inventario_finca" EntityType="MateriaPrimaModel.inventario_finca" />
+          <AssociationSet Name="FK_his_inv_finca" Association="MateriaPrimaModel.FK_his_inv_finca">
+            <End Role="cat_motivo_trans_inv_finca" EntitySet="cat_motivo_trans_inv_finca" />
+            <End Role="historial_inventario_finca" EntitySet="historial_inventario_finca" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cod_finca_inventario" Association="MateriaPrimaModel.FK_cod_finca_inventario">
+            <End Role="fincas" EntitySet="fincas" />
+            <End Role="inventario_finca" EntitySet="inventario_finca" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="cat_motivo_trans_inv_finca">
           <Key>
             <PropertyRef Name="cod_cat" />
           </Key>
           <Property Name="cod_cat" Type="Int32" Nullable="false" />
-          <Property Name="motivo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="historial_inventario_finca" Relationship="Self.FK_his_inv_finca" FromRole="cat_motivo_trans_inv_finca" ToRole="historial_inventario_finca" />
+          <Property Name="motivo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="historial_inventario_finca" Relationship="MateriaPrimaModel.FK_his_inv_finca" FromRole="cat_motivo_trans_inv_finca" ToRole="historial_inventario_finca" />
         </EntityType>
         <EntityType Name="fincas">
           <Key>
@@ -106,7 +120,7 @@
           <Property Name="area_metros_cuadrados" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_creacion" Type="Int32" />
-          <NavigationProperty Name="inventario_finca" Relationship="Self.FK_cod_finca_inventario" FromRole="fincas" ToRole="inventario_finca" />
+          <NavigationProperty Name="inventario_finca" Relationship="MateriaPrimaModel.FK_cod_finca_inventario" FromRole="fincas" ToRole="inventario_finca" />
         </EntityType>
         <EntityType Name="historial_inventario_finca">
           <Key>
@@ -114,12 +128,12 @@
           </Key>
           <Property Name="correlativo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="cod_materia_prima" Type="Int32" Nullable="false" />
-          <Property Name="cantidad" Type="Decimal" Precision="30" Scale="8" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="30" Scale="8" />
           <Property Name="cod_cat" Type="Int32" Nullable="false" />
           <Property Name="comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario_creacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="cat_motivo_trans_inv_finca" Relationship="Self.FK_his_inv_finca" FromRole="historial_inventario_finca" ToRole="cat_motivo_trans_inv_finca" />
+          <Property Name="usuario_creacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cat_motivo_trans_inv_finca" Relationship="MateriaPrimaModel.FK_his_inv_finca" FromRole="historial_inventario_finca" ToRole="cat_motivo_trans_inv_finca" />
         </EntityType>
         <EntityType Name="inventario_finca">
           <Key>
@@ -130,24 +144,29 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cantidad" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+<<<<<<< Updated upstream
           <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_inventario" FromRole="inventario_finca" ToRole="fincas" />
           <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+=======
+          <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="fincas" Relationship="MateriaPrimaModel.FK_cod_finca_inventario" FromRole="inventario_finca" ToRole="fincas" />
+>>>>>>> Stashed changes
         </EntityType>
         <Association Name="FK_his_inv_finca">
-          <End Role="cat_motivo_trans_inv_finca" Type="Self.cat_motivo_trans_inv_finca" Multiplicity="1" />
-          <End Role="historial_inventario_finca" Type="Self.historial_inventario_finca" Multiplicity="0..1" />
+          <End Type="MateriaPrimaModel.cat_motivo_trans_inv_finca" Role="cat_motivo_trans_inv_finca" Multiplicity="1" />
+          <End Type="MateriaPrimaModel.historial_inventario_finca" Role="historial_inventario_finca" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cat_motivo_trans_inv_finca">
               <PropertyRef Name="cod_cat" />
             </Principal>
             <Dependent Role="historial_inventario_finca">
-              <PropertyRef Name="correlativo" />
+              <PropertyRef Name="cod_cat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_cod_finca_inventario">
-          <End Role="fincas" Type="Self.fincas" Multiplicity="0..1" />
-          <End Role="inventario_finca" Type="Self.inventario_finca" Multiplicity="*" />
+          <End Type="MateriaPrimaModel.fincas" Role="fincas" Multiplicity="0..1" />
+          <End Type="MateriaPrimaModel.inventario_finca" Role="inventario_finca" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="fincas">
               <PropertyRef Name="cod_finca" />
@@ -157,20 +176,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MateriaPrimaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="cat_motivo_trans_inv_finca" EntityType="Self.cat_motivo_trans_inv_finca" />
-          <EntitySet Name="fincas" EntityType="Self.fincas" />
-          <EntitySet Name="historial_inventario_finca" EntityType="Self.historial_inventario_finca" />
-          <EntitySet Name="inventario_finca" EntityType="Self.inventario_finca" />
-          <AssociationSet Name="FK_his_inv_finca" Association="Self.FK_his_inv_finca">
-            <End Role="cat_motivo_trans_inv_finca" EntitySet="cat_motivo_trans_inv_finca" />
-            <End Role="historial_inventario_finca" EntitySet="historial_inventario_finca" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cod_finca_inventario" Association="Self.FK_cod_finca_inventario">
-            <End Role="fincas" EntitySet="fincas" />
-            <End Role="inventario_finca" EntitySet="inventario_finca" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -180,33 +185,33 @@
           <EntitySetMapping Name="cat_motivo_trans_inv_finca">
             <EntityTypeMapping TypeName="MateriaPrimaModel.cat_motivo_trans_inv_finca">
               <MappingFragment StoreEntitySet="cat_motivo_trans_inv_finca">
-                <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
                 <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="fincas">
             <EntityTypeMapping TypeName="MateriaPrimaModel.fincas">
               <MappingFragment StoreEntitySet="fincas">
-                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
-                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
                 <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="historial_inventario_finca">
             <EntityTypeMapping TypeName="MateriaPrimaModel.historial_inventario_finca">
               <MappingFragment StoreEntitySet="historial_inventario_finca">
-                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
-                <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
-                <ScalarProperty Name="comentario" ColumnName="comentario" />
-                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
                 <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -214,11 +219,18 @@
             <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
               <MappingFragment StoreEntitySet="inventario_finca">
                 <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+<<<<<<< Updated upstream
                 <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
                 <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+=======
+>>>>>>> Stashed changes
                 <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+                <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

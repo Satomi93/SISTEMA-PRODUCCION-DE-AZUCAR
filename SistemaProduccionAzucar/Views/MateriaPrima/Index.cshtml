@@ -68,50 +68,45 @@
     <div class="card-footer"></div>
 </div>
 <!-- /.card -->
-<!-- Modal Create User 
-<div class="modal fade" id="modal-create-user" tabindex="-1" aria-labelledby="modal-create-user" aria-hidden="true">
+
+<!-- Modal Create Materia Prima -->
+<div class="modal fade" id="modal-create-m-prima" tabindex="-1" aria-labelledby="modal-create-m-prima" aria-hidden="true">
     <div class="modal-dialog">
         <form id="form-create" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-create-user">Agregar usuario</h5>
+                <h5 class="modal-title" id="modal-create-user">Agregar materia prima</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="nombres">Nombres:</label>
-                    <input type="text" class="form-control" name="nombres" id="nombres" placeholder="">
+                    <label for="nombre">Nombre materia prima:</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="">
                 </div>
                 <div class="form-group">
-                    <label for="apellidos">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="username">Nombre de usuario:</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="correo">Correo:</label>
-                    <input type="text" class="form-control" name="correo" id="correo" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="clave">Clave:</label>
-                    <input type="text" class="form-control" name="clave" id="clave" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="tipoUsuario">Tipo de usuario:</label>
-                    <select class="form-control" name="tipoUsuario" id="tipoUsuario">
-                        <option value="">Seleccione tipo de usuario</option>
-                        <option value="Administrador">Administrador</option>
-                        <option value="Administrador finca">Administrador finca</option>
-                        <option value="Encargado transporte caña">Encargado transporte caña</option>
-                        <option value="Jefe de área">Jefe de área</option>
-                        <option value="Encargado de central">Encargado de central</option>
+                    <label for="finca">Finca:</label>
+                    <select class="form-control" name="finca" id="finca">
+                        <option value="">Seleccione finca</option>
                     </select>
                 </div>
-
-                <div id="msj-info" class="alert alert-info d-none" role="alert"></div>
+                <div class="form-group">
+                    <label for="tipo">Tipo materia prima:</label>
+                    <select class="form-control" name="tipo" id="tipo">
+                        <option value="">Seleccione materia prima</option>
+                        <option value="semilla">Semilla</option>
+                        <option value="fertilizante">Fertilizante</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="u-medida">Unidad de medida:</label>
+                    <input type="text" class="form-control" name="u-medida" id="u-medida" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad inicial:</label>
+                    <input type="text" class="form-control" name="cantidad" id="cantidad" placeholder="">
+                </div>
+                <div id="msj-info" class="alert alert-danger d-none" role="alert"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -119,9 +114,9 @@
             </div>
         </form>
     </div>
-</div>-->
+</div>
 
-<!-- Modal Details -->
+<!-- Modal History -->
 <div class="modal fade" id="modal-history" tabindex="-1" aria-labelledby="modal-history" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -133,6 +128,10 @@
             </div>
             <div class="modal-body">
                 <div id="table-history" class="table-responsive mailbox-messages">
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" data-toggle="modal" data-target="#modal-create-history">
+                        <i class="fa fa-plus"></i>
+                        Agregar cantidad
+                    </button>
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -156,18 +155,208 @@
     </div>
 </div>
 
+<!-- Modal Create History -->
+<div class="modal fade" id="modal-create-history" tabindex="-1" aria-labelledby="modal-create-history" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-history" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-create-user">Agregar cantidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="codMateriaPrima" id="codMateriaPrima">
+                <div class="form-group">
+                    <label for="hCantidad">Cantidad:</label>
+                    <input type="text" class="form-control" name="hCantidad" id="hCantidad" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="hMotivo">Motivo:</label>
+                    <select class="form-control" name="hMotivo" id="hMotivo">
+                        <option value="">Seleccione motivo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hComentario">Comentario:</label>
+                    <textarea class="form-control" name="hComentario" id="hComentario"></textarea>
+                </div>
+                <div id="msj-info-h" class="alert alert-danger d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section Scripts {
 <script type="text/javascript">
+    $(document).ready(() => {
+        // VALIDACION DE FORMULARIOS
+        // MATERIA PRIMA
+        let formCreate = $("#form-create").validate({
+            rules: {
+                nombre: {
+                    required: true
+                },
+                finca: {
+                    required: true
+                },
+                'u-medida': {
+                    required: true
+                },
+                cantidad: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese nombre de materia prima."
+                },
+                finca: {
+                    required: "Seleccione finca."
+                },
+                'u-medida': {
+                    required: "Ingrese unidad de medida."
+                },
+                cantidad: {
+                    required: "Ingrese una cantidad inicial.",
+                    number: "Número decimal no válido."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        // HISTORIAL (TRANSACCION)
+        // VALIDACION DE FORMULARIO
+        let formHistory = $("#form-history").validate({
+            rules: {
+                hCantidad: {
+                    required: true,
+                    number: true
+                },
+                hMotivo: {
+                    required: true
+                },
+                hComentario: {
+                    required: true,
+                    maxlength: 200
+                }
+            },
+            messages: {
+                hCantidad: {
+                    required: "Ingrese una cantidad.",
+                    number: "Cantidad no válida."
+                },
+                hMotivo: {
+                    required: "Ingrese motivo de transacción."
+                },
+                hComentario: {
+                    required: "Ingrese comentario.",
+                    maxlength: "Máximo de caracteres permitidos 200."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        // MODAL CREAR HISTORIAL
+        $("#modal-create-history").on("show.bs.modal", () => {
+            $("#modal-create-history").addClass("z-index-modal-overlap");
+        });
+
+        $("#modal-create-history").on("hidden.bs.modal", () => {
+            $("#modal-create-history").removeClass("z-index-modal-overlap");
+            formHistory.resetForm();
+        });
+
+        // MODAL CREAR MATERIA PRIMA
+        $("#modal-create-m-prima").on("hidden.bs.modal", () => {
+            formCreate.resetForm();
+        });
+
+        // CREACION DE MATERIA PRIMA
+        $('#form-create').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-create').valid()) {
+                $('#msj-info').addClass('d-none');
+                let values = $('#form-create').serialize();
+
+                $.post('@Url.Content("~/MateriaPrima/Create")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+
+        // CREACION DE HISTORIAL (TRANSACCION)
+        $('#form-history').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-history').valid()) {
+                $('#msj-info-h').addClass('d-none');
+                let values = $('#form-history').serialize();
+
+                $.post('@Url.Content("~/MateriaPrima/CreateHistory")', values, (data) => {
+                    if (data.response == 1) {
+                        details($("#codMateriaPrima").val());
+                        $('#modal-create-history').modal('toggle');
+                    } else if (data.response == 0) {
+                        $('#msj-info-h').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+
+        // LISTAR FINCAS
+        $.post('@Url.Content("~/MateriaPrima/ListaFincas")', {}, (data) => {
+            if (data.response == 1) {
+                $.each(data.data, function (i, item) {
+                    $("#finca").append('<option value="' + item.codFinca + '">' + item.nombre + '</option>');
+                });
+            } else if (data.response == 0) {
+                $('#msj-info').text(data.message).removeClass('d-none');
+            }
+        });
+
+        // LISTAR MOTIVOS
+        $.post('@Url.Content("~/MateriaPrima/ListaMotivos")', {}, (data) => {
+            if (data.response == 1) {
+                $.each(data.data, function (i, item) {
+                    $("#hMotivo").append('<option value="' + item.codCat + '">' + item.motivo + '</option>');
+                });
+            } else if (data.response == 0) {
+                $('#msj-info').text(data.message).removeClass('d-none');
+            }
+        });
+    });
+
     // VER HISTORIAL EN MODAL
     function details(id) {
+        $('#table-history > table > tbody').html('');
+
         $.post('@Url.Content("~/MateriaPrima/History")', 
         {
             codMateriaPrima: id
         }, 
         (data) => {
             if (data.response == 1) {
-                $('#table-history > table > tbody').html('');
-
                 $.each(data.data, function (i, item) {
                     let row = '<tr>';
                     row += '   <td>' + item.correlativo + '</td>';
@@ -180,6 +369,8 @@
 
                     $("#table-history > table > tbody").append(row);
                 });
+
+                $("#codMateriaPrima").val(id);
             }
         });
     }

@@ -4,33 +4,33 @@
     <EntitySetMapping Name="cat_motivo_trans_inv_finca">
       <EntityTypeMapping TypeName="MateriaPrimaModel.cat_motivo_trans_inv_finca">
         <MappingFragment StoreEntitySet="cat_motivo_trans_inv_finca">
-          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
           <ScalarProperty Name="motivo" ColumnName="motivo" />
+          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="fincas">
       <EntityTypeMapping TypeName="MateriaPrimaModel.fincas">
         <MappingFragment StoreEntitySet="fincas">
-          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="direccion" ColumnName="direccion" />
-          <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
-          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
           <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="area_metros_cuadrados" ColumnName="area_metros_cuadrados" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="historial_inventario_finca">
       <EntityTypeMapping TypeName="MateriaPrimaModel.historial_inventario_finca">
         <MappingFragment StoreEntitySet="historial_inventario_finca">
-          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
-          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
-          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
-          <ScalarProperty Name="comentario" ColumnName="comentario" />
-          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
           <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -38,11 +38,18 @@
       <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
         <MappingFragment StoreEntitySet="inventario_finca">
           <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+<<<<<<< Updated upstream
           <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
           <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+=======
+>>>>>>> Stashed changes
           <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
