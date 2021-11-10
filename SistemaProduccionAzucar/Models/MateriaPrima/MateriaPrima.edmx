@@ -144,13 +144,8 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cantidad" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-<<<<<<< Updated upstream
-          <NavigationProperty Name="fincas" Relationship="Self.FK_cod_finca_inventario" FromRole="inventario_finca" ToRole="fincas" />
-          <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-=======
           <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fincas" Relationship="MateriaPrimaModel.FK_cod_finca_inventario" FromRole="inventario_finca" ToRole="fincas" />
->>>>>>> Stashed changes
         </EntityType>
         <Association Name="FK_his_inv_finca">
           <End Type="MateriaPrimaModel.cat_motivo_trans_inv_finca" Role="cat_motivo_trans_inv_finca" Multiplicity="1" />
@@ -176,7 +171,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -219,13 +214,6 @@
             <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
               <MappingFragment StoreEntitySet="inventario_finca">
                 <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
-<<<<<<< Updated upstream
-                <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
-                <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-=======
->>>>>>> Stashed changes
                 <ScalarProperty Name="unidad" ColumnName="unidad" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

@@ -7,7 +7,7 @@
     <div class="card-header">
         <div class="card-tools">
             <div class="input-group input-group-sm">
-                <input type="text" class="form-control" placeholder="Search Mail">
+                <input type="text" class="form-control" placeholder="Search" id="inp-search">
                 <div class="input-group-append">
                     <div class="btn btn-primary">
                         <i class="fas fa-search"></i>
@@ -32,7 +32,7 @@
             </button>
         </div>
         <div class="table-responsive mailbox-messages">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped" id="table-users">
                 <thead>
                     <tr>
                         <th>N°</th>
@@ -126,8 +126,14 @@
                 <div id="msj-info" class="alert alert-info d-none" role="alert"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
             </div>
         </form>
     </div>
@@ -147,7 +153,10 @@
         <div id="details-list"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+              <i class="fas fa-times-circle"></i>
+              Cerrar
+          </button>
       </div>
     </div>
   </div>
@@ -157,7 +166,7 @@
 <script type="text/javascript">
     $(document).ready(() => {
         // VALIDACION DE FORMULARIO
-        $("#form-create").validate({
+        let formCreate = $("#form-create").validate({
             rules: {
                 nombres: {
                     required: true
@@ -222,6 +231,44 @@
                         $('#msj-info').text(data.message).removeClass('d-none');
                     }
                 });
+            }
+        });
+
+        // MODALES
+        $("#modal-create-user").on("hidden.bs.modal", () => {
+            formCreate.resetForm();
+        });
+
+        /* REFLOW Y DATATABLE */
+        /* TABLA USUARIOS */
+        $('#table-users').reflowTable();
+        let tableSearch = $("#table-users").DataTable({
+            ordering: false,
+            info: false,
+            searching: true,
+            lengthChange: false,
+            language: {
+                oPaginate: {
+                    sNext: '<i class="fas fa-chevron-right"></i>',
+                    sPrevious: '<i class="fas fa-chevron-left"></i>'
+                }
+            },
+            drawCallback: (settings) => {
+                $('#table-users_paginate').addClass('card-footer p-2 d-flex justify-content-end');
+                $('#table-users_paginate > span').css('padding', '.25rem .5rem');
+                $("#table-users_previous").addClass('btn btn-default btn-sm');
+                $("#table-users_next").addClass('btn btn-default btn-sm');
+            }
+        });
+
+        /* BUSQUEDA*/
+        $('#inp-search').keyup(() => {
+            let texto = $('#inp-search').val().toLowerCase();
+
+            if (tableSearch != undefined) {
+                tableSearch
+                    .search(texto)
+                    .draw();
             }
         });
     });

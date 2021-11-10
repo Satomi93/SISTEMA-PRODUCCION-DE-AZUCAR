@@ -7,7 +7,7 @@
     <div class="card-header">
         <div class="card-tools">
             <div class="input-group input-group-sm">
-                <input type="text" class="form-control" placeholder="Search Mail">
+                <input type="text" class="form-control" placeholder="Search" id="inp-search">
                 <div class="input-group-append">
                     <div class="btn btn-primary">
                         <i class="fas fa-search"></i>
@@ -32,7 +32,7 @@
             </button>
         </div>
         <div class="table-responsive mailbox-messages">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped" id="table-materia-prima">
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -109,8 +109,14 @@
                 <div id="msj-info" class="alert alert-danger d-none" role="alert"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
             </div>
         </form>
     </div>
@@ -149,7 +155,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -184,8 +190,14 @@
                 <div id="msj-info-h" class="alert alert-danger d-none" role="alert"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
             </div>
         </form>
     </div>
@@ -345,6 +357,39 @@
                 $('#msj-info').text(data.message).removeClass('d-none');
             }
         });
+
+        /* REFLOW Y DATATABLE */
+        /* TABLA MATERIA PRIMA */
+        $('#table-materia-prima').reflowTable();
+        let tableSearch = $("#table-materia-prima").DataTable({
+            ordering: false,
+            info: false,
+            searching: true,
+            lengthChange: false,
+            language: {
+                oPaginate: {
+                    sNext: '<i class="fas fa-chevron-right"></i>',
+                    sPrevious: '<i class="fas fa-chevron-left"></i>'
+                }
+            },
+            drawCallback: (settings) => {
+                $('#table-materia-prima_paginate').addClass('card-footer p-2 d-flex justify-content-end');
+                $('#table-materia-prima_paginate > span').css('padding', '.25rem .5rem');
+                $("#table-materia-prima_previous").addClass('btn btn-default btn-sm');
+                $("#table-materia-prima_next").addClass('btn btn-default btn-sm');
+            }
+        });
+
+        /* BUSQUEDA*/
+        $('#inp-search').keyup(() => {
+            let texto = $('#inp-search').val().toLowerCase();
+
+            if (tableSearch != undefined) {
+                tableSearch
+                    .search(texto)
+                    .draw();
+            }
+        });
     });
 
     // VER HISTORIAL EN MODAL
@@ -371,6 +416,7 @@
                 });
 
                 $("#codMateriaPrima").val(id);
+                $('#table-history > table').reflowTable();
             }
         });
     }

@@ -40,7 +40,7 @@ namespace SistemaProduccionAzucar.Controllers
                                         url = "/User/";
                                         break;
                                     case "Administrador finca":
-                                        url = "/MateriaPrima/";
+                                        url = "/Fincas/";
                                         break;
                                     case "Encargado transporte caña":
                                         url = "~/User/";

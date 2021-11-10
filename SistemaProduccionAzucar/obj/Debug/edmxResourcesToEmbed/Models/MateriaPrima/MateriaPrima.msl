@@ -38,13 +38,6 @@
       <EntityTypeMapping TypeName="MateriaPrimaModel.inventario_finca">
         <MappingFragment StoreEntitySet="inventario_finca">
           <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
-<<<<<<< Updated upstream
-          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
-          <ScalarProperty Name="cod_finca" ColumnName="cod_finca" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-=======
->>>>>>> Stashed changes
           <ScalarProperty Name="unidad" ColumnName="unidad" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />

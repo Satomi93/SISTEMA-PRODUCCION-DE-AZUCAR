@@ -26,3 +26,6 @@ a.active {
     background-color: rgba(0, 0, 0, .5);
 }
 
+.dataTables_filter {
+    display: none !important;
+}

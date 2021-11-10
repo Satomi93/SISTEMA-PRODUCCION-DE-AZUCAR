@@ -1,336 +1,338 @@
 ﻿@model SistemaProduccionAzucar.Models.TableViewModels.FincasViewModel
-
 @{
     ViewBag.Title = "Administración de Fincas";
 }
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search" id="inp-search">
+                <div class="input-group-append">
+                    <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <!---- BOTON PARA AGREGAR FINCA----->
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#agregarFinca">
+                    <i class="fa fa-plus"></i>
+                    Agregar fincas
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <!-- MOSTRAR TABLAS FINCAS -->
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-fincas">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Área m²</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fincas in Model.tablaFincas)
+                    {
+                        <tr>
+                            <td>@fincas.cod_finca</td>
+                            <td> @fincas.nombre</td>
+                            <td>@fincas.direccion</td>
+                            <td>@fincas.area_metros_cuadrados</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarSembrados(@fincas.cod_finca)" data-toggle="modal" data-target="#registroSembrado">
+                                    <i class="fas fa-seedling"></i>
+                                    Sembrado
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarCortes(@fincas.cod_finca)" data-toggle="modal" data-target="#registroCorte">
+                                    <i class="fas fa-cut"></i>
+                                    Corte
+                                </button>
+                            </td>
+                        </tr>
 
+                    }
+                </tbody>
+            </table>
+            <span id="codigo" hidden></span>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+<!-- /.card -->
 
-<body>
+<!------------------------------------------------------------
+--------------
+VENTANAS DE ADMINISTRACION DE FINCAS
+---------------
+--------------------------------------------------------->
+<!-- AGREGAR FINCAS -->
+<div class="modal fade" id="agregarFinca" tabindex="-1" aria-labelledby="agregarFinca" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-agregar-fincas" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarFinca">Agregar finca</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion" id="direccion" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="area">Área m²:</label>
+                    <input type="number" class="form-control" name="area" id="area" placeholder="">
+                </div>
+                <div id="msj-infoFinca" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
-    <!------------------------------------------------------------
+<div class="modal fade" id="registroSembrado" tabindex="-1" aria-labelledby="registroSembrado" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroSembrado">Registro de siembra</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="tabla-registro-sembrado" class="table-responsive mailbox-messages">
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" data-toggle="modal" data-target="#agregarSembrado">
+                        <i class="fa fa-plus"></i>
+                        Agregar siembra
+                    </button>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-1"> Codigo</th>
+                                <th class="col-3"> Cantidad Sembrada</th>
+                                <th class="col-1"> unidad</th>
+                                <th class="col-3"> Cantidad fertilizante </th>
+                                <th class="col-1"> unidad</th>
+                                <th class="col-3"> Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AGREGAR REGISTROS A SEMBRADO -->
+<div class="modal fade" id="agregarSembrado" tabindex="-1" aria-labelledby="agregarSembrado" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-sembrado" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarSembrado">Agregar siembra</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadSembrada">Cant. sembrada:</label>
+                    <input type="number" class="form-control" name="cantidadSembrada" id="cantidadSembrada" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="cantidadFertilizante">Cant. fertilizante:</label>
+                    <input type="number" class="form-control" name="cantidadFertilizante" id="cantidadFertilizante" placeholder="">
+                </div>
+                <div id="msj-infoSembrado" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!------------------------------------------------------------
     --------------
-    VENTANAS DE ADMINISTRACION DE FINCAS
+    VENTANAS DE ADMINISTRACION DE CORTES
     ---------------
     --------------------------------------------------------->
-    <!---- BOTON PARA AGREGAR FINCA----->
-    <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarFinca">
-            Agregar Fincas
-        </button>
-    </div>
-
-    <!-- AGREGAR FINCAS -->
-    <div class="modal fade" id="agregarFinca" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Agregar Finca</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <br />
-                <div class="modal-body">
-                    <form id="form-agregar-fincas">
-                        <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="direccion">Dirección:</label>
-                            <input type="text" class="form-control" name="direccion" id="direccion" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="area">Área:</label>
-                            <input type="number" class="form-control" name="area" id="area" placeholder="">
-                        </div>
-                        <div id="msj-infoFinca" class="alert alert-info d-none" role="alert"></div>
-                        <div class="row">
-                            <!-- /.col -->
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-block mb-3">Guardar</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+<div class="modal fade" id="registroCorte" tabindex="-1" aria-labelledby="registroCorte" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroCorte">Registro de cortes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
-
-
-    <!-- MOSTRAR TABLAS FINCAS -->
-    <br /><br />
-    <div class="container mb-5 mt-3">
-        <table id="finca" class="table table-striped table-bordered" style="width: 90%">
-            <tr>
-                <th class="col-1">
-                    Cod
-                </th>
-                <th class="col-3">
-                    Nombre
-                </th>
-                <th class="col-3">
-                    Direccion
-                </th>
-                <th class="col-4">
-                    Accion
-                </th>
-            </tr>
-
-            @foreach (var fincas in Model.tablaFincas)
-            {
-                <tr>
-                    <td>@fincas.cod_finca</td>
-                    <td> @fincas.nombre</td>
-                    <td>@fincas.direccion</td>
-                    <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroSembrado" onclick="mostrarSembrados(@fincas.cod_finca)">SEMBRADO</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registroCorte" onclick="mostrarCortes(@fincas.cod_finca)">CORTE</button>
-                    </td>
-                </tr>
-
-            }
-        </table>
-        <span id="codigo" hidden></span>
-
-    </div>
-
-    <div class="modal fade" id="registroSembrado" tabindex="-1" aria-labelledby="modal-history" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Registro de siembra</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+            <div class="modal-body">
+                <div id="tabla-registro-corte" class="table-responsive mailbox-messages">
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" data-toggle="modal" data-target="#agregarCorte">
+                        <i class="fa fa-plus"></i>
+                        Agregar corte
                     </button>
-
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-1">Codigo</th>
+                                <th class="col-3">Cantidad Cortada</th>
+                                <th class="col-1">unidad</th>
+                                <th class="col-3">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#agregarSembrado">Agregar siembra</button>
-                    </div>
-                    <div id="tabla-registro-sembrado" class="table-responsive mailbox-messages">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="col-1"> Codigo</th>
-                                    <th class="col-3"> Cantidad Sembrada</th>
-                                    <th class="col-1"> unidad</th>
-                                    <th class="col-3"> Cantidad fertilizante </th>
-                                    <th class="col-1"> unidad</th>
-                                    <th class="col-3"> Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- AGREGAR REGISTROS A SEMBRADO -->
-    <div class="modal fade" id="agregarSembrado" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Agregar siembra</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <br />
-                <div class="modal-body">
-                    <form id="form-agregar-sembrado">
-                        <div class="form-group">
-                            <label for="cantidadSembrada">Cant. sembrada:</label>
-                            <input type="number" class="form-control" name="cantidadSembrada" id="cantidadSembrada" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidadFertilizante">Cant. fertilizante:</label>
-                            <input type="number" class="form-control" name="cantidadFertilizante" id="cantidadFertilizante" placeholder="">
-                        </div>
-                        <div id="msj-infoSembrado" class="alert alert-info d-none" role="alert"></div>
-                        <div class="row">
-                            <!-- /.col -->
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-block mb-3">Guardar</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+<!-- AGREGAR REGISTROS A CORTE -->
+<div class="modal fade" id="agregarCorte" tabindex="-1" aria-labelledby="agregarCorte" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-corte" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarCorte">Agregar corte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
-
-    <!------------------------------------------------------------
-        --------------
-        VENTANAS DE ADMINISTRACION DE CORTES
-        ---------------
-        --------------------------------------------------------->
-
-    <div class="modal fade" id="registroCorte" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Registro de cortes</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadCortada">Cant. Cortada:</label>
+                    <input type="number" class="form-control" name="cantidadCortada" id="cantidadCortada" placeholder="">
                 </div>
-                <br />
-                <div class="modal-body">
-                    <div>
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#agregarCorte">Agregar corte</button>
-                    </div>
-                    <div id="tabla-registro-corte" class="table-responsive mailbox-messages">
-                        <table class="table table-striped table-bordered" style="width: 90%">
-                            <thead>
-                                <tr>
-                                    <th class="col-1">
-                                        Codigo
-                                    </th>
-                                    <th class="col-3">
-                                        Cantidad Cortada
-                                    </th>
-                                    <th class="col-1">
-                                        unidad
-                                    </th>
-                                    <th class="col-3">
-                                        Fecha
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @*@foreach (var fincas in Model.tabla_registro_corte)
-                                {
-                                    <tr>
-                                        <td>@fincas.cod_corte</td>
-                                        <td> @fincas.cantidad_cortada</td>
-                                        <td>@fincas.unidad</td>
-                                        <td>@fincas.fecha_registro</td>
-                                    </tr>
-                                }*@
-                            </tbody>
-                        </table>
-                     </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-        </div>
-    </div>
-
-    <!-- AGREGAR REGISTROS A CORTE -->
-    <div class="modal fade" id="agregarCorte" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">Agregar corte</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <br />
-                <div class="modal-body">
-                    <form id="form-agregar-corte">
-                        <div class="form-group">
-                            <label for="cantidadCortada">Cant. Cortada:</label>
-                            <input type="number" class="form-control" name="cantidadCortada" id="cantidadCortada" placeholder="">
-                        </div>
-                        <div id="msj-infoCorte" class="alert alert-info d-none" role="alert"></div>
-                        <div class="row">
-                            <!-- /.col -->
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-block mb-3">Guardar</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                <div id="msj-infoCorte" class="alert alert-info d-none" role="alert"></div>
             </div>
-        </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
-</body>
 @section Scripts {
     <script type="text/javascript">
 
         var fincaS = 0;
 
         function mostrarSembrados(id) {
-
             fincaS = id;
 
-        $.post('@Url.Content("~/Fincas/Sembrado")',
-        {
-            codFinca: id
-        },
-        (data) => {
-            if (data.response == 1) {
-                $('#tabla-registro-sembrado > table > tbody').html('');
+            $.post('@Url.Content("~/Fincas/Sembrado")',
+            {
+                codFinca: id
+            },
+            (data) => {
+                if (data.response == 1) {
+                    $('#tabla-registro-sembrado > table > tbody').html('');
 
+                    $.each(data.data, function (i, item) {
+                        let row = '<tr>';
+                        row += '   <td>' + item.cod_sembrado + '</td>';
+                        row += '   <td>' + item.cantidad_sembrado + '</td>';
+                        row += '   <td>' + item.unidad_sembrado + '</td>';
+                        row += '   <td>' + item.cantidad_fertilizante + '</td>';
+                        row += '   <td>' + item.unidad_fertilizante + '</td>';
+                        row += '   <td>' + item.fecha_registroStr + '</td>';
+                        row += '</tr>';
 
+                        $("#tabla-registro-sembrado > table > tbody").append(row);
+                    });
 
-                $.each(data.data, function (i, item) {
-                    let row = '<tr>';
-                    row += '   <td>' + item.cod_sembrado + '</td>';
-                    row += '   <td>' + item.cantidad_sembrado + '</td>';
-                    row += '   <td>' + item.unidad_sembrado + '</td>';
-                    row += '   <td>' + item.cantidad_fertilizante + '</td>';
-                    row += '   <td>' + item.unidad_fertilizante + '</td>';
-                    row += '   <td>' + item.fecha_registroStr + '</td>';
-                    row += '</tr>';
-
-                    $("#tabla-registro-sembrado > table > tbody").append(row);
-                });
-            }
-        });
+                    /* TABLA SEMBRADO */
+                    $("#tabla-registro-sembrado > table").reflowTable();
+                }
+            });
         }
 
-
-
         function mostrarCortes(id) {
+            $.post('@Url.Content("~/Fincas/Cortes")',
+            {
+                codFinca: id
+            },
+            (data) => {
+                if (data.response == 1) {
+                    $('#tabla-registro-corte > table > tbody').html('');
 
+                    $.each(data.data, function (i, item) {
+                        let row = '<tr>';
+                        row += '   <td>' + item.cod_corte + '</td>';
+                        row += '   <td>' + item.cantidad_cortada + '</td>';
+                        row += '   <td>' + item.unidad+ '</td>';
+                        row += '   <td>' + item.fecha_registroStr + '</td>';
+                        row += '</tr>';
 
-        $.post('@Url.Content("~/Fincas/Cortes")',
-        {
-            codFinca: id
-        },
-        (data) => {
-            if (data.response == 1) {
-                $('#tabla-registro-corte > table > tbody').html('');
+                        $("#tabla-registro-corte > table > tbody").append(row);
+                    });
 
-
-
-                $.each(data.data, function (i, item) {
-                    let row = '<tr>';
-                    row += '   <td>' + item.cod_corte + '</td>';
-                    row += '   <td>' + item.cantidad_cortada + '</td>';
-                    row += '   <td>' + item.unidad+ '</td>';
-                    row += '   <td>' + item.fecha_registroStr + '</td>';
-                    row += '</tr>';
-
-                    $("#tabla-registro-corte > table > tbody").append(row);
-                });
-            }
-        });
+                    /* TABLA CORTE */
+                    $("#tabla-registro-corte > table").reflowTable();
+                }
+            });
         }
 
     $(document).ready(() => {
         // VALIDACION DE FORMULARIO AGREGAR FINCA
-
-        $("#form-agregar-fincas").validate({
+        let formAgregarFincas = $("#form-agregar-fincas").validate({
             rules: {
                 nombre: {
                     required: true
@@ -377,12 +379,9 @@
                 });
             }
         });
-    });
 
-    $(document).ready(() => {
         // VALIDACION DE FORMULARIO AGREGAR SEMBRADO
-
-        $("#form-agregar-sembrado").validate({
+        let formSembrado = $("#form-agregar-sembrado").validate({
             rules: {
                 cantidadSembrada: {
                     required: true
@@ -416,7 +415,6 @@
 
                 $.post('@Url.Content("~/Fincas/AgregarSembrado")',values, (data) => {
                     if (data.response == 1) {
-                        console.log(data.message);
                         window.location.reload(true);
                     } else if (data.response == 0) {
                         $('#msj-infoSembrado').text(data.message).removeClass('d-none');
@@ -424,12 +422,9 @@
                 });
             }
         });
-    });
 
-    $(document).ready(() => {
         // VALIDACION DE FORMULARIO AGREGAR CORTE
-
-        $("#form-agregar-corte").validate({
+        let formAgregarCorto = $("#form-agregar-corte").validate({
             rules: {
                 cantidadCortada: {
                     required: true
@@ -457,12 +452,73 @@
 
                 $.post('@Url.Content("~/Fincas/AgregarCorte")',values, (data) => {
                     if (data.response == 1) {
-                        console.log(data.message);
                         window.location.reload(true);
                     } else if (data.response == 0) {
                         $('#msj-infoCorte').text(data.message).removeClass('d-none');
                     }
                 });
+            }
+        });
+
+        // MODALES
+        $("#agregarFinca").on("show.bs.modal", () => {
+            $("#agregarFinca").addClass("z-index-modal-overlap");
+        });
+
+        $("#agregarFinca").on("hidden.bs.modal", () => {
+            $("#agregarFinca").removeClass("z-index-modal-overlap");
+            formAgregarFincas.resetForm();
+        });
+
+        $("#agregarSembrado").on("show.bs.modal", () => {
+            $("#agregarSembrado").addClass("z-index-modal-overlap");
+        });
+
+        $("#agregarSembrado").on("hidden.bs.modal", () => {
+            $("#agregarSembrado").removeClass("z-index-modal-overlap");
+            formSembrado.resetForm();
+        });
+
+        // MODALES
+        $("#agregarCorte").on("show.bs.modal", () => {
+            $("#agregarCorte").addClass("z-index-modal-overlap");
+        });
+
+        $("#agregarCorte").on("hidden.bs.modal", () => {
+            $("#agregarCorte").removeClass("z-index-modal-overlap");
+            formAgregarCorto.resetForm();
+        });
+
+        /* REFLOW Y DATATABLE */
+        /* TABLA FINCAS */
+        $('#table-fincas').reflowTable();
+        let tableSearch = $("#table-fincas").DataTable({
+            ordering: false,
+            info: false,
+            searching: true,
+            lengthChange: false,
+            language: {
+                oPaginate: {
+                    sNext: '<i class="fas fa-chevron-right"></i>',
+                    sPrevious: '<i class="fas fa-chevron-left"></i>'
+                }
+            },
+            drawCallback: (settings) => {
+                $('#table-fincas_paginate').addClass('card-footer p-2 d-flex justify-content-end');
+                $('#table-fincas_paginate > span').css('padding', '.25rem .5rem');
+                $("#table-fincas_previous").addClass('btn btn-default btn-sm');
+                $("#table-fincas_next").addClass('btn btn-default btn-sm');
+            }
+        });
+
+        /* BUSQUEDA*/
+        $('#inp-search').keyup(() => {
+            let texto = $('#inp-search').val().toLowerCase();
+
+            if (tableSearch != undefined) {
+                tableSearch
+                    .search(texto)
+                    .draw();
             }
         });
     });

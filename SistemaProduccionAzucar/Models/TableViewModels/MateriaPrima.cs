@@ -13,6 +13,5 @@ namespace SistemaProduccionAzucar.Models.TableViewModels
         public string nombreMateria { get; set; }
         public decimal? cantidad { get; set; }
         public string unidad { get; set; }
-        public string tipo_materia { get; set; }
     }
 }

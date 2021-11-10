@@ -18,6 +18,8 @@
     @Styles.Render("~/Content/plugins/fontawesome-free/css/all.css")
     <!-- Theme style -->
     @Styles.Render("~/Content/dist/css/adminlte.min.css")
+    <!-- Theme Reflow -->
+    @Styles.Render("~/Content/plugins/jquery-reflow-table/dist/css/reflow-table.css")
     <!-- General style -->
     @Styles.Render("~/Content/general-styles.css")
 
@@ -207,6 +209,10 @@
     <!-- jQuery Validate -->
     @Scripts.Render("~/Content/plugins/jquery-validation/jquery.validate.js")
     @Scripts.Render("~/Content/plugins/jquery-validation/additional-methods.js")
+    <!-- jQuery DataTables -->
+    @Scripts.Render("~/Content/plugins/datatables/jquery.dataTables.js")
+    <!-- jQuery Reflow -->
+    @Scripts.Render("~/Content/plugins/jquery-reflow-table/dist/js/reflow-table.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
