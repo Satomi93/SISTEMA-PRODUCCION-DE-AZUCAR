@@ -4,12 +4,15 @@
     <EntitySetMapping Name="vehiculos">
       <EntityTypeMapping TypeName="Vehiculos.vehiculos">
         <MappingFragment StoreEntitySet="vehiculos">
-          <ScalarProperty Name="cod_vehiculo" ColumnName="cod_vehiculo" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
           <ScalarProperty Name="marca" ColumnName="marca" />
           <ScalarProperty Name="modelo" ColumnName="modelo" />
-          <ScalarProperty Name="placa" ColumnName="placa" />
           <ScalarProperty Name="capacidad" ColumnName="capacidad" />
-          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="motorista" ColumnName="motorista" />
+          <ScalarProperty Name="estado_ingreso" ColumnName="estado_ingreso" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+          <ScalarProperty Name="disponibilidad" ColumnName="disponibilidad" />
+          <ScalarProperty Name="estado_registro" ColumnName="estado_registro" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

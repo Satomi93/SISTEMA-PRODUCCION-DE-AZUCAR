@@ -7,14 +7,17 @@
       <Schema Namespace="Vehiculos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="vehiculos">
           <Key>
-            <PropertyRef Name="cod_vehiculo" />
+            <PropertyRef Name="placa" />
           </Key>
-          <Property Name="cod_vehiculo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="modelo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="placa" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="capacidad" Type="int" Nullable="false" />
-          <Property Name="estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado_ingreso" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+          <Property Name="disponibilidad" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="estado_registro" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="VehiculosStoreContainer">
           <EntitySet Name="vehiculos" EntityType="Self.vehiculos" Schema="dbo" store:Type="Tables" />
@@ -26,14 +29,17 @@
       <Schema Namespace="Vehiculos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="vehiculos">
           <Key>
-            <PropertyRef Name="cod_vehiculo" />
+            <PropertyRef Name="placa" />
           </Key>
-          <Property Name="cod_vehiculo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="placa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="placa" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="capacidad" Type="Int32" Nullable="false" />
-          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="motorista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado_ingreso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="disponibilidad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado_registro" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="VehiculosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vehiculos" EntityType="Self.vehiculos" />
@@ -47,12 +53,15 @@
           <EntitySetMapping Name="vehiculos">
             <EntityTypeMapping TypeName="Vehiculos.vehiculos">
               <MappingFragment StoreEntitySet="vehiculos">
-                <ScalarProperty Name="cod_vehiculo" ColumnName="cod_vehiculo" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
                 <ScalarProperty Name="marca" ColumnName="marca" />
                 <ScalarProperty Name="modelo" ColumnName="modelo" />
-                <ScalarProperty Name="placa" ColumnName="placa" />
                 <ScalarProperty Name="capacidad" ColumnName="capacidad" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="motorista" ColumnName="motorista" />
+                <ScalarProperty Name="estado_ingreso" ColumnName="estado_ingreso" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="disponibilidad" ColumnName="disponibilidad" />
+                <ScalarProperty Name="estado_registro" ColumnName="estado_registro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,9 +1,91 @@
-﻿@model SistemaProduccionAzucar.Models.TableViewModels.Vehiculos
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.Vehiculos>
 
 @{
     ViewBag.Title = "Mantenimiento de vehículos";
 }
 
-<body>
-
-</body>
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search" id="inp-search">
+                <div class="input-group-append">
+                    <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-create-m-prima">
+                    <i class="fa fa-plus"></i>
+                    Agregar vehículo
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-materia-prima">
+                <thead>
+                    <tr>
+                        <th>Placa</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Capacidad de carga</th>
+                        <th>Motorista Encargado</th>
+                        <th>Estado de Ingreso</th>
+                        <th>Fecha Registro</th>
+                        <th>Disponibilidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var veh in Model)
+                    {
+                    <tr>
+                        <td>@veh.placa</td>
+                        <td>@veh.marca</td>
+                        <td>@veh.modelo</td>
+                        <td>@veh.capacidad toneladas</td>
+                        <td>@veh.motorista</td>
+                        <td>@veh.estado_ingreso</td>
+                        <td>@veh.fecha_ingreso</td>
+                        <td>@veh.disponibilidad</td>
+                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarSembrados(@veh.placa)" data-toggle="modal" data-target="#registroSembrado">
+                                <i ></i>
+                                Cambiar motorista
+                            </button>
+                            <br />
+                            @if (veh.estado_registro == 0)
+                            { <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarCortes(@veh.placa)" data-toggle="modal" data-target="#registroCorte">
+                                <i ></i>
+                                Activar
+                            </button>
+                            } else { 
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarCortes(@veh.placa)" data-toggle="modal" data-target="#registroCorte">
+                                <i ></i>
+                                Desactivar
+                            </button>
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
