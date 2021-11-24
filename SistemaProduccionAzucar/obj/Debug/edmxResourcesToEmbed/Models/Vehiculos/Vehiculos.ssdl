@@ -7,7 +7,7 @@
     <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="modelo" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="capacidad" Type="int" Nullable="false" />
+    <Property Name="capacidad" Type="decimal" Precision="5" Scale="2" Nullable="false" />
     <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="estado_ingreso" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="fecha_registro" Type="datetime" Nullable="false" />

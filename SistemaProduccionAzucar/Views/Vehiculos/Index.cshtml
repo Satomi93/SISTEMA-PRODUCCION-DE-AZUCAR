@@ -22,7 +22,7 @@
     <div class="card-body p-0">
         <div class="mailbox-controls">
             <div class="btn-group">
-                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-create-m-prima">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#agregarVehiculo">
                     <i class="fa fa-plus"></i>
                     Agregar vehículo
                 </button>
@@ -33,7 +33,7 @@
             </button>
         </div>
         <div class="table-responsive mailbox-messages">
-            <table class="table table-hover table-striped" id="table-materia-prima">
+            <table class="table table-hover table-striped" id="table-vehiculos">
                 <thead>
                     <tr>
                         <th>Placa</th>
@@ -50,35 +50,35 @@
                 <tbody>
                     @foreach (var veh in Model)
                     {
-                    <tr>
-                        <td>@veh.placa</td>
-                        <td>@veh.marca</td>
-                        <td>@veh.modelo</td>
-                        <td>@veh.capacidad toneladas</td>
-                        <td>@veh.motorista</td>
-                        <td>@veh.estado_ingreso</td>
-                        <td>@veh.fecha_ingreso</td>
-                        <td>@veh.disponibilidad</td>
-                        <td></td>
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarSembrados(@veh.placa)" data-toggle="modal" data-target="#registroSembrado">
-                                <i ></i>
-                                Cambiar motorista
-                            </button>
-                            <br />
-                            @if (veh.estado_registro == 0)
-                            { <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarCortes(@veh.placa)" data-toggle="modal" data-target="#registroCorte">
-                                <i ></i>
-                                Activar
-                            </button>
-                            } else { 
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarCortes(@veh.placa)" data-toggle="modal" data-target="#registroCorte">
-                                <i ></i>
-                                Desactivar
-                            </button>
-                            }
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>@veh.placa</td>
+                            <td>@veh.marca</td>
+                            <td>@veh.modelo</td>
+                            <td>@veh.capacidad toneladas</td>
+                            <td>@veh.motorista</td>
+                            <td>@veh.estado_ingreso</td>
+                            <td>@veh.fecha_ingreso</td>
+                            <td>@veh.disponibilidad</td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#registroSembrado">
+                                    <i></i>
+                                    Cambiar motorista
+                                </button>
+                                <br />
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="cambiarEstado('@veh.placa')">
+                                    <i class="fas fa-sync-alt"></i>
+                                    @if (@veh.estado_registro == 1)
+                                    {
+                                        <span>Desactivar</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Activar</span>
+                                    }
+                                </button>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -89,3 +89,136 @@
     <!-- /.card-body -->
     <div class="card-footer"></div>
 </div>
+
+<!-- AGREGAR VEHICULO -->
+<div class="modal fade" id="agregarVehiculo" tabindex="-1" aria-labelledby="agregarVehiculo" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-vehiculo" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarVehiculo">Agregar vehículo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="placa">PLACA:</label>
+                    <input type="text" class="form-control" name="placa" id="placa" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="marca">Marca:</label>
+                    <input type="text" class="form-control" name="marca" id="marca" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" class="form-control" name="modelo" id="modelo" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="capacidad">Capacidad:</label>
+                    <input type="number" step="any" min="1" class="form-control" name="capacidad" id="capacidad">
+                </div>
+                <div class="form-group">
+                    <label for="estadoIngreso">Estado ingreso:</label>
+                    <select class="form-control" name="estadoIngreso" id="estadoIngreso">
+                        <option value="">Seleccione estado de vehículo</option>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado">Usado</option>
+                    </select>
+                </div>
+                <div id="msj-infoVehiculo" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(() => {
+            let formAgregarVehiculo = $("#form-agregar-vehiculo").validate({
+            rules: {
+                placa: {
+                    required: true
+                },
+                marca: {
+                    required: true
+                },
+                modelo: {
+                    required: true
+                    },
+                capacidad: {
+                    required: true
+                },
+                estadoIngreso: {
+                    required: true
+                },
+            },
+            messages: {
+                placa: {
+                    required: "Ingrese placa de vehiculo"
+                },
+                marca: {
+                    required: "Ingrese marca."
+                },
+                modelo: {
+                    required: "Ingrese modelo."
+                },
+                capacidad: {
+                    required: "Ingrese capacidad."
+                },
+                estadoIngreso: {
+                    required: "Seleccione estado."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        $('#form-agregar-vehiculo').submit((e) => {
+            e.preventDefault();
+            let values = $('#form-agregar-vehiculo').serialize();
+
+            if ($('#form-agregar-vehiculo').valid()) {
+                $('#msj-info').addClass('d-none');
+
+                $.post('@Url.Content("~/Vehiculos/AgregarVehiculo")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+    });
+
+        function cambiarEstado(placa) {
+        if (confirm("Esta seguro de cambiar estado?")) {
+            $.post('@Url.Content("~/Vehiculos/CambiarEstado")',
+            {
+                cod_vehiculo: placa
+            },
+            (data) => {
+                if (data.response == 1) {
+                    window.location.reload(true);
+                }
+            });
+        }
+    }
+    </script>
+}

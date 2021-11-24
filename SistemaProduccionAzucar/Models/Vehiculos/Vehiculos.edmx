@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Vehiculos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Vehiculos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="vehiculos">
           <Key>
             <PropertyRef Name="placa" />
@@ -12,7 +12,7 @@
           <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="modelo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="capacidad" Type="int" Nullable="false" />
+          <Property Name="capacidad" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="estado_ingreso" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="fecha_registro" Type="datetime" Nullable="false" />
@@ -22,8 +22,7 @@
         <EntityContainer Name="VehiculosStoreContainer">
           <EntitySet Name="vehiculos" EntityType="Self.vehiculos" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Vehiculos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -34,7 +33,7 @@
           <Property Name="placa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="capacidad" Type="Int32" Nullable="false" />
+          <Property Name="capacidad" Type="Decimal" Nullable="false" />
           <Property Name="motorista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estado_ingreso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />

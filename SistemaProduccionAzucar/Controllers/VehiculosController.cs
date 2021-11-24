@@ -35,5 +35,66 @@ namespace SistemaProduccionAzucar.Controllers
 
                 return View(list);
         }
+
+        public ActionResult AgregarVehiculo (string placa, string marca, string modelo, decimal capacidad, string estadoIngreso)
+        {
+            using (VehiculosEntities db = new VehiculosEntities())
+            {
+                var list = from d in db.vehiculos
+                           where d.placa == placa
+                           select d;
+
+                if (list.Count() > 0)
+                {
+                    return Json(new
+                    {
+                        response = 0,
+                        message = "Placa ya existente."
+                    });
+                }
+                else
+                {
+                    vehiculos vehiculo = new vehiculos();
+                    vehiculo.placa = placa;
+                    vehiculo.marca = marca;
+                    vehiculo.modelo = modelo;
+                    vehiculo.capacidad = capacidad;
+                    vehiculo.estado_ingreso = estadoIngreso;
+                    vehiculo.motorista = "";
+                    vehiculo.fecha_registro = DateTime.Now;
+                    vehiculo.disponibilidad = "Sin cargar";
+                    vehiculo.estado_registro = 1;
+
+                    db.vehiculos.Add(vehiculo);
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        response = 1,
+                        message = "Éxito"
+                    });
+
+                }
+            }
+        }
+
+        public ActionResult CambiarEstado(string cod_vehiculo)
+        {
+            using (VehiculosEntities db = new VehiculosEntities())
+            {
+                vehiculos veh = db.vehiculos.Find(cod_vehiculo);
+                veh.estado_registro = (veh.estado_registro == 1 ? 0 : 1);
+
+                db.Entry(veh).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    response = 1,
+                    message = "Éxito"
+                });
+
+            }
+        }
     }
 }

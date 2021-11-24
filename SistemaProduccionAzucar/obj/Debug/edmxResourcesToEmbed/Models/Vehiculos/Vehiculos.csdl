@@ -7,7 +7,7 @@
     <Property Name="placa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="capacidad" Type="Int32" Nullable="false" />
+    <Property Name="capacidad" Type="Decimal" Nullable="false" />
     <Property Name="motorista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="estado_ingreso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />

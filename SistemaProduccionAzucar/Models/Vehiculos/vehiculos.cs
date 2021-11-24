@@ -17,7 +17,7 @@ namespace SistemaProduccionAzucar.Models.Vehiculos
         public string placa { get; set; }
         public string marca { get; set; }
         public string modelo { get; set; }
-        public int capacidad { get; set; }
+        public decimal capacidad { get; set; }
         public string motorista { get; set; }
         public string estado_ingreso { get; set; }
         public System.DateTime fecha_registro { get; set; }
