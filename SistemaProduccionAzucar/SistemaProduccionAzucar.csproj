@@ -165,6 +165,7 @@
     <Compile Include="Controllers\FincasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
+    <Compile Include="Controllers\MotoristasController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VehiculosController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -2373,6 +2374,7 @@
     <Content Include="Views\MateriaPrima\Index.cshtml" />
     <Content Include="Views\Fincas\Index.cshtml" />
     <Content Include="Views\Vehiculos\Index.cshtml" />
+    <Content Include="Views\Motoristas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
