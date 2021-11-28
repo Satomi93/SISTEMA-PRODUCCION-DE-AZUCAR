@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_a7ace3_sistemaazucarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="motoristas">
+    <Key>
+      <PropertyRef Name="idDUI" />
+    </Key>
+    <Property Name="idDUI" Type="int" Nullable="false" />
+    <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="edadMot" Type="int" Nullable="false" />
+    <Property Name="genMot" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="tipoLicMot" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="db_a7ace3_sistemaazucarModelStoreContainer">
+    <EntitySet Name="motoristas" EntityType="Self.motoristas" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

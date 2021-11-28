@@ -1,17 +1,231 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.Motoristas>
 
-<!DOCTYPE html>
+    @{
+        ViewBag.Title = "Motoristas";
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <div class="card-tools">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Search" id="inp-search">
+                    <div class="input-group-append">
+                        <div class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+            <div class="mailbox-controls">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#agregarMotorista">
+                        <i class="fa fa-plus"></i>
+                        Agregar Motorista
+                    </button>
+                </div>
+                <!-- /.btn-group -->
+                <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+            <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped" id="table-motoristas">
+                    <thead>
+                        <tr>
+                            <th>DUI</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Género</th>
+                            <th>Tipo de Licencia</th>
+                            <th>Transporte Asignado</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mot in Model)
+                        {
+                            <tr>
+                                <td>@mot.idDUI</td>
+                                <td>@mot.motorista</td>
+                                <td>@mot.edadMot</td>
+                                <td>@mot.genMot</td>
+                                <td>@mot.tipoLicMot</td>
+                                <td>@mot.placa</td>
+                                <td></td>
+                                <td>
+                                    <!--<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#registroSembrado">
+                                        <i></i>
+                                        Actualizar Datos
+                                    </button>-->
+                                    <br />
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="cambEstado('@mot.idDUI')">
+                                        <i class="fas fa-sync-alt"></i>
+                                        @if (@mot.Estado == 1)
+                                        {
+                                            <span>Inactivo</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Activo</span>
+                                        }
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!-- /.table -->
+            </div>
+            <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer"></div>
     </div>
-</body>
-</html>
+
+    <!-- AGREGAR MOTORISTA -->
+    <div class="modal fade" id="agregarMotorista" tabindex="-1" aria-labelledby="agregarMotorista" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <form id="form-agregar-motorista" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarMotorista">Agregar Motorista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="idDUI">DUI:</label>
+                        <input type="text" class="form-control" name="idDUI" id="idDUI" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="motorista">Motorista:</label>
+                        <input type="text" class="form-control" name="motorista" id="motorista" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad:</label>
+                        <input type="number" step="any" min="18" class="form-control" name="edad" id="edad" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Género:</label>
+                        <select class="form-control" name="genero" id="genero">
+                            <option value="">Seleccione su género</option>
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoLic">Tipo de Licencia:</label>
+                        <select class="form-control" name="tipoLic" id="tipoLic">
+                            <option value="">Seleccione su tipo de licencia</option>
+                            <option value="Particular">Particular</option>
+                            <option value="Liviana">Liviana</option>
+                            <option value="Pesada">Pesada</option>
+                            <option value="Pesada-T">Pesada-T</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="placa">Placa:</label>
+                        <input type="text" class="form-control" name="placa" id="placa" placeholder="">
+                    </div>
+                    <div id="msj-infoMotorista" class="alert alert-info d-none" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                        <i class="fas fa-times-circle"></i>
+                        Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script type="text/javascript">
+
+        $(document).ready(() => {
+            let formAgregarMotorista = $("#form-agregar-motorista").validate({
+            rules: {
+                idDUI: {
+                    required: true
+                },
+                motorista: {
+                    required: true
+                },
+                edad: {
+                    required: true
+                    },
+                genero: {
+                    required: true
+                },
+                tipoLic: {
+                    required: true
+                },
+            },
+            messages: {
+                idDUI: {
+                    required: "Ingrese dui del motorista"
+                },
+                motorista: {
+                    required: "Ingrese nombre."
+                },
+                edad: {
+                    required: "Ingrese edad."
+                },
+                genero: {
+                    required: "Seleccione género."
+                },
+                tipoLic: {
+                    required: "Seleccione tipo de licencia."
+                },
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        $('#form-agregar-motorista').submit((e) => {
+            e.preventDefault();
+            let values = $('#form-agregar-motorista').serialize();
+
+            if ($('#form-agregar-motorista').valid()) {
+                $('#msj-info').addClass('d-none');
+
+                $.post('@Url.Content("~/Motoristas/AgregarMotoristas")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+    });
+
+        function cambEstado(dui) {
+        if (confirm("Esta seguro de cambiar estado?")) {
+            $.post('@Url.Content("~/Motoristas/CambEstado")',
+            {
+                id_motorista: idDUI
+            },
+            (data) => {
+                if (data.response == 1) {
+                    window.location.reload(true);
+                }
+            });
+        }
+    }
+        </script>
+    }

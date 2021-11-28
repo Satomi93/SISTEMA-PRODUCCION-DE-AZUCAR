@@ -244,7 +244,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Motoristas\Motoristas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\motoristas.cs">
+      <DependentUpon>Motoristas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\Motoristas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\Motoristas1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
+    <Compile Include="Models\TableViewModels\Motoristas.cs" />
     <Compile Include="Models\TableViewModels\RegistroCorte.cs" />
     <Compile Include="Models\TableViewModels\RegistroSembrado.cs" />
     <Compile Include="Models\TableViewModels\Finca.cs" />
@@ -368,6 +387,23 @@
     </EntityDeploy>
     <Content Include="Models\Vehiculos\Vehiculos.edmx.diagram">
       <DependentUpon>Vehiculos.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Motoristas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Motoristas\Motoristas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+      <LastGenOutput>Motoristas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Motoristas\Motoristas.edmx.diagram">
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Motoristas\Motoristas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+      <LastGenOutput>Motoristas1.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\dist\css\adminlte.css" />

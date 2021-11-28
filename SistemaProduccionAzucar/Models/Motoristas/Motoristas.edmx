@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_a7ace3_sistemaazucarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="motoristas">
+          <Key>
+            <PropertyRef Name="idDUI" />
+          </Key>
+          <Property Name="idDUI" Type="int" Nullable="false" />
+          <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="edadMot" Type="int" Nullable="false" />
+          <Property Name="genMot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipoLicMot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="db_a7ace3_sistemaazucarModelStoreContainer">
+          <EntitySet Name="motoristas" EntityType="Self.motoristas" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_a7ace3_sistemaazucarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="motoristas">
+          <Key>
+            <PropertyRef Name="idDUI" />
+          </Key>
+          <Property Name="idDUI" Type="Int32" Nullable="false" />
+          <Property Name="motorista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="edadMot" Type="Int32" Nullable="false" />
+          <Property Name="genMot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoLicMot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="placa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MotoristasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="motoristas" EntityType="Self.motoristas" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_a7ace3_sistemaazucarModelStoreContainer" CdmEntityContainer="MotoristasEntities">
+          <EntitySetMapping Name="motoristas">
+            <EntityTypeMapping TypeName="db_a7ace3_sistemaazucarModel.motoristas">
+              <MappingFragment StoreEntitySet="motoristas">
+                <ScalarProperty Name="idDUI" ColumnName="idDUI" />
+                <ScalarProperty Name="motorista" ColumnName="motorista" />
+                <ScalarProperty Name="edadMot" ColumnName="edadMot" />
+                <ScalarProperty Name="genMot" ColumnName="genMot" />
+                <ScalarProperty Name="tipoLicMot" ColumnName="tipoLicMot" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

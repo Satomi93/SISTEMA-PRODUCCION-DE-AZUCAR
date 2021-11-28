@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_a7ace3_sistemaazucarModelStoreContainer" CdmEntityContainer="MotoristasEntities">
+    <EntitySetMapping Name="motoristas">
+      <EntityTypeMapping TypeName="db_a7ace3_sistemaazucarModel.motoristas">
+        <MappingFragment StoreEntitySet="motoristas">
+          <ScalarProperty Name="idDUI" ColumnName="idDUI" />
+          <ScalarProperty Name="motorista" ColumnName="motorista" />
+          <ScalarProperty Name="edadMot" ColumnName="edadMot" />
+          <ScalarProperty Name="genMot" ColumnName="genMot" />
+          <ScalarProperty Name="tipoLicMot" ColumnName="tipoLicMot" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
