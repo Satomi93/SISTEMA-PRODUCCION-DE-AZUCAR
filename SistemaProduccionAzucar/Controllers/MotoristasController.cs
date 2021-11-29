@@ -35,7 +35,7 @@ namespace SistemaProduccionAzucar.Controllers
             return View(list);
         }
 
-        public ActionResult AgregarMotoristas(int idDUI, string motorista, int edad, string genero, string tipoLic, string placa, int Estado)
+        public ActionResult AgregarMotoristas(int idDUI, string motorista, int edad, string genero, string tipoLic)
         {
             using (MotoristasEntities db = new MotoristasEntities())
             {
@@ -75,7 +75,7 @@ namespace SistemaProduccionAzucar.Controllers
             }
         }
 
-        public ActionResult CambEstado(string id_motorista)
+        public ActionResult CambEstado(int id_motorista)
         {
             using (MotoristasEntities db = new MotoristasEntities())
             {
