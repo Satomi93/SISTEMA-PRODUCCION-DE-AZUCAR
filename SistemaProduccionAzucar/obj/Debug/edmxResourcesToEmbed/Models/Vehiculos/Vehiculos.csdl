@@ -7,14 +7,46 @@
     <Property Name="placa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="capacidad" Type="Decimal" Nullable="false" />
+    <Property Name="capacidad" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
     <Property Name="motorista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="estado_ingreso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="disponibilidad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="estado_registro" Type="Int32" Nullable="false" />
+    <Property Name="idDUI_motorista" Type="Int32" />
+    <NavigationProperty Name="motoristas" Relationship="Vehiculos.FK_idDUI_motorista" FromRole="vehiculos" ToRole="motoristas" />
   </EntityType>
   <EntityContainer Name="VehiculosEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vehiculos" EntityType="Self.vehiculos" />
+    <EntitySet Name="motoristas" EntityType="Vehiculos.motoristas" />
+    <AssociationSet Name="FK_idDUI_motorista" Association="Vehiculos.FK_idDUI_motorista">
+      <End Role="motoristas" EntitySet="motoristas" />
+      <End Role="vehiculos" EntitySet="vehiculos" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="motoristas">
+    <Key>
+      <PropertyRef Name="idDUI" />
+    </Key>
+    <Property Name="idDUI" Type="Int32" Nullable="false" />
+    <Property Name="motorista" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="edadMot" Type="Int32" Nullable="false" />
+    <Property Name="genMot" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tipoLicMot" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="placa" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="vehiculos" Relationship="Vehiculos.FK_idDUI_motorista" FromRole="motoristas" ToRole="vehiculos" />
+  </EntityType>
+  <Association Name="FK_idDUI_motorista">
+    <End Type="Vehiculos.motoristas" Role="motoristas" Multiplicity="0..1" />
+    <End Type="Vehiculos.vehiculos" Role="vehiculos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="motoristas">
+        <PropertyRef Name="idDUI" />
+      </Principal>
+      <Dependent Role="vehiculos">
+        <PropertyRef Name="idDUI_motorista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

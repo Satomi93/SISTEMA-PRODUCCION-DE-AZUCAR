@@ -44,41 +44,63 @@
                         <th>Estado de Ingreso</th>
                         <th>Fecha Registro</th>
                         <th>Disponibilidad</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var veh in Model)
                     {
-                        <tr>
-                            <td>@veh.placa</td>
-                            <td>@veh.marca</td>
-                            <td>@veh.modelo</td>
-                            <td>@veh.capacidad toneladas</td>
+                    <tr>
+                        <td>@veh.placa</td>
+                        <td>@veh.marca</td>
+                        <td>@veh.modelo</td>
+                        <td>@veh.capacidad toneladas</td>
+
+                        @if (veh.motorista == "")
+                        {
+                            <td>Sin asignar</td>
+
+                        }
+                        else
+                        {
                             <td>@veh.motorista</td>
-                            <td>@veh.estado_ingreso</td>
-                            <td>@veh.fecha_ingreso</td>
-                            <td>@veh.disponibilidad</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#registroSembrado">
-                                    <i></i>
-                                    Cambiar motorista
-                                </button>
-                                <br />
-                                <button type="button" class="btn btn-secondary btn-sm" onclick="cambiarEstado('@veh.placa')">
-                                    <i class="fas fa-sync-alt"></i>
-                                    @if (@veh.estado_registro == 1)
-                                    {
-                                        <span>Desactivar</span>
-                                    }
-                                    else
-                                    {
-                                        <span>Activar</span>
-                                    }
-                                </button>
-                            </td>
-                        </tr>
+
+                        }
+
+                        <td>@veh.estado_ingreso</td>
+                        <td>@veh.fecha_ingreso</td>
+                        <td>@veh.disponibilidad</td>
+                        @if (veh.estado_registro == 1)
+                        {
+                            <td>Activo</td>
+
+                        }
+                        else
+                        {
+                            <td>Desactivado</td>
+
+                        }
+                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="seleccionarVehiculo('@veh.placa')" data-toggle="modal" data-target="#modal-cambiarMotorista">
+                                <i></i>
+                                Asignar o Cambiar motorista
+                            </button>
+                            <br />
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="cambiarEstado('@veh.placa')">
+                                <i class="fas fa-sync-alt"></i>
+                                @if (@veh.estado_registro == 1)
+                                {
+                                    <span>Desactivar</span>
+                                }
+                                else
+                                {
+                                    <span>Activar</span>
+                                }
+                            </button>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -114,7 +136,7 @@
                     <input type="text" class="form-control" name="modelo" id="modelo" placeholder="">
                 </div>
                 <div class="form-group">
-                    <label for="capacidad">Capacidad:</label>
+                    <label for="capacidad">Capacidad:(Toneladas)</label>
                     <input type="number" step="any" min="1" class="form-control" name="capacidad" id="capacidad">
                 </div>
                 <div class="form-group">
@@ -140,6 +162,41 @@
         </form>
     </div>
 </div>
+
+<!-- CAMBIAR MOTORISTA -->
+<div class="modal fade" id="modal-cambiarMotorista" tabindex="-1" aria-labelledby="cambiarMotorista" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-cambiar-motorista" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cambiarMotorista">Cambiar motorista: </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" name="placaVehiculo" id="placaVehiculo">
+                    <label for="seleccionaMotorista">Seleccione motorista:</label>
+                    <select class="form-control" name="seleccionaMotorista" id="seleccionaMotorista">
+                        <option value="">Seleccione motorista</option>
+                    </select>
+                </div>
+                <div id="msj-info" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
 @section Scripts {
@@ -181,44 +238,97 @@
                     required: "Seleccione estado."
                 }
             },
-            onchange: true,
-            errorClass: "error-validation",
-            errorElement: "p",
-            errorPlacement: function (error, element) {
-                element.parent().append(error);
-            }
-        });
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
 
-        $('#form-agregar-vehiculo').submit((e) => {
-            e.preventDefault();
-            let values = $('#form-agregar-vehiculo').serialize();
+            $('#form-agregar-vehiculo').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-agregar-vehiculo').serialize();
 
-            if ($('#form-agregar-vehiculo').valid()) {
-                $('#msj-info').addClass('d-none');
+                if ($('#form-agregar-vehiculo').valid()) {
+                    $('#msj-info').addClass('d-none');
 
-                $.post('@Url.Content("~/Vehiculos/AgregarVehiculo")', values, (data) => {
-                    if (data.response == 1) {
-                        window.location.reload(true);
-                    } else if (data.response == 0) {
-                        $('#msj-info').text(data.message).removeClass('d-none');
+                    $.post('@Url.Content("~/Vehiculos/AgregarVehiculo")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-info').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+            let formCambiarMotorista = $("#form-cambiar-motorista").validate({
+                rules: {
+                    seleccionaMotorista: {
+                        required: true
+                    },
+                },
+                messages: {
+                    seleccionaMotorista: {
+                        required: "Seleccione motorista."
                     }
-                });
-            }
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+
+            });
+
+            $('#form-cambiar-motorista').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-cambiar-motorista').serialize();
+
+                if ($('#form-cambiar-motorista').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/Vehiculos/CambiarMotorista")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-info').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+
+            // LISTAR MOTORISTAS
+            $.post('@Url.Content("~/Vehiculos/ListarMotoristas")', {}, (data) => {
+                if (data.response == 1) {
+                    $.each(data.data, function (i, item) {
+                        $("#seleccionaMotorista").append('<option value="' + item.idDUI + '">' + item.motorista + '</option>');
+                    });
+                } else if (data.response == 0) {
+                    $('#msj-info').text(data.message).removeClass('d-none');
+                }
+            });
         });
-    });
 
         function cambiarEstado(placa) {
         if (confirm("Esta seguro de cambiar estado?")) {
-            $.post('@Url.Content("~/Vehiculos/CambiarEstado")',
-            {
-                cod_vehiculo: placa
-            },
-            (data) => {
-                if (data.response == 1) {
-                    window.location.reload(true);
-                }
-            });
+                $.post('@Url.Content("~/Vehiculos/CambiarEstado")',
+                {
+                    cod_vehiculo: placa
+                },
+                (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    }
+                });
+            }
         }
-    }
+
+        function seleccionarVehiculo(placa) {
+            $("#placaVehiculo").val(placa);
+        }
     </script>
 }

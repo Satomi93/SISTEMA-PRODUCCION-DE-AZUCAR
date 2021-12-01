@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SistemaProduccionAzucar.Models.Vehiculos
+namespace SistemaProduccionAzucar.Models.InventarioProduccion
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VehiculosEntities : DbContext
+    public partial class InventarioProduccionEntities : DbContext
     {
-        public VehiculosEntities()
-            : base("name=VehiculosEntities")
+        public InventarioProduccionEntities()
+            : base("name=InventarioProduccionEntities")
         {
         }
     
@@ -25,7 +25,9 @@ namespace SistemaProduccionAzucar.Models.Vehiculos
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<vehiculos> vehiculos { get; set; }
-        public virtual DbSet<motoristas> motoristas { get; set; }
+        public virtual DbSet<inventario_central> inventario_central { get; set; }
+        public virtual DbSet<inventario_produccion> inventario_produccion { get; set; }
+        public virtual DbSet<registro_produccion> registro_produccion { get; set; }
+        public virtual DbSet<historial_inventario_central> historial_inventario_central { get; set; }
     }
 }

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InventarioProduccionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="historial_inventario_central">
+    <Key>
+      <PropertyRef Name="correlativo" />
+    </Key>
+    <Property Name="correlativo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cod_materia_prima" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="cod_cat" Type="int" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="200" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="usuario_creacion" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="inventario_central">
+    <Key>
+      <PropertyRef Name="cod_materia_prima" />
+    </Key>
+    <Property Name="cod_materia_prima" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="cantidad" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="unidad" Type="varchar" MaxLength="10" />
+    <Property Name="tipo_materia" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="inventario_produccion">
+    <Key>
+      <PropertyRef Name="cod_producto" />
+    </Key>
+    <Property Name="cod_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="cantidad" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="unidad" Type="varchar" MaxLength="10" />
+    <Property Name="tipo_producto" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="registro_produccion">
+    <Key>
+      <PropertyRef Name="correlativo" />
+    </Key>
+    <Property Name="correlativo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cod_materia" Type="int" />
+    <Property Name="materia_prima" Type="varchar" MaxLength="25" />
+    <Property Name="cantidad" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="unidad_m" Type="varchar" MaxLength="10" />
+    <Property Name="estado" Type="varchar" MaxLength="20" />
+    <Property Name="cod_producto" Type="int" />
+    <Property Name="producto" Type="varchar" MaxLength="50" />
+    <Property Name="cantidad_producida" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="unidad_p" Type="varchar" MaxLength="10" />
+    <Property Name="fecha_registro" Type="datetime" />
+    <Property Name="fecha_fin" Type="datetime" />
+  </EntityType>
+  <Association Name="fk_cod_producto_produccion">
+    <End Role="inventario_produccion" Type="Self.inventario_produccion" Multiplicity="0..1" />
+    <End Role="registro_produccion" Type="Self.registro_produccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventario_produccion">
+        <PropertyRef Name="cod_producto" />
+      </Principal>
+      <Dependent Role="registro_produccion">
+        <PropertyRef Name="cod_producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_historial_a_inventario">
+    <End Role="inventario_central" Type="Self.inventario_central" Multiplicity="1" />
+    <End Role="historial_inventario_central" Type="Self.historial_inventario_central" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Principal>
+      <Dependent Role="historial_inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InventarioProduccionModelStoreContainer">
+    <EntitySet Name="historial_inventario_central" EntityType="Self.historial_inventario_central" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="inventario_central" EntityType="Self.inventario_central" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="inventario_produccion" EntityType="Self.inventario_produccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="registro_produccion" EntityType="Self.registro_produccion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_cod_producto_produccion" Association="Self.fk_cod_producto_produccion">
+      <End Role="inventario_produccion" EntitySet="inventario_produccion" />
+      <End Role="registro_produccion" EntitySet="registro_produccion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_historial_a_inventario" Association="Self.fk_historial_a_inventario">
+      <End Role="inventario_central" EntitySet="inventario_central" />
+      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -23,5 +23,8 @@ namespace SistemaProduccionAzucar.Models.Vehiculos
         public System.DateTime fecha_registro { get; set; }
         public string disponibilidad { get; set; }
         public int estado_registro { get; set; }
+        public Nullable<int> idDUI_motorista { get; set; }
+    
+        public virtual motoristas motoristas { get; set; }
     }
 }

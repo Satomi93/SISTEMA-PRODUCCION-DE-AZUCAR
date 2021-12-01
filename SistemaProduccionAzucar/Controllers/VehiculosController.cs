@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SistemaProduccionAzucar.Models.Vehiculos;
 using SistemaProduccionAzucar.Models.TableViewModels;
 
+
 namespace SistemaProduccionAzucar.Controllers
 {
     public class VehiculosController : Controller
@@ -85,6 +86,23 @@ namespace SistemaProduccionAzucar.Controllers
                 vehiculos veh = db.vehiculos.Find(cod_vehiculo);
                 veh.estado_registro = (veh.estado_registro == 1 ? 0 : 1);
 
+                if (veh.motorista != "") { 
+                    veh.motorista = "";
+                    veh.idDUI_motorista = null;
+                }
+
+                var validarMotorista = from m in db.motoristas
+                                       where m.placa == veh.placa
+                                       select m;
+
+                var motorista = validarMotorista.FirstOrDefault();
+
+                if (motorista != null)
+                {
+                    motorista.placa = "";
+                    db.Entry(motorista).State = System.Data.Entity.EntityState.Modified;
+                }
+
                 db.Entry(veh).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
@@ -94,6 +112,89 @@ namespace SistemaProduccionAzucar.Controllers
                     message = "Éxito"
                 });
 
+            }
+        }
+
+        public ActionResult ListarMotoristas()
+        {
+            using (VehiculosEntities db = new VehiculosEntities())
+            {
+                List<cambiarMotorista> list = (from f in db.motoristas where f.Estado == 1
+                                      orderby f.idDUI ascending
+                                      select new cambiarMotorista
+                                      {
+                                          idDUI = f.idDUI,
+                                          motorista = f.motorista
+                                      }).ToList();
+
+                return Json(new
+                {
+                    response = 1,
+                    message = "Éxito",
+                    data = list
+                });
+            }
+        }
+
+        public ActionResult CambiarMotorista(string placaVehiculo, int seleccionaMotorista)
+        {
+            using (VehiculosEntities db = new VehiculosEntities())
+            {
+                motoristas mot = db.motoristas.Find(seleccionaMotorista);
+                mot.placa = placaVehiculo;
+
+                var validarVehiculo = from v in db.vehiculos
+                                      where v.motorista == mot.motorista
+                                      select v;
+
+                var validarMotorista = from m in db.motoristas
+                                       where m.placa == placaVehiculo
+                                       select m;
+
+                var motorista = validarMotorista.FirstOrDefault();
+
+                if (motorista != null)
+                {
+                    motorista.placa = "";
+                    db.Entry(motorista).State = System.Data.Entity.EntityState.Modified;
+                }
+
+
+                vehiculos veh = db.vehiculos.Find(placaVehiculo);
+                veh.motorista = mot.motorista;
+                veh.idDUI_motorista = seleccionaMotorista;
+
+                if (veh.estado_registro == 0)
+                {
+                    return Json(new
+                    {
+                        response = 0,
+                        message = "Vehiculo no activo.",
+                    });
+                }
+                else if (validarVehiculo.Count() > 0)
+                {
+                    return Json(new
+                    {
+                        response = 0,
+                        message = "Transportista ya asignado a diferente vehículo.",
+                    });
+                }
+                else {
+
+                    db.Entry(mot).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    db.Entry(veh).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        response = 1,
+                        message = "Éxito",
+                    });
+                }
+                
             }
         }
     }

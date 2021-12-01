@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Vehiculos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="motoristas">
+    <Key>
+      <PropertyRef Name="idDUI" />
+    </Key>
+    <Property Name="idDUI" Type="int" Nullable="false" />
+    <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="edadMot" Type="int" Nullable="false" />
+    <Property Name="genMot" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="tipoLicMot" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="placa" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="vehiculos">
     <Key>
       <PropertyRef Name="placa" />
@@ -8,13 +20,31 @@
     <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="modelo" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="capacidad" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="idDUI_motorista" Type="int" />
     <Property Name="motorista" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="estado_ingreso" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="fecha_registro" Type="datetime" Nullable="false" />
     <Property Name="disponibilidad" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="estado_registro" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_idDUI_motorista">
+    <End Role="motoristas" Type="Self.motoristas" Multiplicity="0..1" />
+    <End Role="vehiculos" Type="Self.vehiculos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="motoristas">
+        <PropertyRef Name="idDUI" />
+      </Principal>
+      <Dependent Role="vehiculos">
+        <PropertyRef Name="idDUI_motorista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="VehiculosStoreContainer">
+    <EntitySet Name="motoristas" EntityType="Self.motoristas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vehiculos" EntityType="Self.vehiculos" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_idDUI_motorista" Association="Self.FK_idDUI_motorista">
+      <End Role="motoristas" EntitySet="motoristas" />
+      <End Role="vehiculos" EntitySet="vehiculos" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

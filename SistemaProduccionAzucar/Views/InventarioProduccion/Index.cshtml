@@ -1,0 +1,601 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.InventarioProduccion>
+
+@{
+    ViewBag.Title = "Inventario Producción";
+}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#agregarProducto">
+                    <i class="fa fa-plus"></i>
+                    Agregar producto
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-productos">
+                <thead>
+                    <tr>
+                        <th>Código Producto</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pro in Model)
+                    {
+                        <tr>
+                            <td>@pro.cod_producto</td>
+                            <td>@pro.descripcion</td>
+                            <td>@pro.cantidad @pro.unidad</td>
+                            <td>
+                                @if (pro.tipo_producto == "azucar")
+                                {
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarRegistros(@pro.cod_producto)" data-toggle="modal" data-target="#modal-registro-produccion-azucar">
+                                        <i></i>
+                                        Producción
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="mostrarRegistros(@pro.cod_producto)" data-toggle="modal" data-target="#modal-registro-produccion-melaza">
+                                        <i></i>
+                                        Producción
+                                    </button>
+                                }
+
+                                @if (pro.tipo_producto == "melaza")
+                                {
+                                    <br /><br />
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="" data-toggle="modal" data-target="#convertirMateria">
+                                        <i></i>
+                                        Convertir a materia prima
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+<!-- /.card -->
+<!-- AGREGAR PRODUCTO -->
+<div class="modal fade" id="agregarProducto" tabindex="-1" aria-labelledby="agregarProducto" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-producto" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarProducto">Agregar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="unidad">Unidad</label>
+                    <input type="text" class="form-control" name="unidad" id="unidad" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="tipoProducto">Tipo Producto</label>
+                    <select class="form-control" name="tipoProducto" id="tipoProducto">
+                        <option value="">Seleccione tipo de producto</option>
+                        <option value="azucar">Azucar</option>
+                        <option value="melaza">Melaza</option>
+                    </select>
+                </div>
+                <div id="msj-infoAgregarProducto" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- MODAL REGISTRO PRODUCCION AZUCAR-->
+
+<div class="modal fade" id="modal-registro-produccion-azucar" tabindex="-1" aria-labelledby="modal-history" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-details">Producción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="table-registro-produccion" class="table-responsive mailbox-messages">
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" data-toggle="modal" data-target="#agregarProduccionAzucar">
+                        <i class="fa fa-plus"></i>
+                        Agregar producción
+                    </button>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Materia prima</th>
+                                <th>Cantidad materia</th>
+                                <th>Estado producción</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR PRODUCCION AZUCAR-->
+
+<div class="modal fade" id="agregarProduccionAzucar" tabindex="-1" aria-labelledby="agregarProduccionAzucar" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-produccion-azucar" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarProduccion">Agregar Producción Azucar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadUtilizar">Cantidad melaza a utilizar(kg):</label>
+                    <input type="number" class="form-control" name="cantidadUtilizar" id="cantidadUtilizar" placeholder="">
+                </div>
+                <div id="msj-infoAgregarProduccion" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL REGISTRO PRODUCCION MELAZA-->
+
+<div class="modal fade" id="modal-registro-produccion-melaza" tabindex="-1" aria-labelledby="modal-history" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-details">Producción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="table-registro-produccion" class="table-responsive mailbox-messages">
+                    <button type="button" class="btn btn-secondary btn-sm mb-2" data-toggle="modal" data-target="#agregarProduccionMelaza">
+                        <i class="fa fa-plus"></i>
+                        Agregar producción
+                    </button>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Materia prima</th>
+                                <th>Cantidad materia</th>
+                                <th>Estado producción</th>
+                                <th>Producto</th>
+                                <th>Cantidad Producida</th>
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL AGREGAR PRODUCCION MELAZA-->
+
+<div class="modal fade" id="agregarProduccionMelaza" tabindex="-1" aria-labelledby="agregarProduccionMelaza" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-agregar-produccion-melaza" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarProduccionMelaza">Agregar Producción Melaza</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadUtilizarMelaza">Cantidad caña arrimada a utilizar(kg):</label>
+                    <input type="number" class="form-control" name="cantidadUtilizar" id="cantidadUtilizarMelaza" placeholder="">
+                </div>
+                <div id="msj-infoAgregarProduccionMelaza" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="finProduccion" tabindex="-1" aria-labelledby="finProduccionAzucar" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-finalizar-produccion" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="finProduccion">Concluir Producción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="codRegistro" id="codRegistro">
+                <div class="form-group">
+                    <label for="cantidadProducida">Cantidad producida(kg):</label>
+                    <input type="number" class="form-control" name="cantidadProducida" id="cantidadProducida" placeholder="">
+                </div>
+                <div id="msj-infofinProduccion" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="convertirMateria" tabindex="-1" aria-labelledby="convertirMateria" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <form id="form-convertir-a-materia" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="convertirMateria">Convertir a materia prima</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidadConvertir">Cantidad a convertir(kg):</label>
+                    <input type="number" class="form-control" name="cantidadConvertir" id="cantidadConvertir" placeholder="">
+                </div>
+                <div id="msj-info-converir-a-materia" class="alert alert-info d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(() => {
+            let formAgregarProducto = $("#form-agregar-producto").validate({
+            rules: {
+                descripcion: {
+                    required: true
+                },
+                unidad: {
+                    required: true
+                },
+                tipoProducto: {
+                    required: true
+                    },
+            },
+            messages: {
+                descripcion: {
+                    required: "Ingrese descripción."
+                },
+                unidad: {
+                    required: "Ingrese unidad."
+                },
+                tipoProducto: {
+                    required: "Ingrese tipo de producto."
+                },
+            },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
+
+            $('#form-agregar-producto').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-agregar-producto').serialize();
+
+                if ($('#form-agregar-producto').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/InventarioProduccion/AgregarProducto")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-infoAgregarProducto').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+
+            let formAgregarProduccionAzucar = $("#form-agregar-produccion-azucar").validate({
+                rules: {
+                    cantidadUtilizar: {
+                        required: true
+                    },
+                },
+                messages: {
+                    cantidadUtilizar: {
+                        required: "Ingrese cantidad."
+                    },
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
+
+            $('#form-agregar-produccion-azucar').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-agregar-produccion-azucar').serialize();
+
+                if ($('#form-agregar-produccion-azucar').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/InventarioProduccion/AgregarProduccionAzucar")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-infoAgregarProduccion').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+            let formAgregarProduccionMelaza = $("#form-agregar-produccion-melaza").validate({
+                rules: {
+                    cantidadUtilizarMelaza: {
+                        required: true
+                    },
+                },
+                messages: {
+                    cantidadUtilizarMelaza: {
+                        required: "Ingrese cantidad."
+                    },
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
+
+            $('#form-agregar-produccion-melaza').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-agregar-produccion-melaza').serialize();
+
+                if ($('#form-agregar-produccion-azucar').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/InventarioProduccion/AgregarProduccionMelaza")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-infoAgregarProduccionMelaza').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+            let formFinProduccion = $("#form-finalizar-produccion").validate({
+                rules: {
+                    cantidadProducida: {
+                        required: true
+                    },
+                },
+                messages: {
+                    cantidadProducida: {
+                        required: "Ingrese cantidad."
+                    },
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
+
+            $('#form-finalizar-produccion').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-finalizar-produccion').serialize();
+
+                if ($('#form-finalizar-produccion').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/InventarioProduccion/FinalizarProduccion")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-infofinProduccion').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+            let formConvertiraMateria = $("#form-convertir-a-materia").validate({
+                rules: {
+                    cantidadConvertir: {
+                        required: true
+                    },
+                },
+                messages: {
+                    cantidadConvertir: {
+                        required: "Ingrese cantidad."
+                    },
+                },
+                onchange: true,
+                errorClass: "error-validation",
+                errorElement: "p",
+                errorPlacement: function (error, element) {
+                    element.parent().append(error);
+                }
+            });
+
+            $('#form-convertir-a-materia').submit((e) => {
+                e.preventDefault();
+                let values = $('#form-convertir-a-materia').serialize();
+
+                if ($('#form-convertir-a-materia').valid()) {
+                    $('#msj-info').addClass('d-none');
+
+                    $.post('@Url.Content("~/InventarioProduccion/ConvertirMateria")', values, (data) => {
+                        if (data.response == 1) {
+                            window.location.reload(true);
+                        } else if (data.response == 0) {
+                            $('#msj-info-converir-a-materia').text(data.message).removeClass('d-none');
+                        }
+                    });
+                }
+            });
+
+        });
+
+         // VER REGISTROS PRODUCCION EN MODAL
+
+    function mostrarRegistros(id) {
+        $('#table-registro-produccion > table > tbody').html('');
+
+        $.post('@Url.Content("~/InventarioProduccion/MostrarRegistros")',
+        {
+            cod_producto: id
+        },
+        (data) => {
+            if (data.response == 1) {
+                $.each(data.data, function (i, item) {
+
+                    let fechafin = "";
+                    if (item.fechaFinStr == null) {
+                        fechafin = "Sin Finalizar";
+                    } else {
+                        fechafin = item.fechaFinStr;
+                    }
+
+                    let row = '<tr>';
+                    row += '   <td>' + item.correlativo + '</td>';
+                    row += '   <td>' + item.materia_prima + '</td>';
+                    row += '   <td>' + item.cantidad + item.unidad_m + '</td>';
+                    row += '   <td>' + item.estado + '</td>';
+                    row += '   <td>' + item.producto + '</td>';
+                    row += '   <td>' + item.cantidad_producida + item.unidad_p + '</td>';
+                    row += '   <td>' + item.fechaRegistroStr + '</td>';
+                    row += '   <td>' + fechafin + '</td>';
+                    row += '<td><button type="button" class="btn btn-secondary btn-sm" onclick="finalizarPro(' + item.correlativo + ')" data-toggle="modal" data-target="#finProduccion">Concluir Producción </button> </td>';
+                    row += '</tr>';
+
+                    let row2 = '<tr>';
+                    row2 += '   <td>' + item.correlativo + '</td>';
+                    row2 += '   <td>' + item.materia_prima + '</td>';
+                    row2 += '   <td>' + item.cantidad + item.unidad_m + '</td>';
+                    row2 += '   <td>' + item.estado + '</td>';
+                    row2 += '   <td>' + item.producto + '</td>';
+                    row2 += '   <td>' + item.cantidad_producida + item.unidad_p + '</td>';
+                    row2 += '   <td>' + item.fechaRegistroStr + '</td>';
+                    row2 += '   <td>' + fechafin + '</td>';
+                    row2 += '<td>Concluido</td>';
+                    row2 += '</tr>';
+
+                    if (item.estado == "Finalizado") {
+                        $("#table-registro-produccion > table > tbody").append(row2);
+                    } else {
+                        $("#table-registro-produccion > table > tbody").append(row);
+                    }
+                });
+
+                $("#cod_producto").val(id);
+                $('#table-registro-produccion > table').reflowTable();
+            }
+        });
+     }
+
+        function finalizarPro(correlativo) {
+            $("#codRegistro").val(correlativo);
+        }
+
+    </script>
+}

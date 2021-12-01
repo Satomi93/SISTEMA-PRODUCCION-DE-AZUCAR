@@ -4,6 +4,7 @@
     <EntitySetMapping Name="vehiculos">
       <EntityTypeMapping TypeName="Vehiculos.vehiculos">
         <MappingFragment StoreEntitySet="vehiculos">
+          <ScalarProperty Name="idDUI_motorista" ColumnName="idDUI_motorista" />
           <ScalarProperty Name="placa" ColumnName="placa" />
           <ScalarProperty Name="marca" ColumnName="marca" />
           <ScalarProperty Name="modelo" ColumnName="modelo" />
@@ -13,6 +14,19 @@
           <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
           <ScalarProperty Name="disponibilidad" ColumnName="disponibilidad" />
           <ScalarProperty Name="estado_registro" ColumnName="estado_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motoristas">
+      <EntityTypeMapping TypeName="Vehiculos.motoristas">
+        <MappingFragment StoreEntitySet="motoristas">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
+          <ScalarProperty Name="tipoLicMot" ColumnName="tipoLicMot" />
+          <ScalarProperty Name="genMot" ColumnName="genMot" />
+          <ScalarProperty Name="edadMot" ColumnName="edadMot" />
+          <ScalarProperty Name="motorista" ColumnName="motorista" />
+          <ScalarProperty Name="idDUI" ColumnName="idDUI" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

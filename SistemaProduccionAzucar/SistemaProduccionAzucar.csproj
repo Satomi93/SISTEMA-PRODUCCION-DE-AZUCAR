@@ -164,6 +164,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\FincasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventarioProduccionController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\MotoristasController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -198,6 +199,33 @@
       <DependentUpon>Fincas.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InventarioProduccion\historial_inventario_central.cs">
+      <DependentUpon>InventarioProduccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\InventarioProduccion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioProduccion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\InventarioProduccion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioProduccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\InventarioProduccion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventarioProduccion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\inventario_central.cs">
+      <DependentUpon>InventarioProduccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\inventario_produccion.cs">
+      <DependentUpon>InventarioProduccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventarioProduccion\registro_produccion.cs">
+      <DependentUpon>InventarioProduccion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Login\Usuarios.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -244,6 +272,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
+
+    <Compile Include="Models\TableViewModels\cambiarMotorista.cs" />
+    <Compile Include="Models\Motoristas\Motoristas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\motoristas.cs">
+      <DependentUpon>Motoristas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\Motoristas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Motoristas\Motoristas1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Motoristas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
+    <Compile Include="Models\TableViewModels\HistorialInventarioProduccion.cs" />
+    <Compile Include="Models\TableViewModels\InventarioCentralProduccion.cs" />
+    <Compile Include="Models\TableViewModels\InventarioProduccion.cs" />
+
     <Compile Include="Models\Motoristas\Motoristas.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -264,7 +317,10 @@
     </Compile>
     <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
     <Compile Include="Models\TableViewModels\Motoristas.cs" />
+>>>>>>> 62c866ea3c908a4ec7d44e351568ef4fa92df064
+    <Compile Include="Models\TableViewModels\Motoristas.cs" />
     <Compile Include="Models\TableViewModels\RegistroCorte.cs" />
+    <Compile Include="Models\TableViewModels\RegistroProduccion.cs" />
     <Compile Include="Models\TableViewModels\RegistroSembrado.cs" />
     <Compile Include="Models\TableViewModels\Finca.cs" />
     <Compile Include="Models\TableViewModels\HistorialInventarioFinca.cs" />
@@ -272,6 +328,9 @@
     <Compile Include="Models\TableViewModels\Motivos.cs" />
     <Compile Include="Models\TableViewModels\User.cs" />
     <Compile Include="Models\TableViewModels\Vehiculos.cs" />
+    <Compile Include="Models\Vehiculos\motoristas.cs">
+      <DependentUpon>Vehiculos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Vehiculos\Vehiculos.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -296,7 +355,20 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dist\img\logo_canha.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\dist\img\user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\dist\img\user2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\general-styles.css" />
+    <Content Include="Content\plugins\jquery-reflow-table\dist\css\reflow-table.css" />
+    <Content Include="Content\plugins\jquery-reflow-table\dist\css\reflow-table.min.css" />
+    <Content Include="Content\plugins\jquery-reflow-table\dist\js\reflow-table.js" />
+    <Content Include="Content\plugins\jquery-reflow-table\dist\js\reflow-table.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -310,6 +382,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Fincas.edmx</DependentUpon>
       <LastGenOutput>Fincas1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InventarioProduccion\InventarioProduccion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventarioProduccion.edmx</DependentUpon>
+      <LastGenOutput>InventarioProduccion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InventarioProduccion\InventarioProduccion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventarioProduccion.edmx</DependentUpon>
+      <LastGenOutput>InventarioProduccion.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Vehiculos\Vehiculos.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -387,6 +469,36 @@
     </EntityDeploy>
     <Content Include="Models\Vehiculos\Vehiculos.edmx.diagram">
       <DependentUpon>Vehiculos.edmx</DependentUpon>
+    </Content>
+
+    <Content Include="Content\plugins\jquery-reflow-table\bower.json" />
+    <Content Include="Content\plugins\jquery-reflow-table\LICENSE" />
+    <Content Include="Content\plugins\jquery-reflow-table\package.json" />
+    <Content Include="Content\plugins\jquery-reflow-table\README.md" />
+    <EntityDeploy Include="Models\InventarioProduccion\InventarioProduccion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InventarioProduccion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\InventarioProduccion\InventarioProduccion.edmx.diagram"/>
+      <DependentUpon>InventarioProduccion.edmx</DependentUpon>
+
+    <EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Motoristas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Motoristas\Motoristas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+      <LastGenOutput>Motoristas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Motoristas\Motoristas.edmx.diagram">
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Motoristas\Motoristas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Motoristas.edmx</DependentUpon>
+      <LastGenOutput>Motoristas1.cs</LastGenOutput>
+>>>>>>> 62c866ea3c908a4ec7d44e351568ef4fa92df064
     </Content>
     <EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -2411,6 +2523,7 @@
     <Content Include="Views\Fincas\Index.cshtml" />
     <Content Include="Views\Vehiculos\Index.cshtml" />
     <Content Include="Views\Motoristas\Index.cshtml" />
+    <Content Include="Views\InventarioProduccion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
