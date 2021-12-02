@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SistemaProduccionAzucar.Models.Motoristas;
+using SistemaProduccionAzucar.Models.Vehiculos;
 using SistemaProduccionAzucar.Models.TableViewModels;
 
 namespace SistemaProduccionAzucar.Controllers
@@ -16,7 +16,7 @@ namespace SistemaProduccionAzucar.Controllers
         {
             List<Motoristas> list = null;
 
-            using (MotoristasEntities db = new MotoristasEntities())
+            using (VehiculosEntities db = new VehiculosEntities())
             {
                 list = (from m in db.motoristas
                         orderby m.idDUI ascending
@@ -37,7 +37,7 @@ namespace SistemaProduccionAzucar.Controllers
 
         public ActionResult AgregarMotoristas(int idDUI, string motorista, int edad, string genero, string tipoLic)
         {
-            using (MotoristasEntities db = new MotoristasEntities())
+            using (VehiculosEntities db = new VehiculosEntities())
             {
                 var list = from m in db.motoristas
                            where m.idDUI == idDUI
@@ -77,10 +77,31 @@ namespace SistemaProduccionAzucar.Controllers
 
         public ActionResult CambEstado(int id_motorista)
         {
-            using (MotoristasEntities db = new MotoristasEntities())
+            using (VehiculosEntities db = new VehiculosEntities())
             {
                 motoristas mot = db.motoristas.Find(id_motorista);
+                
+                if (mot.Estado == 1)
+                {
+                    var findVehiculos = from d in db.vehiculos
+                                        where d.placa == mot.placa
+                                        select d;
+
+                    var vehiculo = findVehiculos.FirstOrDefault();
+
+                    if (findVehiculos.Count() > 0)
+                    {
+                        mot.placa = "";
+                        vehiculo.motorista = "";
+                        db.Entry(vehiculo).State = System.Data.Entity.EntityState.Modified;
+                        db.Entry(mot).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
+
                 mot.Estado = (mot.Estado == 1 ? 0 : 1);
+                
 
                 db.Entry(mot).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
