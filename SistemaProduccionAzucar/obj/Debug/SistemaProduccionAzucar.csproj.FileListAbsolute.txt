@@ -222,3 +222,6 @@ C:\Users\Josue Ramirez\Documentos\GitHub\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaPro
 C:\Users\alexv\Documents\GitHub\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\logo_canha.png
 C:\Users\alexv\Documents\GitHub\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\user.png
 C:\Users\alexv\Documents\GitHub\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\user2.png
+C:\Users\Satomi\Documents\REPOSITORIO\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\logo_canha.png
+C:\Users\Satomi\Documents\REPOSITORIO\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\user.png
+C:\Users\Satomi\Documents\REPOSITORIO\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Content\dist\img\user2.png

@@ -18,8 +18,8 @@ namespace SistemaProduccionAzucar.Models.TableViewModels
         public decimal? cantidad_producida { get; set; }
         public string unidad_p { get; set; }
         public DateTime? fecha_registro { get; set; }
-        public string fechaRegistroStr { get { return fecha_registro?.ToString("dd/MM/yyyy hh:mm:ss tt"); } }
+        public string fechaRegistroStr { get { return (fecha_registro == null ? null : fecha_registro.Value.ToString("dd/MM/yyyy hh:mm:ss tt")); } }
         public DateTime? fecha_fin { get; set; }
-        public string fechaFinStr { get { return fecha_fin?.ToString("dd/MM/yyyy hh:mm:ss tt"); } }
+        public string fechaFinStr { get { return (fecha_fin == null ? null : fecha_fin.Value.ToString("dd/MM/yyyy hh:mm:ss tt")); } }
     }
 }
