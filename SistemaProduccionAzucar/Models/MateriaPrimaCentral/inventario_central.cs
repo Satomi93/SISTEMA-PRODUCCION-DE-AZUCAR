@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SistemaProduccionAzucar.Models.InventarioProduccion
+namespace SistemaProduccionAzucar.Models.MateriaPrimaCentral
 {
     using System;
     using System.Collections.Generic;

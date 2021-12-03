@@ -1,0 +1,129 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.inventario_centrals>
+@{
+    ViewBag.Title = "Materia Prima Central Azucarero";
+}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-materia-prima">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Tipo Materia</th>
+                        <th>Accion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var elem in Model)
+                    {
+                        <tr>
+                            <td>@elem.CodMateriaPrima</td>
+                            <td>@elem.Descripcion</td>
+                            <td>@elem.Cantidad</td>
+                            <td>@elem.Tipo_Materia </td>
+
+                            <td>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="details(@elem.CodMateriaPrima);" data-toggle="modal" data-target="#modal-history-Materia-Prima">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Historial
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+
+<!-- Modal History de materia Prima-->
+<div class="modal fade" id="modal-history-Materia-Prima" tabindex="-1" aria-labelledby="modal-history-Materia-Prima" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-details">Historial</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="table-history-Materia-Prima" class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Cantidad</th>
+                                <th>Motivo</th>
+                                <th>Comentario</th>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+
+        // VER HISTORIAL EN MODAL DE MATERIA PRIMA CENTRAL
+        function details(id) {
+            $('#table-history-Materia-Prima > table > tbody').html('');
+
+            $.post('@Url.Content("~/MateriaPrimaCentral/HistoryMateriaPrima")',
+            {
+                codMateriaPrima: id
+            },
+            (data) => {
+                if (data.response == 1) {
+                    $.each(data.data, function (i, item) {
+                        let row = '<tr>';
+                        row += '   <td>' + item.Correlativo + '</td>';
+                        row += '   <td>' + item.Cantidad + '</td>';
+                        row += '   <td>' + item.Motivo + '</td>';
+                        row += '   <td>' + item.Comentario + '</td>';
+                        row += '   <td>' + item.fechaCreacionStr + '</td>';
+                        row += '   <td>' + item.Usuario + '</td>';
+                        row += '</tr>';
+
+                        $("#table-history-Materia-Prima > table > tbody").append(row);
+                    });
+
+                    $("#codMateriaPrima").val(id);
+                    $('#table-history-Materia-Prima > table').reflowTable();
+                }
+            });
+        }
+
+    </script>
+}

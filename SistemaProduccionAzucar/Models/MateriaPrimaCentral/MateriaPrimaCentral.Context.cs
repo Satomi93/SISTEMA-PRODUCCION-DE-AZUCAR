@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SistemaProduccionAzucar.Models.InventarioProduccion
+namespace SistemaProduccionAzucar.Models.MateriaPrimaCentral
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class InventarioProduccionEntities : DbContext
+    public partial class MateriaPrimaCentralEntities : DbContext
     {
-        public InventarioProduccionEntities()
-            : base("name=InventarioProduccionEntities")
+        public MateriaPrimaCentralEntities()
+            : base("name=MateriaPrimaCentralEntities")
         {
         }
     
@@ -25,7 +25,8 @@ namespace SistemaProduccionAzucar.Models.InventarioProduccion
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<inventario_produccion> inventario_produccion { get; set; }
-        public virtual DbSet<registro_produccion> registro_produccion { get; set; }
+        public virtual DbSet<cat_motivo_trans_inv_central> cat_motivo_trans_inv_central { get; set; }
+        public virtual DbSet<historial_inventario_central> historial_inventario_central { get; set; }
+        public virtual DbSet<inventario_central> inventario_central { get; set; }
     }
 }

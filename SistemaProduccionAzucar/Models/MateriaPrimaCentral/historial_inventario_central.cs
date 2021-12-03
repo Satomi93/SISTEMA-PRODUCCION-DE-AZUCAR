@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SistemaProduccionAzucar.Models.InventarioProduccion
+namespace SistemaProduccionAzucar.Models.MateriaPrimaCentral
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,7 @@ namespace SistemaProduccionAzucar.Models.InventarioProduccion
         public System.DateTime fecha_creacion { get; set; }
         public string usuario_creacion { get; set; }
     
+        public virtual cat_motivo_trans_inv_central cat_motivo_trans_inv_central { get; set; }
         public virtual inventario_central inventario_central { get; set; }
     }
 }

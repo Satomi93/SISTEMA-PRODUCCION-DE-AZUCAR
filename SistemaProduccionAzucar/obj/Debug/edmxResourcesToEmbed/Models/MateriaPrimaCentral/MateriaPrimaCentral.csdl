@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MateriaPrimaCentral" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cat_motivo_trans_inv_central">
+    <Key>
+      <PropertyRef Name="cod_cat" />
+    </Key>
+    <Property Name="cod_cat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="motivo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="historial_inventario_central" Relationship="Self.FK_cod_cat_central" FromRole="cat_motivo_trans_inv_central" ToRole="historial_inventario_central" />
+  </EntityType>
+  <EntityType Name="historial_inventario_central">
+    <Key>
+      <PropertyRef Name="correlativo" />
+    </Key>
+    <Property Name="correlativo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cod_materia_prima" Type="Int32" Nullable="false" />
+    <Property Name="cantidad" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="cod_cat" Type="Int32" Nullable="false" />
+    <Property Name="comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="usuario_creacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="cat_motivo_trans_inv_central" Relationship="Self.FK_cod_cat_central" FromRole="historial_inventario_central" ToRole="cat_motivo_trans_inv_central" />
+    <NavigationProperty Name="inventario_central" Relationship="Self.fk_historial_a_inventario" FromRole="historial_inventario_central" ToRole="inventario_central" />
+  </EntityType>
+  <EntityType Name="inventario_central">
+    <Key>
+      <PropertyRef Name="cod_materia_prima" />
+    </Key>
+    <Property Name="cod_materia_prima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cantidad" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="historial_inventario_central" Relationship="Self.fk_historial_a_inventario" FromRole="inventario_central" ToRole="historial_inventario_central" />
+  </EntityType>
+  <Association Name="FK_cod_cat_central">
+    <End Role="cat_motivo_trans_inv_central" Type="Self.cat_motivo_trans_inv_central" Multiplicity="1" />
+    <End Role="historial_inventario_central" Type="Self.historial_inventario_central" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cat_motivo_trans_inv_central">
+        <PropertyRef Name="cod_cat" />
+      </Principal>
+      <Dependent Role="historial_inventario_central">
+        <PropertyRef Name="cod_cat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_historial_a_inventario">
+    <End Role="inventario_central" Type="Self.inventario_central" Multiplicity="1" />
+    <End Role="historial_inventario_central" Type="Self.historial_inventario_central" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Principal>
+      <Dependent Role="historial_inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MateriaPrimaCentralEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cat_motivo_trans_inv_central" EntityType="Self.cat_motivo_trans_inv_central" />
+    <EntitySet Name="historial_inventario_central" EntityType="Self.historial_inventario_central" />
+    <EntitySet Name="inventario_central" EntityType="Self.inventario_central" />
+    <AssociationSet Name="FK_cod_cat_central" Association="Self.FK_cod_cat_central">
+      <End Role="cat_motivo_trans_inv_central" EntitySet="cat_motivo_trans_inv_central" />
+      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
+    </AssociationSet>
+    <AssociationSet Name="fk_historial_a_inventario" Association="Self.fk_historial_a_inventario">
+      <End Role="inventario_central" EntitySet="inventario_central" />
+      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

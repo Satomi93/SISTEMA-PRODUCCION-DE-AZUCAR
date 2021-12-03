@@ -1,16 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="InventarioProduccionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="inventario_central">
-    <Key>
-      <PropertyRef Name="cod_materia_prima" />
-    </Key>
-    <Property Name="cod_materia_prima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="cantidad" Type="Decimal" Precision="8" Scale="2" />
-    <Property Name="unidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="tipo_materia" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="historial_inventario_central" Relationship="InventarioProduccionModel.fk_historial_a_inventario" FromRole="inventario_central" ToRole="historial_inventario_central" />
-  </EntityType>
   <EntityType Name="inventario_produccion">
     <Key>
       <PropertyRef Name="cod_producto" />
@@ -53,42 +42,11 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="InventarioProduccionEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="inventario_central" EntityType="Self.inventario_central" />
     <EntitySet Name="inventario_produccion" EntityType="Self.inventario_produccion" />
     <EntitySet Name="registro_produccion" EntityType="Self.registro_produccion" />
     <AssociationSet Name="fk_cod_producto_produccion" Association="Self.fk_cod_producto_produccion">
       <End Role="inventario_produccion" EntitySet="inventario_produccion" />
       <End Role="registro_produccion" EntitySet="registro_produccion" />
     </AssociationSet>
-    <EntitySet Name="historial_inventario_central" EntityType="InventarioProduccionModel.historial_inventario_central" />
-    <AssociationSet Name="fk_historial_a_inventario" Association="InventarioProduccionModel.fk_historial_a_inventario">
-      <End Role="inventario_central" EntitySet="inventario_central" />
-      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="historial_inventario_central">
-    <Key>
-      <PropertyRef Name="correlativo" />
-    </Key>
-    <Property Name="correlativo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="cod_materia_prima" Type="Int32" Nullable="false" />
-    <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-    <Property Name="cod_cat" Type="Int32" Nullable="false" />
-    <Property Name="comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="usuario_creacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="inventario_central" Relationship="InventarioProduccionModel.fk_historial_a_inventario" FromRole="historial_inventario_central" ToRole="inventario_central" />
-  </EntityType>
-  <Association Name="fk_historial_a_inventario">
-    <End Type="InventarioProduccionModel.inventario_central" Role="inventario_central" Multiplicity="1" />
-    <End Type="InventarioProduccionModel.historial_inventario_central" Role="historial_inventario_central" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="inventario_central">
-        <PropertyRef Name="cod_materia_prima" />
-      </Principal>
-      <Dependent Role="historial_inventario_central">
-        <PropertyRef Name="cod_materia_prima" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

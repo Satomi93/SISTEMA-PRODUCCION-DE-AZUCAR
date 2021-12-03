@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MateriaPrimaCentral.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="cat_motivo_trans_inv_central">
+    <Key>
+      <PropertyRef Name="cod_cat" />
+    </Key>
+    <Property Name="cod_cat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="motivo" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="historial_inventario_central">
+    <Key>
+      <PropertyRef Name="correlativo" />
+    </Key>
+    <Property Name="correlativo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cod_materia_prima" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="cod_cat" Type="int" Nullable="false" />
+    <Property Name="comentario" Type="varchar" MaxLength="200" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="usuario_creacion" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="inventario_central">
+    <Key>
+      <PropertyRef Name="cod_materia_prima" />
+    </Key>
+    <Property Name="cod_materia_prima" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="cantidad" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="unidad" Type="varchar" MaxLength="10" />
+    <Property Name="tipo_materia" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <Association Name="FK_cod_cat_central">
+    <End Role="cat_motivo_trans_inv_central" Type="Self.cat_motivo_trans_inv_central" Multiplicity="1" />
+    <End Role="historial_inventario_central" Type="Self.historial_inventario_central" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cat_motivo_trans_inv_central">
+        <PropertyRef Name="cod_cat" />
+      </Principal>
+      <Dependent Role="historial_inventario_central">
+        <PropertyRef Name="cod_cat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_historial_a_inventario">
+    <End Role="inventario_central" Type="Self.inventario_central" Multiplicity="1" />
+    <End Role="historial_inventario_central" Type="Self.historial_inventario_central" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Principal>
+      <Dependent Role="historial_inventario_central">
+        <PropertyRef Name="cod_materia_prima" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MateriaPrimaCentralStoreContainer">
+    <EntitySet Name="cat_motivo_trans_inv_central" EntityType="Self.cat_motivo_trans_inv_central" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="historial_inventario_central" EntityType="Self.historial_inventario_central" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="inventario_central" EntityType="Self.inventario_central" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_cod_cat_central" Association="Self.FK_cod_cat_central">
+      <End Role="cat_motivo_trans_inv_central" EntitySet="cat_motivo_trans_inv_central" />
+      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
+    </AssociationSet>
+    <AssociationSet Name="fk_historial_a_inventario" Association="Self.fk_historial_a_inventario">
+      <End Role="inventario_central" EntitySet="inventario_central" />
+      <End Role="historial_inventario_central" EntitySet="historial_inventario_central" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

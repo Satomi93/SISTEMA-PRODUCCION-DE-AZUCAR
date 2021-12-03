@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MateriaPrimaCentralStoreContainer" CdmEntityContainer="MateriaPrimaCentralEntities">
+    <EntitySetMapping Name="cat_motivo_trans_inv_central">
+      <EntityTypeMapping TypeName="MateriaPrimaCentral.cat_motivo_trans_inv_central">
+        <MappingFragment StoreEntitySet="cat_motivo_trans_inv_central">
+          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
+          <ScalarProperty Name="motivo" ColumnName="motivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="historial_inventario_central">
+      <EntityTypeMapping TypeName="MateriaPrimaCentral.historial_inventario_central">
+        <MappingFragment StoreEntitySet="historial_inventario_central">
+          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="inventario_central">
+      <EntityTypeMapping TypeName="MateriaPrimaCentral.inventario_central">
+        <MappingFragment StoreEntitySet="inventario_central">
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
