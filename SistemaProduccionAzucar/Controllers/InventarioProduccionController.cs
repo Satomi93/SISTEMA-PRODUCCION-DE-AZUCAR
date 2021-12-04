@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SistemaProduccionAzucar.Models;
 using SistemaProduccionAzucar.Models.InventarioProduccion;
+using SistemaProduccionAzucar.Models.MateriaPrimaCentral;
 using SistemaProduccionAzucar.Models.TableViewModels;
 using SistemaProduccionAzucar.Models.Login;
 
@@ -37,9 +38,10 @@ namespace SistemaProduccionAzucar.Controllers
 
         public ActionResult AgregarProducto(string descripcion, string unidad, string tipoProducto)
         {
-            using (InventarioProduccionEntities db = new InventarioProduccionEntities() )
+            using (InventarioProduccionEntities db = new InventarioProduccionEntities())
             {
-                try {
+                try
+                {
 
                     var validarTipoProducto = from p in db.inventario_produccion
                                               where p.tipo_producto == tipoProducto
@@ -48,7 +50,8 @@ namespace SistemaProduccionAzucar.Controllers
 
                     if (producto.tipo_producto == "melaza")
                     {
-                        return Json(new { 
+                        return Json(new
+                        {
                             response = 0,
                             message = "Melaza ya existe en inventario."
                         });
@@ -62,7 +65,8 @@ namespace SistemaProduccionAzucar.Controllers
 
                     db.inventario_produccion.Add(pro);
                     db.SaveChanges();
-                    return Json(new {
+                    return Json(new
+                    {
                         response = 1,
                         message = "Exito"
                     });
@@ -115,9 +119,11 @@ namespace SistemaProduccionAzucar.Controllers
                     });
 
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                return Json(new{
+                return Json(new
+                {
                     response = 0,
                     message = "Error. " + ex.Message
                 });
@@ -133,15 +139,16 @@ namespace SistemaProduccionAzucar.Controllers
                 {
                     var usuario = (usuarios)Session["UserData"];
 
-                    registro_produccion pro = new registro_produccion();
-                    inventario_central inv = new inventario_central();
 
-                    var findMateria = from i in db.inventario_central
-                                  where i.tipo_materia == "melaza"
-                                  select i;
+
+                    MateriaPrimaCentralEntities central = new MateriaPrimaCentralEntities();
+                    var findMateria = from i in central.inventario_central
+                                      where i.tipo_materia == "melaza"
+                                      select i;
                     var materia = findMateria.FirstOrDefault();
 
 
+                    registro_produccion pro = new registro_produccion();
                     var findProducto = from p in db.inventario_produccion
                                        where p.cod_producto == productoSeleccionado
                                        select p;
@@ -149,7 +156,7 @@ namespace SistemaProduccionAzucar.Controllers
                     var producto = findProducto.FirstOrDefault();
 
 
-                    if ( materia.cantidad >= cantidadUtilizar)
+                    if (materia.cantidad >= cantidadUtilizar)
                     {
                         pro.cod_materia = materia.cod_materia_prima;
                         pro.materia_prima = materia.descripcion;
@@ -166,17 +173,19 @@ namespace SistemaProduccionAzucar.Controllers
 
                         decimal? resta = materia.cantidad - cantidadUtilizar;
                         materia.cantidad = resta;
-                        db.Entry(materia).State = System.Data.Entity.EntityState.Modified;
-                        
+                        central.Entry(materia).State = System.Data.Entity.EntityState.Modified;
+
 
                         historial_inventario_central his = new historial_inventario_central();
                         his.cod_materia_prima = materia.cod_materia_prima;
                         his.cantidad = cantidadUtilizar;
-                        his.cod_cat = 1;
+                        his.cod_cat = 2;
                         his.comentario = "Por salida para produccion.";
                         his.fecha_creacion = DateTime.Now;
                         his.usuario_creacion = usuario.username;
-                        db.historial_inventario_central.Add(his);
+                        central.historial_inventario_central.Add(his);
+
+                        central.SaveChanges();
                         db.SaveChanges();
 
                         return Json(new
@@ -199,7 +208,8 @@ namespace SistemaProduccionAzucar.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { 
+                return Json(new
+                {
                     response = 0,
                     message = "Error. " + ex.Message
                 });
@@ -216,7 +226,8 @@ namespace SistemaProduccionAzucar.Controllers
 
                     registro_produccion pro = new registro_produccion();
 
-                    var findMateria = from i in db.inventario_central
+                    MateriaPrimaCentralEntities central = new MateriaPrimaCentralEntities();
+                    var findMateria = from i in central.inventario_central
                                       where i.tipo_materia == "caña arrimada"
                                       select i;
                     var materia = findMateria.FirstOrDefault();
@@ -246,16 +257,18 @@ namespace SistemaProduccionAzucar.Controllers
 
                         decimal? resta = materia.cantidad - cantidadUtilizar;
                         materia.cantidad = resta;
-                        db.Entry(materia).State = System.Data.Entity.EntityState.Modified;
+                        central.Entry(materia).State = System.Data.Entity.EntityState.Modified;
 
                         historial_inventario_central his = new historial_inventario_central();
                         his.cod_materia_prima = materia.cod_materia_prima;
                         his.cantidad = cantidadUtilizar;
-                        his.cod_cat = 1;
+                        his.cod_cat = 2;
                         his.comentario = "Por salida para produccion.";
                         his.fecha_creacion = DateTime.Now;
                         his.usuario_creacion = usuario.username;
-                        db.historial_inventario_central.Add(his);
+                        central.historial_inventario_central.Add(his);
+
+                        central.SaveChanges();
                         db.SaveChanges();
 
                         return Json(new
@@ -290,31 +303,33 @@ namespace SistemaProduccionAzucar.Controllers
         {
             using (InventarioProduccionEntities db = new InventarioProduccionEntities())
             {
-                try { 
-                var findRegistro = from r in db.registro_produccion
-                          where r.correlativo == codRegistro
-                          select r;
-                var registro = findRegistro.FirstOrDefault();
+                try
+                {
+                    var findRegistro = from r in db.registro_produccion
+                                       where r.correlativo == codRegistro
+                                       select r;
+                    var registro = findRegistro.FirstOrDefault();
 
-                registro.cantidad_producida = cantidadProducida;
-                registro.fecha_fin = DateTime.Now;
-                registro.estado = "Finalizado";
+                    registro.cantidad_producida = cantidadProducida;
+                    registro.fecha_fin = DateTime.Now;
+                    registro.estado = "Finalizado";
 
-                var findProducto = from p in db.inventario_produccion
-                                   where p.cod_producto == registro.cod_producto
-                                   select p;
-                var producto = findProducto.FirstOrDefault();
+                    var findProducto = from p in db.inventario_produccion
+                                       where p.cod_producto == registro.cod_producto
+                                       select p;
+                    var producto = findProducto.FirstOrDefault();
 
-                decimal? suma = producto.cantidad + cantidadProducida;
-                producto.cantidad = suma;
+                    decimal? suma = producto.cantidad + cantidadProducida;
+                    producto.cantidad = suma;
 
-                db.Entry(registro).State = System.Data.Entity.EntityState.Modified;
-                db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
+                    db.Entry(registro).State = System.Data.Entity.EntityState.Modified;
+                    db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
 
-                db.SaveChanges();
+                    db.SaveChanges();
 
 
-                    return Json(new { 
+                    return Json(new
+                    {
                         response = 1,
                         message = "Exito. "
                     });
@@ -323,7 +338,8 @@ namespace SistemaProduccionAzucar.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new {
+                    return Json(new
+                    {
                         response = 0,
                         message = "Error. " + ex.Message
                     });
@@ -339,7 +355,8 @@ namespace SistemaProduccionAzucar.Controllers
                 {
                     var usuario = (usuarios)Session["UserData"];
 
-                    var findMelazaMateria = from m in db.inventario_central
+                    MateriaPrimaCentralEntities central = new MateriaPrimaCentralEntities();
+                    var findMelazaMateria = from m in central.inventario_central
                                             where m.tipo_materia == "melaza"
                                             select m;
                     var melazaMateria = findMelazaMateria.FirstOrDefault();
@@ -351,11 +368,13 @@ namespace SistemaProduccionAzucar.Controllers
 
                     if (cantidadConvertir > melazaProduccion.cantidad)
                     {
-                        return Json(new { 
+                        return Json(new
+                        {
                             response = 0,
                             message = "No hay suficiente melaza en melaza producción."
                         });
-                    } else
+                    }
+                    else
                     {
                         decimal? sumaMateria = melazaMateria.cantidad + cantidadConvertir;
                         melazaMateria.cantidad = sumaMateria;
@@ -363,21 +382,23 @@ namespace SistemaProduccionAzucar.Controllers
                         decimal? restaProduccion = melazaProduccion.cantidad - cantidadConvertir;
                         melazaProduccion.cantidad = restaProduccion;
 
-                        db.Entry(melazaMateria).State = System.Data.Entity.EntityState.Modified;
+                        central.Entry(melazaMateria).State = System.Data.Entity.EntityState.Modified;
                         db.Entry(melazaProduccion).State = System.Data.Entity.EntityState.Modified;
 
                         historial_inventario_central his = new historial_inventario_central();
                         his.cod_materia_prima = melazaMateria.cod_materia_prima;
                         his.cantidad = cantidadConvertir;
-                        his.cod_cat = 2;
+                        his.cod_cat = 1;
                         his.comentario = "Por ingreso de materia prima.";
                         his.fecha_creacion = DateTime.Now;
                         his.usuario_creacion = usuario.username;
-                        db.historial_inventario_central.Add(his);
+
+                        central.historial_inventario_central.Add(his);
                         db.SaveChanges();
+                        central.SaveChanges();
 
-
-                        return Json(new { 
+                        return Json(new
+                        {
                             response = 1,
                             message = "Exito. "
                         });
@@ -387,9 +408,10 @@ namespace SistemaProduccionAzucar.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { 
-                    response = 0,
-                    message = "Error. " + ex.Message
+                    return Json(new
+                    {
+                        response = 0,
+                        message = "Error. " + ex.Message
                     });
                 }
             }

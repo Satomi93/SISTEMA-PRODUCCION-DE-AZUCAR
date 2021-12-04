@@ -115,33 +115,27 @@
                                     </a>
                                 </li>
                             }
-                            else if (user.tipo_usuario == "Jefe de área")
+                            else if (user.tipo_usuario == "Jefe de producción")
                             {
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="@Url.Action("Index", "InventarioProduccion")" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
+                                        <p>Producción</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="@Url.Action("Index", "MateriaPrimaCentral")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                        <p>Materia prima central</p>
                                     </a>
                                 </li>
                             }
-                            else if (user.tipo_usuario == "Encargado de central")
+                            else if (user.tipo_usuario == "Presidente de central azucarero")
                             {
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="@Url.Action("Index", "Reporteria")" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                        <p>Reportes</p>
                                     </a>
                                 </li>
                             }

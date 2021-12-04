@@ -45,11 +45,11 @@ namespace SistemaProduccionAzucar.Controllers
                                     case "Encargado transporte caña":
                                         url = "/Vehiculos/";
                                         break;
-                                    case "Jefe de área":
-                                        url = "~/User/";
+                                    case "Jefe de producción":
+                                        url = "/InventarioProduccion/";
                                         break;
-                                    case "Encargado de central":
-                                        url = "~/User/";
+                                    case "Presidente de central azucarero":
+                                        url = "/Reporteria/";
                                         break;
                                 }
 

@@ -322,6 +322,8 @@
                 (data) => {
                     if (data.response == 1) {
                         window.location.reload(true);
+                    } else if (data.response == 0) {
+                        alert(data.message);
                     }
                 });
             }

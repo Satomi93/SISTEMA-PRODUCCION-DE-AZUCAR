@@ -42,6 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -165,8 +168,10 @@
     <Compile Include="Controllers\FincasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioProduccionController.cs" />
+    <Compile Include="Controllers\MateriaPrimaCentralController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\MotoristasController.cs" />
+    <Compile Include="Controllers\ReporteriaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VehiculosController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -199,9 +204,6 @@
       <DependentUpon>Fincas.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\InventarioProduccion\historial_inventario_central.cs">
-      <DependentUpon>InventarioProduccion.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\InventarioProduccion\InventarioProduccion.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -216,9 +218,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InventarioProduccion.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\InventarioProduccion\inventario_central.cs">
-      <DependentUpon>InventarioProduccion.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InventarioProduccion\inventario_produccion.cs">
       <DependentUpon>InventarioProduccion.tt</DependentUpon>
@@ -245,6 +244,30 @@
       <DependentUpon>Usuarios.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MateriaPrimaCentral\cat_motivo_trans_inv_central.cs">
+      <DependentUpon>MateriaPrimaCentral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrimaCentral\historial_inventario_central.cs">
+      <DependentUpon>MateriaPrimaCentral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrimaCentral\inventario_central.cs">
+      <DependentUpon>MateriaPrimaCentral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrimaCentral.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrimaCentral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\MateriaPrima\cat_motivo_trans_inv_finca.cs">
       <DependentUpon>MateriaPrima.tt</DependentUpon>
     </Compile>
@@ -272,7 +295,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
-
     <Compile Include="Models\TableViewModels\cambiarMotorista.cs" />
     <Compile Include="Models\Motoristas\Motoristas.Context.cs">
       <AutoGen>True</AutoGen>
@@ -294,9 +316,10 @@
     </Compile>
     <Compile Include="Models\TableViewModels\FincasViewModel.cs" />
     <Compile Include="Models\TableViewModels\HistorialInventarioProduccion.cs" />
+    <Compile Include="Models\TableViewModels\historial_inventario_centrals.cs" />
     <Compile Include="Models\TableViewModels\InventarioCentralProduccion.cs" />
     <Compile Include="Models\TableViewModels\InventarioProduccion.cs" />
-
+    <Compile Include="Models\TableViewModels\inventario_centrals.cs" />
     <!--<Compile Include="Models\Motoristas\Motoristas.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -393,6 +416,16 @@
       <DependentUpon>InventarioProduccion.edmx</DependentUpon>
       <LastGenOutput>InventarioProduccion.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
+      <LastGenOutput>MateriaPrimaCentral.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
+      <LastGenOutput>MateriaPrimaCentral.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Vehiculos\Vehiculos.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Vehiculos.edmx</DependentUpon>
@@ -403,6 +436,7 @@
       <DependentUpon>Vehiculos.edmx</DependentUpon>
       <LastGenOutput>Vehiculos1.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\dist\css\adminlte.css.map" />
@@ -470,7 +504,6 @@
     <Content Include="Models\Vehiculos\Vehiculos.edmx.diagram">
       <DependentUpon>Vehiculos.edmx</DependentUpon>
     </Content>
-
     <Content Include="Content\plugins\jquery-reflow-table\bower.json" />
     <Content Include="Content\plugins\jquery-reflow-table\LICENSE" />
     <Content Include="Content\plugins\jquery-reflow-table\package.json" />
@@ -479,9 +512,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>InventarioProduccion.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\InventarioProduccion\InventarioProduccion.edmx.diagram"/>
-      <!--<DependentUpon>InventarioProduccion.edmx</DependentUpon>-->
-
+    <Content Include="Models\InventarioProduccion\InventarioProduccion.edmx.diagram" />
+    <!--<DependentUpon>InventarioProduccion.edmx</DependentUpon>-->
     <EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Motoristas.Designer.cs</LastGenOutput>
@@ -498,8 +530,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Motoristas.edmx</DependentUpon>
       <LastGenOutput>Motoristas1.cs</LastGenOutput>
-<!-->>>>>>> 62c866ea3c908a4ec7d44e351568ef4fa92df064-->
+      <!-->>>>>>> 62c866ea3c908a4ec7d44e351568ef4fa92df064-->
     </Content>
+    <EntityDeploy Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MateriaPrimaCentral.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.edmx.diagram">
+      <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
+    </Content>
+    <Content Include="App_Browsers\qt.browser" />
     <!--<EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Motoristas.Designer.cs</LastGenOutput>
@@ -2524,6 +2564,9 @@
     <Content Include="Views\Vehiculos\Index.cshtml" />
     <Content Include="Views\Motoristas\Index.cshtml" />
     <Content Include="Views\InventarioProduccion\Index.cshtml" />
+    <Content Include="Views\MateriaPrimaCentral\Index.cshtml" />
+    <Content Include="Views\Reporteria\Index.cshtml" />
+    <Content Include="Views\Reporteria\generarReporte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -84,33 +84,47 @@ namespace SistemaProduccionAzucar.Controllers
             using (VehiculosEntities db = new VehiculosEntities())
             {
                 vehiculos veh = db.vehiculos.Find(cod_vehiculo);
-                veh.estado_registro = (veh.estado_registro == 1 ? 0 : 1);
 
-                if (veh.motorista != "") { 
-                    veh.motorista = "";
-                    veh.idDUI_motorista = null;
-                }
-
-                var validarMotorista = from m in db.motoristas
-                                       where m.placa == veh.placa
-                                       select m;
-
-                var motorista = validarMotorista.FirstOrDefault();
-
-                if (motorista != null)
+                if (veh.disponibilidad == "cargado")
                 {
-                    motorista.placa = "";
-                    db.Entry(motorista).State = System.Data.Entity.EntityState.Modified;
-                }
+                    return Json(new
+                    {
+                        response = 0,
+                        message = "Vehículo actualmente cargado"
+                    });
 
-                db.Entry(veh).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                return Json(new
+                } else
                 {
-                    response = 1,
-                    message = "Éxito"
-                });
+                    veh.estado_registro = (veh.estado_registro == 1 ? 0 : 1);
+
+                    if (veh.motorista != "")
+                    {
+                        veh.motorista = "";
+                        veh.idDUI_motorista = null;
+                    }
+
+                    var validarMotorista = from m in db.motoristas
+                                           where m.placa == veh.placa
+                                           select m;
+
+                    var motorista = validarMotorista.FirstOrDefault();
+
+                    if (motorista != null)
+                    {
+                        motorista.placa = "";
+                        db.Entry(motorista).State = System.Data.Entity.EntityState.Modified;
+                    }
+
+                    db.Entry(veh).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        response = 1,
+                        message = "Éxito"
+                    });
+
+                }
 
             }
         }

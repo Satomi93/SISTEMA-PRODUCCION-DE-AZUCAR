@@ -1,0 +1,45 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.RegistroProduccion>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>
+    <!-- /.navbar -->
+    <h2>Reportes de producción </h2>
+    <div class="">
+        <table class="table  table-striped" id="">
+            <thead>
+                <tr>
+                    <th>Correlativo</th>
+                    <th>Materia prima</th>
+                    <th>Cantidad materia</th>
+                    <th>Estado</th>
+                    <th>Producto</th>
+                    <th>Cantidad producida</th>
+                    <th>Fecha registro</th>
+                    <th>Fecha fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pro in Model)
+                {
+                    <tr>
+                        <td>@pro.correlativo</td>
+                        <td>@pro.materia_prima</td>
+                        <td>@pro.cantidad @pro.unidad_m</td>
+                        <td>@pro.estado</td>
+                        <td>@pro.producto</td>
+                        <td>@pro.cantidad_producida @pro.unidad_p</td>
+                        <td>@pro.fecha_registro</td>
+                        <td>@pro.fecha_fin</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- /.table -->
+    </div>
+</body>
+
+</html>

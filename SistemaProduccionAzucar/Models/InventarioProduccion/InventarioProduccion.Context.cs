@@ -25,9 +25,7 @@ namespace SistemaProduccionAzucar.Models.InventarioProduccion
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<inventario_central> inventario_central { get; set; }
         public virtual DbSet<inventario_produccion> inventario_produccion { get; set; }
         public virtual DbSet<registro_produccion> registro_produccion { get; set; }
-        public virtual DbSet<historial_inventario_central> historial_inventario_central { get; set; }
     }
 }
