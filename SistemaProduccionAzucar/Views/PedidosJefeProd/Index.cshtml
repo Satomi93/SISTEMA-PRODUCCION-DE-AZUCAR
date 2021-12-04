@@ -1,0 +1,379 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.PedidosViewModel>
+@{
+    ViewBag.Title = "Pedidos central azucarero";
+}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search" id="inp-search">
+                <div class="input-group-append">
+                    <div class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-create-pedido">
+                    <i class="fa fa-plus"></i>
+                    Agregar pedido
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location.reload(true);">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-pedidos">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Cant. Pedido</th>
+                        <th>Estado</th>
+                        <th>Prioridad</th>
+                        <th>Fecha pedido</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var mat in Model)
+                    {
+                        <tr>
+                            <td>@mat.correlativo</td>
+                            <td>@mat.descripcion</td>
+                            <td>@mat.cant_pedido</td>
+                            <td>@mat.estadoStr</td>
+                            <td>@mat.prioridad</td>
+                            <td>@mat.fechaPedidoStr</td>
+                            <td>
+                                @if (@mat.estado != "A" && @mat.estado != "C") {
+                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" onclick="changeState(@mat.correlativo)" data-target="#modal-change-state">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        Cambiar estado
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="details(@mat.correlativo);" data-toggle="modal" data-target="#modal-details">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Detalles
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+<!-- /.card -->
+
+<!-- Modal Create Pedido -->
+<div class="modal fade" id="modal-create-pedido" tabindex="-1" aria-labelledby="modal-create-pedido" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-create" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-create-pedido">Agregar pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="text" class="form-control" name="cantidad" id="cantidad" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="fechaDeseada">Fecha deseada:</label>
+                    <input type="date" class="form-control" name="fechaDeseada" id="fechaDeseada" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="prioridad">Prioridad:</label>
+                    <select class="form-control" name="prioridad" id="prioridad">
+                        <option value="">Seleccione prioridad</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+                <div id="msj-info" class="alert alert-danger d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Details -->
+<div class="modal fade" id="modal-details" tabindex="-1" aria-labelledby="modal-details" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-details">Ver detalles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="details-list"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Change State -->
+<div class="modal fade" id="modal-change-state" tabindex="-1" aria-labelledby="modal-change-state" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-change-state" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-change-state">Cambiar estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="correlativoPedido" id="correlativoPedido">
+                <div class="form-group">
+                    <label for="estadoCS">Estado:</label>
+                    <select class="form-control" name="estadoCS" id="estadoCS">
+                        <option value="">Seleccione estado</option>
+                        <option value="A">Entregado</option>
+                        <option value="C">Cancelado</option>
+                    </select>
+                </div>
+                <div id="msj-info-cs" class="alert alert-danger d-none" role="alert"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i>
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(() => {
+        // VALIDACION DE FORMULARIOS
+        // PEDIDO
+        let formCreate = $("#form-create").validate({
+            rules: {
+                cantidad: {
+                    required: true,
+                    number: true
+                },
+                fechaDeseada: {
+                    required: true
+                },
+                prioridad: {
+                    required: true
+                }
+            },
+            messages: {
+                cantidad: {
+                    required: "Por favor ingrese una cantidad.",
+                    number: "Debe ingresar una cantidad."
+                },
+                fechaDeseada: {
+                    required: "Por favor ingrese una fecha."
+                },
+                prioridad: {
+                    required: "Por favor seleccione una prioridad."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        // CAMBIO ESTADO
+        let formChangeState = $("#form-change-state").validate({
+            rules: {
+                estadoCS: {
+                    required: true
+                }
+            },
+            messages: {
+                estadoCS: {
+                    required: "Por favor seleccione un estado."
+                }
+            },
+            onchange: true,
+            errorClass: "error-validation",
+            errorElement: "p",
+            errorPlacement: function (error, element) {
+                element.parent().append(error);
+            }
+        });
+
+        // MODAL CREAR PEDIDO
+        $("#modal-create-pedido").on("hidden.bs.modal", () => {
+            formCreate.resetForm();
+        });
+
+        // MODAL CAMBIAR ESTADO
+        $("#modal-change-state").on("hidden.bs.modal", () => {
+            formChangeState.resetForm();
+        });
+
+        // CREACION DE PEDIDO
+        $('#form-create').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-create').valid()) {
+                $('#msj-info').addClass('d-none');
+                let values = $('#form-create').serialize();
+
+                $.post('@Url.Content("~/PedidosJefeProd/Create")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+
+        // CAMBIO ESTADO PEDIDO
+        $('#form-change-state').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-change-state').valid()) {
+                $('#msj-info-cs').addClass('d-none');
+                let values = $('#form-change-state').serialize();
+
+                $.post('@Url.Content("~/PedidosJefeProd/ChangeState")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info-cs').text(data.message).removeClass('d-none');
+                    }
+                });
+            }
+        });
+
+        /* REFLOW Y DATATABLE */
+        /* TABLA MATERIA PRIMA */
+        $('#table-pedidos').reflowTable();
+        let tableSearch = $("#table-pedidos").DataTable({
+            ordering: false,
+            info: false,
+            searching: true,
+            lengthChange: false,
+            language: {
+                oPaginate: {
+                    sNext: '<i class="fas fa-chevron-right"></i>',
+                    sPrevious: '<i class="fas fa-chevron-left"></i>'
+                }
+            },
+            drawCallback: (settings) => {
+                $('#table-pedidos_paginate').addClass('card-footer p-2 d-flex justify-content-end');
+                $('#table-pedidos_paginate > span').css('padding', '.25rem .5rem');
+                $("#table-pedidos_previous").addClass('btn btn-default btn-sm');
+                $("#table-pedidos_next").addClass('btn btn-default btn-sm');
+            }
+        });
+
+        /* BUSQUEDA*/
+        $('#inp-search').keyup(() => {
+            let texto = $('#inp-search').val().toLowerCase();
+
+            if (tableSearch != undefined) {
+                tableSearch
+                    .search(texto)
+                    .draw();
+            }
+        });
+    });
+
+    // VER DETALLES EN MODAL
+    function details(correlativo) {
+        $.post('@Url.Content("~/PedidosJefeProd/Details")', 
+        {
+            correlativo: correlativo
+        }, 
+        (data) => {
+            if (data.response == 1) {
+                let html = '';
+
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">N°: </div>';
+                html +=     '<div class="col-md-8">' + data.data.correlativo + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Descripción: </div>';
+                html +=     '<div class="col-md-8">' + data.data.descripcion + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Cantidad pedido: </div>';
+                html +=     '<div class="col-md-8">' + data.data.cant_pedido + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Estado: </div>';
+                html +=     '<div class="col-md-8 ' + (data.data.estado == 'A' ? 'text-success' : data.data.estado == 'C' ? 'text-danger' : '') + '">' + data.data.estadoStr + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Prioridad: </div>';
+                html +=     '<div class="col-md-8">' + data.data.prioridad + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Usuario pedido: </div>';
+                html +=     '<div class="col-md-8">' + data.data.usuarioPedido + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Fecha pedido: </div>';
+                html +=     '<div class="col-md-8">' + data.data.fechaPedidoStr + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Fecha deseada: </div>';
+                html +=     '<div class="col-md-8">' + data.data.fechaDeseadaStr + '</div>';
+                html += '</div>';
+                html += '<div class="row pb-3">';
+                html +=     '<div class="col-md-4 font-weight-bold">Fecha recibida: </div>';
+                html +=     '<div class="col-md-8">' + (data.data.fechaRecibidaStr == null ? '' : data.data.fechaRecibidaStr) + '</div>';
+                html += '</div>';
+
+                $('#details-list').html(html);
+            }
+        });
+    }
+
+    function changeState(correlativo) {
+        $("#correlativoPedido").val(correlativo);
+    }
+    </script>
+}

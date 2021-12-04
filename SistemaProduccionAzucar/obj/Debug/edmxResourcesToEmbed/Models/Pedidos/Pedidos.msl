@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PedidosModelStoreContainer" CdmEntityContainer="PedidosEntities">
+    <EntitySetMapping Name="inventario_central_p">
+      <EntityTypeMapping TypeName="PedidosModel.inventario_central_p">
+        <MappingFragment StoreEntitySet="inventario_central">
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="historial_inventario_central_p">
+      <EntityTypeMapping TypeName="PedidosModel.historial_inventario_central_p">
+        <MappingFragment StoreEntitySet="historial_inventario_central">
+          <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
+          <ScalarProperty Name="cod_cat" ColumnName="cod_cat" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="cod_materia_prima" ColumnName="cod_materia_prima" />
+          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="motoristas_p">
+      <EntityTypeMapping TypeName="PedidosModel.motoristas_p">
+        <MappingFragment StoreEntitySet="motoristas">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
+          <ScalarProperty Name="tipoLicMot" ColumnName="tipoLicMot" />
+          <ScalarProperty Name="genMot" ColumnName="genMot" />
+          <ScalarProperty Name="edadMot" ColumnName="edadMot" />
+          <ScalarProperty Name="motorista" ColumnName="motorista" />
+          <ScalarProperty Name="idDUI" ColumnName="idDUI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vehiculos_p">
+      <EntityTypeMapping TypeName="PedidosModel.vehiculos_p">
+        <MappingFragment StoreEntitySet="vehiculos">
+          <ScalarProperty Name="estado_registro" ColumnName="estado_registro" />
+          <ScalarProperty Name="disponibilidad" ColumnName="disponibilidad" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+          <ScalarProperty Name="estado_ingreso" ColumnName="estado_ingreso" />
+          <ScalarProperty Name="motorista" ColumnName="motorista" />
+          <ScalarProperty Name="idDUI_motorista" ColumnName="idDUI_motorista" />
+          <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+          <ScalarProperty Name="modelo" ColumnName="modelo" />
+          <ScalarProperty Name="marca" ColumnName="marca" />
+          <ScalarProperty Name="placa" ColumnName="placa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pedidos_canha">
+      <EntityTypeMapping TypeName="PedidosModel.pedidos_canha">
+        <MappingFragment StoreEntitySet="pedidos_canha">
+          <ScalarProperty Name="placa_vehiculo" ColumnName="placa_vehiculo" />
+          <ScalarProperty Name="fecha_recibida" ColumnName="fecha_recibida" />
+          <ScalarProperty Name="fecha_deseada" ColumnName="fecha_deseada" />
+          <ScalarProperty Name="prioridad" ColumnName="prioridad" />
+          <ScalarProperty Name="usuario_pedido" ColumnName="usuario_pedido" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="cant_pedido" ColumnName="cant_pedido" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="inventario_finca_produccion">
+      <EntityTypeMapping TypeName="PedidosModel.inventario_finca_produccion">
+        <MappingFragment StoreEntitySet="inventario_finca_produccion">
+          <ScalarProperty Name="tipo_materia" ColumnName="tipo_materia" />
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="cod_materia" ColumnName="cod_materia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

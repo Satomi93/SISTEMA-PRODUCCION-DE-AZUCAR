@@ -103,17 +103,18 @@
                             else if (user.tipo_usuario == "Encargado transporte caña")
                             {
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Vehiculos")" class="nav-link active">
+                                    <a href="@Url.Action("Index", "Vehiculos")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Vehiculos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index", "Motoristas")" class="nav-link active">
+                                    <a href="@Url.Action("Index", "Motoristas")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Motoristas</p>
                                     </a>
                                 </li>
+<<<<<<< Updated upstream
                             }
                             else if (user.tipo_usuario == "Jefe de producción")
                             {
@@ -121,12 +122,36 @@
                                     <a href="@Url.Action("Index", "InventarioProduccion")" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Producción</p>
+=======
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "PedidosTransporte")" class="nav-link 
+                                       @((Url.RequestContext.HttpContext.Request.Path == "/PedidosTransporte/index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosTransporte/Index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosTransporte/")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosTransporte") ? "active" : "") ">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Pedidos</p>
+>>>>>>> Stashed changes
                                     </a>
                                 </li>
+                            }
+                            else if (user.tipo_usuario == "Jefe de producción")
+                            {
                                 <li class="nav-item">
+<<<<<<< Updated upstream
                                     <a href="@Url.Action("Index", "MateriaPrimaCentral")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Materia prima central</p>
+=======
+                                    <a href="@Url.Action("Index", "PedidosJefeProd")" class="nav-link 
+                                       @((Url.RequestContext.HttpContext.Request.Path == "/PedidosJefeProd/index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosJefeProd/Index")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosJefeProd/")
+                                    || (Url.RequestContext.HttpContext.Request.Path == "/PedidosJefeProd") ? "active" : "") ">
+                                        <i class=" far fa-circle nav-icon">
+                                        </i>
+                                        <p>Pedidos</p>
+>>>>>>> Stashed changes
                                     </a>
                                 </li>
                             }
