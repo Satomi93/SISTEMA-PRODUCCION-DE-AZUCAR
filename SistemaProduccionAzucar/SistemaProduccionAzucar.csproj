@@ -171,12 +171,12 @@
     <Compile Include="Controllers\MateriaPrimaCentralController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\MotoristasController.cs" />
-<<<<<<< Updated upstream
+<!--<<<<<<< Updated upstream-->
     <Compile Include="Controllers\ReporteriaController.cs" />
-=======
+    <!--=======-->
     <Compile Include="Controllers\PedidosJefeProdController.cs" />
     <Compile Include="Controllers\PedidosTransporteController.cs" />
->>>>>>> Stashed changes
+    <!-->>>>>>> Stashed changes-->
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VehiculosController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -300,8 +300,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MateriaPrima.edmx</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
-=======
+    <!--<<<<<<< Updated upstream
+=======-->
     <Compile Include="Models\Pedidos\historial_inventario_central_p.cs">
       <DependentUpon>Pedidos.tt</DependentUpon>
     </Compile>
@@ -335,7 +335,7 @@
     <Compile Include="Models\Pedidos\vehiculos_p.cs">
       <DependentUpon>Pedidos.tt</DependentUpon>
     </Compile>
->>>>>>> Stashed changes
+    <!-->>>>>>> Stashed changes-->
     <Compile Include="Models\TableViewModels\cambiarMotorista.cs" />
     <Compile Include="Models\Motoristas\Motoristas.Context.cs">
       <AutoGen>True</AutoGen>
@@ -360,10 +360,10 @@
     <Compile Include="Models\TableViewModels\historial_inventario_centrals.cs" />
     <Compile Include="Models\TableViewModels\InventarioCentralProduccion.cs" />
     <Compile Include="Models\TableViewModels\InventarioProduccion.cs" />
-<<<<<<< Updated upstream
+    <!--<<<<<<< Updated upstream-->
     <Compile Include="Models\TableViewModels\inventario_centrals.cs" />
-=======
->>>>>>> Stashed changes
+    <!--=======
+>>>>>>> Stashed changes-->
     <!--<Compile Include="Models\Motoristas\Motoristas.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -576,7 +576,7 @@
       <DependentUpon>Motoristas.edmx</DependentUpon>
       <LastGenOutput>Motoristas1.cs</LastGenOutput>
       <!-->>>>>>> 62c866ea3c908a4ec7d44e351568ef4fa92df064-->
-<<<<<<< Updated upstream
+      <!--<<<<<<< Updated upstream-->
     </Content>
     <EntityDeploy Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -584,8 +584,8 @@
     </EntityDeploy>
     <Content Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.edmx.diagram">
       <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
-=======
->>>>>>> Stashed changes
+      <!--=======
+>>>>>>> Stashed changes-->
     </Content>
     <Content Include="App_Browsers\qt.browser" />
     <!--<EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
@@ -2629,14 +2629,14 @@
     <Content Include="Views\Vehiculos\Index.cshtml" />
     <Content Include="Views\Motoristas\Index.cshtml" />
     <Content Include="Views\InventarioProduccion\Index.cshtml" />
-<<<<<<< Updated upstream
+    <!--<<<<<<< Updated upstream-->
     <Content Include="Views\MateriaPrimaCentral\Index.cshtml" />
     <Content Include="Views\Reporteria\Index.cshtml" />
     <Content Include="Views\Reporteria\generarReporte.cshtml" />
-=======
+    <!--=======-->
     <Content Include="Views\PedidosJefeProd\Index.cshtml" />
     <Content Include="Views\PedidosTransporte\Index.cshtml" />
->>>>>>> Stashed changes
+    <!-->>>>>>> Stashed changes-->
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

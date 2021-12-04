@@ -39,36 +39,47 @@ namespace SistemaProduccionAzucar.Controllers
         {
             using (var db = new SistemaAzucarEntities()) 
             {
-                var list = from d in db.usuarios
-                           where d.username == username
-                           select d;
+                try
+                {
+                    var list = from d in db.usuarios
+                               where d.username == username
+                               select d;
 
-                if (list.Count() > 0)
+                    if (list.Count() > 0)
+                    {
+                        return Json(new
+                        {
+                            response = 0,
+                            message = "Nombre de usuario ya existe."
+                        });
+                    }
+                    else
+                    {
+                        usuarios user = new usuarios();
+                        user.nombre = nombres;
+                        user.apellido = apellidos;
+                        user.username = username;
+                        user.correo = correo;
+                        user.clave = clave;
+                        user.tipo_usuario = tipoUsuario;
+                        user.estado = 1;
+
+                        db.usuarios.Add(user);
+                        db.SaveChanges();
+
+                        return Json(new
+                        {
+                            response = 1,
+                            message = "Éxito"
+                        });
+                    }
+                }
+                catch (Exception ex)
                 {
                     return Json(new
                     {
                         response = 0,
-                        message = "Nombre de usuario ya existe."
-                    });
-                }
-                else
-                {
-                    usuarios user = new usuarios();
-                    user.nombre = nombres;
-                    user.apellido = apellidos;
-                    user.username = username;
-                    user.correo = correo;
-                    user.clave = clave;
-                    user.tipo_usuario = tipoUsuario;
-                    user.estado = 1;
-
-                    db.usuarios.Add(user);
-                    db.SaveChanges();
-
-                    return Json(new
-                    {
-                        response = 1,
-                        message = "Éxito"
+                        message = ex.Message
                     });
                 }
             }

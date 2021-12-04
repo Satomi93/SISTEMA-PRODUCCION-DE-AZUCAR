@@ -51,8 +51,8 @@
                             <td>@mat.prioridad</td>
                             <td>@mat.fechaPedidoStr</td>
                             <td>
-                                @if (@mat.estado == "E") {
-                                    <button type="button" class="btn btn-secondary btn-sm" onclick="despacho(@mat.correlativo);" data-toggle="modal" data-target="#modal-despachar">
+                                @if (@mat.estado == "P") {
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="despacho(@mat.correlativo, @mat.cant_pedido);" data-toggle="modal" data-target="#modal-despachar">
                                         <i class="fas fa-clipboard-list"></i>
                                         Despachar
                                     </button>
@@ -111,10 +111,11 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="correlativoPedidoDes" id="correlativoPedidoDes">
+                <input type="hidden" name="cantidadDes" id="cantidadDes">
                 <div id="motorista-detalles-despacho"></div>
                 <div class="form-group">
-                    <label for="motorista-des">Motorista:</label>
-                    <select class="form-control" name="motorista-des" id="motorista-des">
+                    <label for="placa">Motorista:</label>
+                    <select class="form-control" name="placa" id="placa">
                         <option value="">Seleccione motorista</option>
                     </select>
                 </div>
@@ -144,12 +145,12 @@
         // DESPACHO
         let formDespachar = $("#form-despachar").validate({
             rules: {
-                'motorista-des': {
+                'placa': {
                     required: true
                 }
             },
             messages: {
-                'motorista-des': {
+                'placa': {
                     required: "Por favor seleccione un motorista a despachar."
                 }
             },
@@ -204,7 +205,25 @@
                     html += '<option value="' + item.placa + '">' + item.motorista + '</option>';
                 });
 
-                $('#motorista-des').html(html);
+                $('#placa').append(html);
+            }
+        });
+
+        // CAMBIO ESTADO PEDIDO
+        $('#form-despachar').submit((e) => {
+            e.preventDefault();
+
+            if ($('#form-despachar').valid()) {
+                $('#msj-info-des').addClass('d-none');
+                let values = $('#form-despachar').serialize();
+
+                $.post('@Url.Content("~/PedidosTransporte/Despachar")', values, (data) => {
+                    if (data.response == 1) {
+                        window.location.reload(true);
+                    } else if (data.response == 0) {
+                        $('#msj-info-des').text(data.message).removeClass('d-none');
+                    }
+                });
             }
         });
     });
@@ -253,7 +272,7 @@
         });
     }
 
-    function despacho(correlativo) {
+    function despacho(correlativo, cantidad) {
         $.post('@Url.Content("~/PedidosJefeProd/Details")', 
         {
             correlativo: correlativo
@@ -263,6 +282,7 @@
                 let html = '';
 
                 $("#correlativoPedidoDes").val(correlativo);
+                $("#cantidadDes").val(cantidad);
 
                 html += '<div class="row pb-3">';
                 html +=     '<div class="col-md-4 font-weight-bold">N°: </div>';

@@ -32,8 +32,7 @@
                             <td>
                                 <i></i>
                                 <input type="hidden" name="codProducto" id="codProducto" value="@pro.cod_producto">
-                                <button class="btn btn-default btn-sm" id="getReporte" onclick="codigo(@pro.cod_producto)">
-
+                                <button class="btn btn-default btn-sm" id="getReporte" onclick="codigo(@pro.cod_producto)" >
                                     Obtener reporte
                                 </button>
                             </td>
@@ -60,7 +59,8 @@
 
             url = url.replace("codigoPro",cod);
 
-            document.location.href = url;
+            //document.location.href = url;
+            window.open(url, "Reporte de producción")
 
             };
 

@@ -285,3 +285,4 @@ C:\Users\alexv\Documents\GitKraken\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccio
 C:\Users\alexv\Documents\GitKraken\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\obj\Debug\SistemaProduccionAzucar.dll
 C:\Users\alexv\Documents\GitKraken\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\obj\Debug\SistemaProduccionAzucar.pdb
 C:\Users\alexv\Documents\GitKraken\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Rotativa.dll
+C:\Users\Satomi\Documents\REPOSITORIO\SISTEMA-PRODUCCION-DE-AZUCAR\SistemaProduccionAzucar\bin\Rotativa.dll

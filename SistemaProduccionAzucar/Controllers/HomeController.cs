@@ -46,17 +46,10 @@ namespace SistemaProduccionAzucar.Controllers
                                         url = "/Vehiculos/";
                                         break;
                                     case "Jefe de producción":
-<<<<<<< Updated upstream
                                         url = "/InventarioProduccion/";
                                         break;
                                     case "Presidente de central azucarero":
                                         url = "/Reporteria/";
-=======
-                                        url = "/PedidosJefeProd/";
-                                        break;
-                                    case "Presidente de central azucarero":
-                                        url = "/User/";
->>>>>>> Stashed changes
                                         break;
                                 }
 

@@ -1,4 +1,5 @@
-﻿using SistemaProduccionAzucar.Models.Pedidos;
+﻿using SistemaProduccionAzucar.Models.Login;
+using SistemaProduccionAzucar.Models.Pedidos;
 using SistemaProduccionAzucar.Models.TableViewModels;
 using System;
 using System.Collections.Generic;
@@ -118,6 +119,53 @@ namespace SistemaProduccionAzucar.Controllers
                 message = "Éxito",
                 data = obj
             });
+        }
+
+        // restar de [dbo].[inventario_finca_produccion]
+        // [dbo].[vehiculos] cambiar disponibilidad
+        // [dbo].[pedidos_canha] actualizar placa y estado
+        public ActionResult Despachar(string placa, decimal cantidadDes, int correlativoPedidoDes)
+        {
+            try
+            {
+                using (PedidosEntities db = new PedidosEntities())
+                {
+                    var usuario = (usuarios) Session["UserData"];
+
+                    pedidos_canha ped = db.pedidos_canha.Find(correlativoPedidoDes);
+                    ped.placa_vehiculo = placa;
+                    ped.estado = "E";
+
+                    db.Entry(ped).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    vehiculos_p ve = db.vehiculos_p.Find(placa);
+                    ve.disponibilidad = "cargado";
+
+                    db.Entry(ve).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    inventario_finca_produccion inv = db.inventario_finca_produccion.Find(1);
+                    inv.cantidad = inv.cantidad - cantidadDes;
+
+                    db.Entry(inv).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        response = 1,
+                        message = "Éxito"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    response = 0,
+                    message = "Error: " + ex.Message
+                });
+            }
         }
     }
 }
