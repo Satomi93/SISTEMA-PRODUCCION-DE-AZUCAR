@@ -42,6 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -168,6 +171,7 @@
     <Compile Include="Controllers\MateriaPrimaCentralController.cs" />
     <Compile Include="Controllers\MateriaPrimaController.cs" />
     <Compile Include="Controllers\MotoristasController.cs" />
+    <Compile Include="Controllers\ReporteriaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VehiculosController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -432,6 +436,7 @@
       <DependentUpon>Vehiculos.edmx</DependentUpon>
       <LastGenOutput>Vehiculos1.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\dist\css\adminlte.css.map" />
@@ -534,6 +539,7 @@
     <Content Include="Models\MateriaPrimaCentral\MateriaPrimaCentral.edmx.diagram">
       <DependentUpon>MateriaPrimaCentral.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Browsers\qt.browser" />
     <!--<EntityDeploy Include="Models\Motoristas\Motoristas.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Motoristas.Designer.cs</LastGenOutput>
@@ -2559,6 +2565,8 @@
     <Content Include="Views\Motoristas\Index.cshtml" />
     <Content Include="Views\InventarioProduccion\Index.cshtml" />
     <Content Include="Views\MateriaPrimaCentral\Index.cshtml" />
+    <Content Include="Views\Reporteria\Index.cshtml" />
+    <Content Include="Views\Reporteria\generarReporte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,69 @@
+﻿@model List<SistemaProduccionAzucar.Models.TableViewModels.InventarioProduccion>
+
+@{
+    ViewBag.Title = "Reportes";
+}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <div class="card-tools">
+            <div class="input-group input-group-sm">
+            </div>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped" id="table-motoristas">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pro in Model)
+                    {
+                        <tr>
+                            <td>@pro.cod_producto</td>
+                            <td>@pro.descripcion</td>
+                            <td>
+                                <i></i>
+                                <input type="hidden" name="codProducto" id="codProducto" value="@pro.cod_producto">
+                                <button class="btn btn-default btn-sm" id="getReporte" onclick="codigo(@pro.cod_producto)">
+
+                                    Obtener reporte
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer"></div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+
+        function codigo(cod) {
+
+
+            var url = '@Url.Action("generarReporte", "Reporteria", new { codPro = "codigoPro" })';
+
+            url = url.replace("codigoPro",cod);
+
+            document.location.href = url;
+
+            };
+
+    </script>
+}
+
